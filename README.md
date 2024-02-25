@@ -6,7 +6,7 @@
   <br>
 </h1>
 
-<p align="center">
+<div align="center">
 
 TODO.
  
@@ -17,4 +17,4 @@ TODO.
  <a href="https://raw.githubusercontent.com/AcK77/TTGames-Explorer-Rebirth/master/distribution/misc/Screen04.png" target="_blank"><img src="https://raw.githubusercontent.com/AcK77/TTGames-Explorer-Rebirth/master/distribution/misc/Screen04.png" width="200"></a>
  <a href="https://raw.githubusercontent.com/AcK77/TTGames-Explorer-Rebirth/master/distribution/misc/Screen05.png" target="_blank"><img src="https://raw.githubusercontent.com/AcK77/TTGames-Explorer-Rebirth/master/distribution/misc/Screen05.png" width="200"></a>
  <a href="https://raw.githubusercontent.com/AcK77/TTGames-Explorer-Rebirth/master/distribution/misc/Screen06.png" target="_blank"><img src="https://raw.githubusercontent.com/AcK77/TTGames-Explorer-Rebirth/master/distribution/misc/Screen06.png" width="200"></a>
-</p>
+</div>
