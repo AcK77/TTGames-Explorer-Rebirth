@@ -10,11 +10,11 @@
 
 TODO.
  
- <a href="https://raw.githubusercontent.com/AcK77/TTGames-Explorer-Rebirth/master/distribution/misc/Screen01.png" target="_blank"><img src="https://raw.githubusercontent.com/AcK77/TTGames-Explorer-Rebirth/master/distribution/misc/Screen01.png" width="300"></a>
- <a href="https://raw.githubusercontent.com/AcK77/TTGames-Explorer-Rebirth/master/distribution/misc/Screen02.png" target="_blank"><img src="https://raw.githubusercontent.com/AcK77/TTGames-Explorer-Rebirth/master/distribution/misc/Screen02.png" width="300"></a>
- <a href="https://raw.githubusercontent.com/AcK77/TTGames-Explorer-Rebirth/master/distribution/misc/Screen03.png" target="_blank"><img src="https://raw.githubusercontent.com/AcK77/TTGames-Explorer-Rebirth/master/distribution/misc/Screen03.png" width="300"></a>
+ <a href="https://raw.githubusercontent.com/AcK77/TTGames-Explorer-Rebirth/master/distribution/misc/Screen01.png" target="_blank"><img src="https://raw.githubusercontent.com/AcK77/TTGames-Explorer-Rebirth/master/distribution/misc/Screen01.png" width="200"></a>
+ <a href="https://raw.githubusercontent.com/AcK77/TTGames-Explorer-Rebirth/master/distribution/misc/Screen02.png" target="_blank"><img src="https://raw.githubusercontent.com/AcK77/TTGames-Explorer-Rebirth/master/distribution/misc/Screen02.png" width="200"></a>
+ <a href="https://raw.githubusercontent.com/AcK77/TTGames-Explorer-Rebirth/master/distribution/misc/Screen03.png" target="_blank"><img src="https://raw.githubusercontent.com/AcK77/TTGames-Explorer-Rebirth/master/distribution/misc/Screen03.png" width="200"></a>
  <br>
- <a href="https://raw.githubusercontent.com/AcK77/TTGames-Explorer-Rebirth/master/distribution/misc/Screen04.png" target="_blank"><img src="https://raw.githubusercontent.com/AcK77/TTGames-Explorer-Rebirth/master/distribution/misc/Screen04.png" width="300"></a>
- <a href="https://raw.githubusercontent.com/AcK77/TTGames-Explorer-Rebirth/master/distribution/misc/Screen05.png" target="_blank"><img src="https://raw.githubusercontent.com/AcK77/TTGames-Explorer-Rebirth/master/distribution/misc/Screen05.png" width="300"></a>
- <a href="https://raw.githubusercontent.com/AcK77/TTGames-Explorer-Rebirth/master/distribution/misc/Screen06.png" target="_blank"><img src="https://raw.githubusercontent.com/AcK77/TTGames-Explorer-Rebirth/master/distribution/misc/Screen06.png" width="300"></a>
+ <a href="https://raw.githubusercontent.com/AcK77/TTGames-Explorer-Rebirth/master/distribution/misc/Screen04.png" target="_blank"><img src="https://raw.githubusercontent.com/AcK77/TTGames-Explorer-Rebirth/master/distribution/misc/Screen04.png" width="200"></a>
+ <a href="https://raw.githubusercontent.com/AcK77/TTGames-Explorer-Rebirth/master/distribution/misc/Screen05.png" target="_blank"><img src="https://raw.githubusercontent.com/AcK77/TTGames-Explorer-Rebirth/master/distribution/misc/Screen05.png" width="200"></a>
+ <a href="https://raw.githubusercontent.com/AcK77/TTGames-Explorer-Rebirth/master/distribution/misc/Screen06.png" target="_blank"><img src="https://raw.githubusercontent.com/AcK77/TTGames-Explorer-Rebirth/master/distribution/misc/Screen06.png" width="200"></a>
 </p>
