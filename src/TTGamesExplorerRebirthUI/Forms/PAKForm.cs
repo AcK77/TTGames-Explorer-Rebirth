@@ -8,20 +8,21 @@ namespace TTGamesExplorerRebirthUI.Forms
     public partial class PAKForm : DarkForm
     {
         private readonly PAK _pakArchive;
-        private PAK _pakArchiveExtraction;
-        private readonly string _pakFilePath;
+        private PAK          _pakArchiveExtraction;
 
-        private bool _extractingTaskCanceled;
+        private readonly string _filePath;
+
+        private bool   _extractingTaskCanceled;
         private string _extractingAllFolderPath;
 
-        public PAKForm(string pakFilePath, byte[] fileBuffer)
+        public PAKForm(string filePath, byte[] fileBuffer)
         {
             InitializeComponent();
 
-            _pakFilePath = pakFilePath;
-            _pakArchive = (fileBuffer != null) ? new(fileBuffer) : new(pakFilePath);
+            _filePath   = filePath;
+            _pakArchive = (fileBuffer != null) ? new(fileBuffer) : new(filePath);
 
-            toolStripStatusLabel1.Text = $"{Path.GetFileName(pakFilePath)} - {_pakArchive.Files.Count} file(s)";
+            toolStripStatusLabel1.Text = $"{Path.GetFileName(filePath)} - {_pakArchive.Files.Count} file(s)";
         }
 
         protected override void OnHandleCreated(EventArgs e)
@@ -40,8 +41,8 @@ namespace TTGamesExplorerRebirthUI.Forms
             {
                 DarkListItem listItem = new($"{file.Name} ({Helper.FormatSize(file.Size)})")
                 {
-                    Tag = file.Name,
-                    Icon = Helper.GetIconByFileName(file.Name)
+                    Tag  = file.Name,
+                    Icon = Helper.GetIconByFileName(file.Name),
                 };
 
                 darkListView1.Items.Add(listItem);
@@ -50,11 +51,10 @@ namespace TTGamesExplorerRebirthUI.Forms
 
         private void DarkListView1_DoubleClick(object sender, EventArgs e)
         {
-            string name = (string)darkListView1.Items[darkListView1.SelectedIndices[0]].Tag;
-
+            string  name = (string)darkListView1.Items[darkListView1.SelectedIndices[0]].Tag;
             PAKFile file = _pakArchive.Files.Where(file => file.Name == name).First();
 
-            Helper.OpenFileInternal(_pakFilePath, name, file.Data, file);
+            Helper.OpenFileInternal(_filePath, name, file.Data, file);
         }
 
         private void ExtractAllToolStripMenuItem_Click(object sender, EventArgs e)
@@ -62,18 +62,17 @@ namespace TTGamesExplorerRebirthUI.Forms
             if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
             {
                 _extractingAllFolderPath = folderBrowserDialog1.SelectedPath;
-
-                _pakArchiveExtraction = _pakArchive;
+                _pakArchiveExtraction    = _pakArchive;
 
                 LoadingForm loadingForm = new()
                 {
-                    Text = $"Extract {Path.GetFileName(_pakFilePath)}..."
+                    Text = $"Extract {Path.GetFileName(_filePath)}..."
                 };
 
-                loadingForm.progressBar1.Maximum = _pakArchiveExtraction.Files.Count;
-                loadingForm.Shown += LoadingForm_Shown;
-                loadingForm.darkButton1.Text = "Cancel";
-                loadingForm.darkButton1.Click += DarkButton1_Click;
+                loadingForm.progressBar1.Maximum  = _pakArchiveExtraction.Files.Count;
+                loadingForm.Shown                += LoadingForm_Shown;
+                loadingForm.darkButton1.Text      = "Cancel";
+                loadingForm.darkButton1.Click    += DarkButton1_Click;
 
                 loadingForm.ShowDialog();
             }
@@ -91,12 +90,11 @@ namespace TTGamesExplorerRebirthUI.Forms
             new Thread(() =>
             {
                 LoadingForm loadingForm = (LoadingForm)sender;
-                int i = 0;
-
                 Stopwatch timer = new();
+
                 timer.Start();
 
-                foreach (PAKFile file in _pakArchiveExtraction.Files)
+                for (int i = 0; i < _pakArchiveExtraction.Files.Count; i++)
                 {
                     if (_extractingTaskCanceled)
                     {
@@ -107,7 +105,7 @@ namespace TTGamesExplorerRebirthUI.Forms
 
                     loadingForm.Invoke((MethodInvoker)(() =>
                     {
-                        loadingForm.darkLabel1.Text = $"Extracting: \"{file.Name}\"";
+                        loadingForm.darkLabel1.Text = $"Extracting: \"{_pakArchiveExtraction.Files[i].Name}\"";
                         loadingForm.darkLabel1.Refresh();
 
                         loadingForm.progressBar1.Value = i;
@@ -118,10 +116,10 @@ namespace TTGamesExplorerRebirthUI.Forms
                         loadingForm.darkLabel3.Text = $"{timer.Elapsed:mm\\:ss}";
                         loadingForm.darkLabel3.Refresh();
 
-                        string fullFilePath = Path.GetFullPath(Path.Join(_extractingAllFolderPath, file.Name));
+                        string path = Path.GetFullPath(Path.Join(_extractingAllFolderPath, _pakArchiveExtraction.Files[i].Name));
 
-                        Directory.CreateDirectory(Path.GetDirectoryName(fullFilePath));
-                        File.WriteAllBytes(fullFilePath, file.Data);
+                        Directory.CreateDirectory(Path.GetDirectoryName(path));
+                        File.WriteAllBytes(path, _pakArchiveExtraction.Files[i].Data);
 
                         i++;
                     }));
@@ -134,12 +132,12 @@ namespace TTGamesExplorerRebirthUI.Forms
                     loadingForm.Close();
                 }));
 
-                MessageBox.Show($"{i} file(s) extracted!", "Extracting file(s)...", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show($"{_pakArchiveExtraction.Files.Count} file(s) extracted!", "Extracting file(s)...", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             }).Start();
         }
 
-        private void extractFilesToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ExtractFilesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
             {
@@ -152,24 +150,23 @@ namespace TTGamesExplorerRebirthUI.Forms
                 }
 
                 _pakArchiveExtraction.Files = files;
-
-                _extractingAllFolderPath = folderBrowserDialog1.SelectedPath;
+                _extractingAllFolderPath    = folderBrowserDialog1.SelectedPath;
 
                 LoadingForm loadingForm = new()
                 {
-                    Text = $"Extract {Path.GetFileName(_pakFilePath)}..."
+                    Text = $"Extract {Path.GetFileName(_filePath)}..."
                 };
 
-                loadingForm.progressBar1.Maximum = _pakArchiveExtraction.Files.Count;
-                loadingForm.Shown += LoadingForm_Shown;
-                loadingForm.darkButton1.Text = "Cancel";
-                loadingForm.darkButton1.Click += DarkButton1_Click;
+                loadingForm.progressBar1.Maximum  = _pakArchiveExtraction.Files.Count;
+                loadingForm.Shown                += LoadingForm_Shown;
+                loadingForm.darkButton1.Text      = "Cancel";
+                loadingForm.darkButton1.Click    += DarkButton1_Click;
 
                 loadingForm.ShowDialog();
             }
         }
 
-        private void darkContextMenu1_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        private void DarkContextMenu1_Opening(object sender, System.ComponentModel.CancelEventArgs e)
         {
             if (darkListView1.SelectedIndices.Count < 1)
             {

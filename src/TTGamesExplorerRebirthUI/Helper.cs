@@ -49,6 +49,7 @@ namespace TTGamesExplorerRebirthUI
                 ".mp3" => new Bitmap(Properties.Resources.page_white_music),
                 ".nxg_textures" => new Bitmap(Properties.Resources.pictures),
                 ".ogg" => new Bitmap(Properties.Resources.page_white_music),
+                ".pc_shaders" => new Bitmap(Properties.Resources.border_all),
                 ".scp" => new Bitmap(Properties.Resources.page_white_text),
                 ".sf" => new Bitmap(Properties.Resources.page_white_text),
                 ".sub" => new Bitmap(Properties.Resources.page_white_text),
@@ -131,7 +132,6 @@ namespace TTGamesExplorerRebirthUI
 
                 case ".tsh":
                     {
-
                         fileBuffer ??= File.ReadAllBytes(path);
 
                         new TSHForm(path, fileBuffer).ShowDialog();
@@ -148,6 +148,15 @@ namespace TTGamesExplorerRebirthUI
 
                         new SoundForm(path, fileBuffer).ShowDialog();
                         break;
+                    }
+
+                case ".pc_shaders":
+                    {
+                        fileBuffer ??= File.ReadAllBytes(path);
+
+                        new PCShadersForm(path, fileBuffer).ShowDialog();
+                        break;
+
                     }
             }
         }

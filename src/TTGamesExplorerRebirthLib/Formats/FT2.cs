@@ -26,7 +26,7 @@ namespace TTGamesExplorerRebirthLib.Formats
         private const string MagicVtor = "ROTV";
 
         public FT2Char[] Chars;
-        public DDSImage       FontImage;
+        public DDSImage  FontImage;
 
         public float MinHeight;
         public float BaseLine;
@@ -34,9 +34,9 @@ namespace TTGamesExplorerRebirthLib.Formats
         public uint  SndId;
         public uint  IcGap;
 
-        public FT2(string archiveFilePath)
+        public FT2(string filePath)
         {
-            Deserialize(File.ReadAllBytes(archiveFilePath));
+            Deserialize(File.ReadAllBytes(filePath));
         }
 
         public FT2(byte[] buffer)
