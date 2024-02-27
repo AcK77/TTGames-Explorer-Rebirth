@@ -68,7 +68,7 @@ namespace TTGamesExplorerRebirthLib.Formats
 
             uint   nuTextureSetHeaderVersion  = reader.ReadUInt32BigEndian();
 
-            if (nuTextureSetHeaderVersion > 0) // 0 versions don't have datestamps
+            if (nuTextureSetHeaderVersion > 0)
             {
                 ushort nuTextureSetHeaderUnknown2 = reader.ReadUInt16BigEndian();
                 DateStamp = reader.ReadSized16NullTerminatedString();
