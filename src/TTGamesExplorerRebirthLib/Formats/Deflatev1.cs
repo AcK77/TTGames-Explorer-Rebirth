@@ -22,7 +22,7 @@ namespace TTGamesExplorerRebirthLib.Formats
             using MemoryStream stream = new(fileBuffer);
             using BinaryReader reader = new(stream);
 
-            if (stream.ReadNullTerminatedString() != Magic)
+            if (reader.ReadNullTerminatedString() != Magic)
             {
                 stream.Seek(0x20, SeekOrigin.Begin);
 

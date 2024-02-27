@@ -113,7 +113,7 @@ namespace TTGamesExplorerRebirthLib.Formats.DAT
 
                         stream.Seek((long)namesOffset + nameOffset, SeekOrigin.Begin);
 
-                        string fileName = stream.ReadNullTerminatedString();
+                        string fileName = reader.ReadNullTerminatedString();
 
                         stream.Seek(latestOffset, SeekOrigin.Begin);
 
@@ -213,11 +213,11 @@ namespace TTGamesExplorerRebirthLib.Formats.DAT
 
                 stream.Seek(namesOffset, SeekOrigin.Begin);
 
-                uint namesCrcOffset  = reader.ReadUInt32();
-                     namesOffset     = (uint)stream.Position;
-                     namesCrcOffset += (uint)stream.Position;
+                uint namesfnv1aOffset  = reader.ReadUInt32();
+                     namesOffset       = (uint)stream.Position;
+                     namesfnv1aOffset += (uint)stream.Position;
 
-                stream.Seek(namesCrcOffset, SeekOrigin.Begin);
+                stream.Seek(namesfnv1aOffset, SeekOrigin.Begin);
 
                 ulong fnv1aTableOffset = (ulong)stream.Position;
 
@@ -276,7 +276,7 @@ namespace TTGamesExplorerRebirthLib.Formats.DAT
 
                             stream.Seek(offset, SeekOrigin.Begin);
 
-                            name = stream.ReadNullTerminatedString();
+                            name = reader.ReadNullTerminatedString();
                         }
 
                         // NOTE: Used only for LEGO the game if you don't use the hdr file.

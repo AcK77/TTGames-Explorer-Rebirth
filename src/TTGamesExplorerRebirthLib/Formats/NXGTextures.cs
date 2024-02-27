@@ -1,4 +1,5 @@
 ﻿using TTGamesExplorerRebirthLib.Formats.DDS;
+using TTGamesExplorerRebirthLib.Formats.NuCore;
 using TTGamesExplorerRebirthLib.Helper;
 
 namespace TTGamesExplorerRebirthLib.Formats
@@ -20,14 +21,10 @@ namespace TTGamesExplorerRebirthLib.Formats
     /// </remarks>
     public class NXGTextures
     {
-        private const string Magic     = ".CC4";
-        private const string MagicResH = "HSER";
-        private const string MagicVtor = "ROTV";
         private const string MagicTxSt = "TSXT";
 
-        public string ProjectName;
-        public string ProducedByUserName;
-        public string SourceFileName;
+        public NuResourceHeader Header;
+
         public string DateStamp;
 
         public List<NXGFile> Files = [];
@@ -49,58 +46,13 @@ namespace TTGamesExplorerRebirthLib.Formats
 
             // Read header.
 
-            uint nuResourceHeaderSize = reader.ReadUInt32BigEndian();
+            reader.ReadNuFileHeader();
 
-            if (reader.ReadUInt32AsString() != Magic)
-            {
-                throw new InvalidDataException($"{stream.Position:x8}");
-            }
-
-            if (reader.ReadUInt32AsString() != MagicResH)
-            {
-                throw new InvalidDataException($"{stream.Position:x8}");
-            }
-
-            if (reader.ReadUInt32AsString() != MagicResH)
-            {
-                throw new InvalidDataException($"{stream.Position:x8}");
-            }
-
-            uint nuResourceHeaderVersion = reader.ReadUInt32BigEndian();
-            uint unknown1 = reader.ReadUInt32();
-
-            if (reader.ReadUInt32AsString() != MagicVtor)
-            {
-                throw new InvalidDataException($"{stream.Position:x8}");
-            }
-
-            uint vtorVersion = reader.ReadUInt32BigEndian();
-            uint unknown2    = reader.ReadUInt32();
-
-            ushort projectNameSize = reader.ReadUInt16BigEndian();
-            ProjectName = stream.ReadNullTerminatedString();
-
-            uint unknown3 = reader.ReadUInt32();
-            uint unknown4 = reader.ReadUInt32();
-
-            ushort producedByUserNameSize = reader.ReadUInt16BigEndian();
-            ProducedByUserName = stream.ReadNullTerminatedString();
-
-            byte unknown5 = reader.ReadByte();
-
-            ushort sourceFileNameSize = reader.ReadUInt16BigEndian();
-            SourceFileName = stream.ReadNullTerminatedString();
-
-            byte unknown6 = reader.ReadByte();
+            Header = reader.ReadNuResourceHeader();
 
             // Read NuTextureSetHeader.
 
-            uint nuTextureSetHeaderSize = reader.ReadUInt32BigEndian();
-
-            if (reader.ReadUInt32AsString() != Magic)
-            {
-                throw new InvalidDataException($"{stream.Position:x8}");
-            }
+            uint nuTextureSetHeaderSize = reader.ReadNuFileHeader();
 
             if (reader.ReadUInt32AsString() != MagicTxSt)
             {
@@ -117,10 +69,9 @@ namespace TTGamesExplorerRebirthLib.Formats
             uint   nuTextureSetHeaderVersion  = reader.ReadUInt32BigEndian();
             ushort nuTextureSetHeaderUnknown2 = reader.ReadUInt16BigEndian();
 
-            ushort dateStampSize = reader.ReadUInt16BigEndian();
-            DateStamp = stream.ReadNullTerminatedString();
+            DateStamp = reader.ReadSized16NullTerminatedString();
 
-            if (reader.ReadUInt32AsString() != MagicVtor)
+            if (reader.ReadUInt32AsString() != NuFile.MagicVirtualTableObjectReference)
             {
                 throw new InvalidDataException($"{stream.Position:x8}");
             }
@@ -139,7 +90,7 @@ namespace TTGamesExplorerRebirthLib.Formats
                 if (nuTextureSetHeaderVersion == 1)
                 {
                     uint pathSize            = reader.ReadUInt32BigEndian();
-                         path                = stream.ReadNullTerminatedString();
+                         path                = reader.ReadNullTerminatedString();
                     uint nuTexGenHdrUnknown1 = reader.ReadUInt32BigEndian();
                 }
                 
@@ -147,7 +98,7 @@ namespace TTGamesExplorerRebirthLib.Formats
                 {
                     uint nuAlignedBuffer = reader.ReadUInt32();
                     byte pathSize        = reader.ReadByte();
-                         path            = stream.ReadNullTerminatedString();
+                         path            = reader.ReadNullTerminatedString();
                     byte nuResourceId    = reader.ReadByte();
                 }
 
@@ -158,7 +109,7 @@ namespace TTGamesExplorerRebirthLib.Formats
                     {
                         uint nuAlignedBuffer     = reader.ReadUInt32();
                         byte pathSize            = reader.ReadByte();
-                             path                = stream.ReadNullTerminatedString();
+                             path                = reader.ReadNullTerminatedString();
                         byte nuResourceId        = reader.ReadByte();
                         uint nuTexGenHdrUnknown3 = reader.ReadUInt32();
                         uint nuTexGenHdrUnknown4 = reader.ReadUInt32();
@@ -166,7 +117,7 @@ namespace TTGamesExplorerRebirthLib.Formats
                     else
                     {
                         ushort pathSize            = reader.ReadUInt16BigEndian();
-                               path                = stream.ReadNullTerminatedString();
+                               path                = reader.ReadNullTerminatedString();
                         uint   nuTexGenHdrUnknown1 = reader.ReadUInt32();
                         uint   nuTexGenHdrUnknown2 = reader.ReadUInt32();
                         uint   nuTexGenHdrUnknown3 = reader.ReadUInt32();

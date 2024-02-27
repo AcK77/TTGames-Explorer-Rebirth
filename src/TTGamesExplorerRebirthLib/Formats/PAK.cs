@@ -73,7 +73,7 @@ namespace TTGamesExplorerRebirthLib.Formats
 
                 stream.Seek(nameOffset, SeekOrigin.Begin);
 
-                string fileName = stream.ReadNullTerminatedString().ToLowerInvariant();
+                string fileName = reader.ReadNullTerminatedString().ToLowerInvariant();
 
                 stream.Seek(oldPosition, SeekOrigin.Begin);
 

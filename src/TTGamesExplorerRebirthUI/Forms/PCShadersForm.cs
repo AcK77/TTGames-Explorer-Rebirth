@@ -15,7 +15,7 @@ namespace TTGamesExplorerRebirthUI.Forms
             _pcShaders = (fileBuffer != null) ? new(fileBuffer) : new(filePath);
 
             Text                       += $" - {Path.GetFileName(filePath)} - {_pcShaders.Shaders.Count} shader(s)";
-            toolStripStatusLabel1.Text  = _pcShaders.ProjectName;
+            toolStripStatusLabel1.Text  = _pcShaders.Header.ProjectName;
         }
 
         protected override void OnHandleCreated(EventArgs e)
