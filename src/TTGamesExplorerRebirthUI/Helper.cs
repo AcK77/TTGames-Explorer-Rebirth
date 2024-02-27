@@ -91,7 +91,7 @@ namespace TTGamesExplorerRebirthUI
                         new PAKForm(path, fileBuffer).ShowDialog();
                         break;
                     }
-
+                    
                 case ".ats":
                 case ".cfg":
                 case ".csv":
@@ -110,6 +110,7 @@ namespace TTGamesExplorerRebirthUI
                         new TextForm(Path.GetFileName(path), fileBuffer, archiveFile).ShowDialog();
                         break;
                     }
+                    
                 case ".cmo":
                 case ".dds":
                 case ".tex":
@@ -162,7 +163,6 @@ namespace TTGamesExplorerRebirthUI
 
                         new PCShadersForm(path, fileBuffer).ShowDialog();
                         break;
-
                     }
             }
         }
