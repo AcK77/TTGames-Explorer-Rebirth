@@ -33,6 +33,7 @@
             flowLayoutPanel1 = new FlowLayoutPanel();
             pictureBox1 = new PictureBox();
             darkSectionPanel2 = new DarkUI.Controls.DarkSectionPanel();
+            darkButton3 = new DarkUI.Controls.DarkButton();
             splitContainer2 = new SplitContainer();
             darkSectionPanel4 = new DarkUI.Controls.DarkSectionPanel();
             darkListView2 = new DarkUI.Controls.DarkListView();
@@ -125,6 +126,18 @@
             darkSectionPanel2.Size = new Size(842, 205);
             darkSectionPanel2.TabIndex = 7;
             // 
+            // darkButton3
+            // 
+            darkButton3.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            darkButton3.Location = new Point(234, 8);
+            darkButton3.Name = "darkButton3";
+            darkButton3.Padding = new Padding(5);
+            darkButton3.Size = new Size(134, 23);
+            darkButton3.TabIndex = 10;
+            darkButton3.Text = "Toggle Background";
+            darkButton3.Visible = false;
+            darkButton3.Click += DarkButton3_Click;
+            // 
             // splitContainer2
             // 
             splitContainer2.Dock = DockStyle.Fill;
@@ -139,23 +152,24 @@
             // 
             // splitContainer2.Panel2
             // 
+            splitContainer2.Panel2.Controls.Add(darkButton3);
             splitContainer2.Panel2.Controls.Add(darkButton2);
             splitContainer2.Panel2.Controls.Add(darkButton1);
             splitContainer2.Panel2.Controls.Add(darkLabel1);
             splitContainer2.Panel2.Controls.Add(darkLabel3);
             splitContainer2.Panel2.Controls.Add(trackBar1);
             splitContainer2.Size = new Size(840, 179);
-            splitContainer2.SplitterDistance = 400;
+            splitContainer2.SplitterDistance = 457;
             splitContainer2.TabIndex = 7;
             // 
             // darkSectionPanel4
             // 
             darkSectionPanel4.Controls.Add(darkListView2);
             darkSectionPanel4.Dock = DockStyle.Left;
-            darkSectionPanel4.Location = new Point(200, 0);
+            darkSectionPanel4.Location = new Point(292, 0);
             darkSectionPanel4.Name = "darkSectionPanel4";
             darkSectionPanel4.SectionHeader = "MipMap(s)";
-            darkSectionPanel4.Size = new Size(200, 179);
+            darkSectionPanel4.Size = new Size(162, 179);
             darkSectionPanel4.TabIndex = 1;
             // 
             // darkListView2
@@ -164,7 +178,7 @@
             darkListView2.Location = new Point(1, 25);
             darkListView2.Name = "darkListView2";
             darkListView2.ShowIcons = true;
-            darkListView2.Size = new Size(198, 153);
+            darkListView2.Size = new Size(160, 153);
             darkListView2.TabIndex = 0;
             darkListView2.Text = "darkListView2";
             darkListView2.SelectedIndicesChanged += DarkListView2_SelectedIndicesChanged;
@@ -176,7 +190,7 @@
             darkSectionPanel3.Location = new Point(0, 0);
             darkSectionPanel3.Name = "darkSectionPanel3";
             darkSectionPanel3.SectionHeader = "Image(s)";
-            darkSectionPanel3.Size = new Size(200, 179);
+            darkSectionPanel3.Size = new Size(292, 179);
             darkSectionPanel3.TabIndex = 0;
             // 
             // darkListView1
@@ -185,14 +199,14 @@
             darkListView1.Location = new Point(1, 25);
             darkListView1.Name = "darkListView1";
             darkListView1.ShowIcons = true;
-            darkListView1.Size = new Size(198, 153);
+            darkListView1.Size = new Size(290, 153);
             darkListView1.TabIndex = 0;
             darkListView1.Text = "darkListView1";
             darkListView1.SelectedIndicesChanged += DarkListView1_SelectedIndicesChanged;
             // 
             // darkButton2
             // 
-            darkButton2.Location = new Point(15, 101);
+            darkButton2.Location = new Point(3, 96);
             darkButton2.Name = "darkButton2";
             darkButton2.Padding = new Padding(5);
             darkButton2.Size = new Size(151, 23);
@@ -203,7 +217,7 @@
             // 
             // darkButton1
             // 
-            darkButton1.Location = new Point(15, 139);
+            darkButton1.Location = new Point(3, 141);
             darkButton1.Name = "darkButton1";
             darkButton1.Padding = new Padding(5);
             darkButton1.Size = new Size(151, 23);
@@ -215,17 +229,17 @@
             // 
             darkLabel1.AutoSize = true;
             darkLabel1.ForeColor = Color.FromArgb(220, 220, 220);
-            darkLabel1.Location = new Point(58, 11);
+            darkLabel1.Location = new Point(61, 7);
             darkLabel1.Name = "darkLabel1";
-            darkLabel1.Size = new Size(10, 15);
+            darkLabel1.Size = new Size(35, 15);
             darkLabel1.TabIndex = 7;
-            darkLabel1.Text = " ";
+            darkLabel1.Text = "100%";
             // 
             // darkLabel3
             // 
             darkLabel3.AutoSize = true;
             darkLabel3.ForeColor = Color.FromArgb(220, 220, 220);
-            darkLabel3.Location = new Point(10, 11);
+            darkLabel3.Location = new Point(3, 7);
             darkLabel3.Name = "darkLabel3";
             darkLabel3.Size = new Size(42, 15);
             darkLabel3.TabIndex = 6;
@@ -233,7 +247,7 @@
             // 
             // trackBar1
             // 
-            trackBar1.Location = new Point(10, 34);
+            trackBar1.Location = new Point(3, 25);
             trackBar1.Maximum = 200;
             trackBar1.Name = "trackBar1";
             trackBar1.Size = new Size(151, 45);
@@ -330,5 +344,6 @@
         private DarkUI.Controls.DarkButton darkButton2;
         private SaveFileDialog saveFileDialog2;
         private FlowLayoutPanel flowLayoutPanel1;
+        private DarkUI.Controls.DarkButton darkButton3;
     }
 }
