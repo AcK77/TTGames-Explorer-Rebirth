@@ -1,4 +1,5 @@
-﻿using DarkUI.Forms;
+﻿using TTGamesExplorerRebirthUI.Forms;
+using DarkUI.Forms;
 using FastColoredTextBoxNS;
 using System.Diagnostics;
 using System.Net.Http.Headers;
@@ -163,6 +164,7 @@ namespace TTGamesExplorerRebirthUI
 
                         new PCShadersForm(path, fileBuffer).ShowDialog();
                         break;
+                        
                     }
             }
         }
