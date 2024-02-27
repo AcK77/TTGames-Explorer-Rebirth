@@ -67,9 +67,12 @@ namespace TTGamesExplorerRebirthLib.Formats
             }
 
             uint   nuTextureSetHeaderVersion  = reader.ReadUInt32BigEndian();
-            ushort nuTextureSetHeaderUnknown2 = reader.ReadUInt16BigEndian();
 
-            DateStamp = reader.ReadSized16NullTerminatedString();
+            if (nuTextureSetHeaderVersion > 0) // 0 versions don't have datestamps
+            {
+                ushort nuTextureSetHeaderUnknown2 = reader.ReadUInt16BigEndian();
+                DateStamp = reader.ReadSized16NullTerminatedString();
+            }
 
             if (reader.ReadUInt32AsString() != NuFile.MagicVirtualTableObjectReference)
             {
@@ -87,7 +90,7 @@ namespace TTGamesExplorerRebirthLib.Formats
 
                 string path = "";
 
-                if (nuTextureSetHeaderVersion == 1)
+                if (nuTextureSetHeaderVersion == 1 || nuTextureSetHeaderVersion == 0)
                 {
                     uint pathSize            = reader.ReadUInt32BigEndian();
                          path                = reader.ReadNullTerminatedString();

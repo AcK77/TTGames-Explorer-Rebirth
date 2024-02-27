@@ -24,7 +24,58 @@ namespace TTGamesExplorerRebirthUI.Forms
             _gameFolderPath = gameFolderPath;
             _datFilePath = datFilePath;
             _datArchive = new(datFilePath);
+            {
+                LoadingForm loadingForm = new()
+                {
+                    Text = "Opening DAT file",
+                    StartPosition = FormStartPosition.CenterScreen
+                };
+                int i = 0;
 
+                Stopwatch timer = new();
+                timer.Start();
+
+                loadingForm.progressBar1.Maximum = _datArchive.Files.Count;
+                loadingForm.Show();
+
+                loadingForm.darkButton1.Hide();
+
+                loadingForm.darkLabel1.Text = "Opening DAT file";
+                loadingForm.darkLabel1.Refresh();
+
+                foreach (var file in _datArchive.Files)
+                {
+                    string folderPath = file.Path.Replace(Path.GetFileName(file.Path), "");
+                    folderPath = folderPath.Remove(folderPath.Length - 1);
+
+                    if (!_datArchiveFolders.Contains(folderPath))
+                    {
+                        _datArchiveFolders.Add(folderPath);
+                    }
+
+                    loadingForm.progressBar1.Value = i;
+
+                    loadingForm.darkLabel2.Text = $"{i} / {_datArchive.Files.Count} files...";
+                    loadingForm.darkLabel2.Refresh();
+
+                    loadingForm.darkButton1.Refresh();
+                    loadingForm.darkButton1.Click += new EventHandler(delegate (Object o, EventArgs a)
+                    {
+                        loadingForm.Close();
+                        return;
+                    });
+
+                    loadingForm.darkLabel3.Text = $"{timer.Elapsed:mm\\:ss}";
+                    loadingForm.darkLabel3.Refresh();
+
+                    i++;
+                }
+                loadingForm.Close();
+                timer.Stop();
+
+            }
+
+            /*
             foreach (var file in _datArchive.Files)
             {
                 string folderPath = file.Path.Replace(Path.GetFileName(file.Path), "");
@@ -35,7 +86,7 @@ namespace TTGamesExplorerRebirthUI.Forms
                     _datArchiveFolders.Add(folderPath);
                 }
             }
-
+            */
             _datArchiveFolders.Sort();
 
             toolStripStatusLabel1.Text = $"{Path.GetFileName(datFilePath)} - {_datArchive.Files.Count} file(s)";

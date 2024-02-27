@@ -3,6 +3,8 @@ using DarkUI.Forms;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats.Png;
 using System.Drawing.Drawing2D;
+using System.Runtime;
+using System.Text.RegularExpressions;
 using TTGamesExplorerRebirthLib.Formats;
 using TTGamesExplorerRebirthLib.Formats.DDS;
 
@@ -16,10 +18,12 @@ namespace TTGamesExplorerRebirthUI.Forms
 
     public partial class ImageForm : DarkForm
     {
-        private DDSImage[] _ddsFiles;
+        //private DDSImage[] _ddsFiles;
+        private readonly List<string> _ddsNames = [];
         private readonly List<byte[]> _ddsFilesRaw = [];
         private readonly string _filePath;
         private readonly bool _isDDS;
+        private bool _TransparentBackground = false;
 
         private System.Drawing.Image _previewImage;
         private int _previewWidth;
@@ -48,11 +52,10 @@ namespace TTGamesExplorerRebirthUI.Forms
 
                 foreach (NXGFile nxgFile in nxgTextures.Files)
                 {
+                    _ddsNames.Add(nxgFile.Path);
                     _ddsFilesRaw.Add(nxgFile.Data);
                 }
-
                 LoadImages();
-
                 darkButton2.Visible = true;
             }
         }
@@ -66,8 +69,9 @@ namespace TTGamesExplorerRebirthUI.Forms
         {
             if (_isDDS)
             {
-                _ddsFiles = new DDSImage[_ddsFilesRaw.Count];
+                //_ddsFiles = new DDSImage[_ddsFilesRaw.Count];
 
+                /*
                 int i = 0;
                 foreach (byte[] buffer in _ddsFilesRaw)
                 {
@@ -75,11 +79,28 @@ namespace TTGamesExplorerRebirthUI.Forms
 
                     i++;
                 }
-
-                i = 1;
-                foreach (DDSImage ddsFile in _ddsFiles)
+                */
+                int i = 0;
+                foreach (var file in _ddsFilesRaw)
                 {
-                    DarkListItem item = new($"Image #{i} ({ddsFile.Type})")
+                    if (_ddsNames.Count != 0)
+                    {
+                        string fullPath = _ddsNames[i];
+                        fullPath = fullPath.Replace('\\', '/');
+                        string name = fullPath[(fullPath.LastIndexOf('/') + 1)..];
+                        if (name != null)
+                        {
+                            DarkListItem item2 = new($"{i + 1}: {name}")
+                            {
+                                Icon = Properties.Resources.picture
+                            };
+                            darkListView1.Items.Add(item2);
+                            i++;
+                            continue;
+                        }
+                    }
+
+                    DarkListItem item = new($"Image #{i + 1}")
                     {
                         Icon = Properties.Resources.picture
                     };
@@ -89,12 +110,12 @@ namespace TTGamesExplorerRebirthUI.Forms
                     i++;
                 }
 
-                if (_ddsFiles.Length == 1)
+                if (_ddsFilesRaw.Count == 1)
                 {
                     darkListView1.Enabled = false;
                 }
 
-                toolStripStatusLabel1.Text = $"{Path.GetFileName(_filePath)} - {_ddsFiles.Length} Image(s)";
+                toolStripStatusLabel1.Text = $"{Path.GetFileName(_filePath)} - {_ddsFilesRaw.Count} Image(s)";
             }
 
             if (darkListView1.Items.Count > 0)
@@ -103,10 +124,10 @@ namespace TTGamesExplorerRebirthUI.Forms
             }
         }
 
-        private void LoadDDSImage(DDSImage dds)
+        private void LoadDDSImage(uint index)
         {
             darkListView2.Items.Clear();
-
+            DDSImage dds = new(_ddsFilesRaw[(int)index]);
             int i = 1;
             foreach (SixLabors.ImageSharp.Image image in dds.Images)
             {
@@ -131,13 +152,21 @@ namespace TTGamesExplorerRebirthUI.Forms
             }
         }
 
+        [GeneratedRegex(@"\d+")]
+        private static partial Regex regex_FirstDigit();
+
+        private static uint GetIndexFromName(string input)
+        {
+            string str = regex_FirstDigit().Match(input).Value ?? throw new("Could not find number");
+            return uint.Parse(str) - 1;
+        }
+
         private void DarkListView1_SelectedIndicesChanged(object sender, EventArgs e)
         {
             if (_isDDS)
             {
-                uint index = uint.Parse(darkListView1.Items[darkListView1.SelectedIndices[0]].Text.Split("(")[0].Replace("Image #", "")) - 1;
-
-                LoadDDSImage(_ddsFiles[index]);
+                uint index = GetIndexFromName(darkListView1.Items[darkListView1.SelectedIndices[0]].Text);
+                LoadDDSImage(index);
             }
         }
 
@@ -147,21 +176,23 @@ namespace TTGamesExplorerRebirthUI.Forms
             {
                 if (_isDDS)
                 {
-                    uint indexImage = uint.Parse(darkListView1.Items[darkListView1.SelectedIndices[0]].Text.Split("(")[0].Replace("Image #", "")) - 1;
-                    uint indexMipMap = uint.Parse(darkListView2.Items[darkListView2.SelectedIndices[0]].Text.Split("(")[0].Replace("MipMap #", "")) - 1;
-
+                    uint indexMipMap = GetIndexFromName(darkListView2.Items[darkListView2.SelectedIndices[0]].Text);
+                    uint indexImage = GetIndexFromName(darkListView1.Items[darkListView1.SelectedIndices[0]].Text);
                     using MemoryStream stream = new();
+                    
+                    var _ddsFile = new DDSImage(_ddsFilesRaw[(int)indexImage]);
 
-                    _ddsFiles[indexImage].Images[indexMipMap].Save(stream, PngFormat.Instance);
+
+
+                    _ddsFile.Images[indexMipMap].Save(stream, PngFormat.Instance);
 
                     _zoomVal = trackBar1.Value = 100;
 
                     darkLabel1.Text = $"{_zoomVal}%";
 
                     _previewImage = new Bitmap(stream);
-                    _previewWidth = _ddsFiles[indexImage].Images[indexMipMap].Width;
-                    _previewHeight = _ddsFiles[indexImage].Images[indexMipMap].Height;
-
+                    _previewWidth = _ddsFile.Images[indexMipMap].Width;
+                    _previewHeight = _ddsFile.Images[indexMipMap].Height;
                     pictureBox1.Image = new Bitmap(stream);
                 }
             }
@@ -177,7 +208,7 @@ namespace TTGamesExplorerRebirthUI.Forms
             _zoomVal = trackBar1.Value;
 
             darkLabel1.Text = $"{_zoomVal}%";
-
+            pictureBox1.Image.Dispose(); // avoid memory leak
             pictureBox1.Image = PictureBoxZoom(_previewImage, new System.Drawing.Size(_previewHeight * _zoomVal / 100, _previewWidth * _zoomVal / 100));
         }
 
@@ -186,7 +217,6 @@ namespace TTGamesExplorerRebirthUI.Forms
             Bitmap bitmap = new(img, size.Width <= 0 ? 1 : size.Width, size.Height <= 0 ? 1 : size.Height);
 
             Graphics.FromImage(bitmap).InterpolationMode = InterpolationMode.HighQualityBilinear;
-
             return bitmap;
         }
 
@@ -221,6 +251,17 @@ namespace TTGamesExplorerRebirthUI.Forms
 
                 MessageBox.Show("File saved!", "Save as DDS...", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+        }
+
+        private void DarkButton3_Click(object sender, EventArgs e)
+        {
+            _TransparentBackground = !_TransparentBackground;
+            if (_TransparentBackground)
+            {
+                pictureBox1.BackColor = System.Drawing.Color.Transparent;
+                return;
+            }
+            pictureBox1.BackColor = System.Drawing.Color.Black;
         }
     }
 }
