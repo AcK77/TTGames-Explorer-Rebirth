@@ -18,7 +18,6 @@ namespace TTGamesExplorerRebirthUI.Forms
 
     public partial class ImageForm : DarkForm
     {
-        //private DDSImage[] _ddsFiles;
         private readonly List<string> _ddsNames = [];
         private readonly List<byte[]> _ddsFilesRaw = [];
         private readonly string _filePath;
@@ -69,17 +68,6 @@ namespace TTGamesExplorerRebirthUI.Forms
         {
             if (_isDDS)
             {
-                //_ddsFiles = new DDSImage[_ddsFilesRaw.Count];
-
-                /*
-                int i = 0;
-                foreach (byte[] buffer in _ddsFilesRaw)
-                {
-                    _ddsFiles[i] = new DDSImage(buffer);
-
-                    i++;
-                }
-                */
                 int i = 0;
                 foreach (var file in _ddsFilesRaw)
                 {
@@ -158,6 +146,7 @@ namespace TTGamesExplorerRebirthUI.Forms
         private static uint GetIndexFromName(string input)
         {
             string str = regex_FirstDigit().Match(input).Value ?? throw new("Could not find number");
+            
             return uint.Parse(str) - 1;
         }
 
@@ -208,7 +197,6 @@ namespace TTGamesExplorerRebirthUI.Forms
             _zoomVal = trackBar1.Value;
 
             darkLabel1.Text = $"{_zoomVal}%";
-            pictureBox1.Image.Dispose(); // avoid memory leak
             pictureBox1.Image = PictureBoxZoom(_previewImage, new System.Drawing.Size(_previewHeight * _zoomVal / 100, _previewWidth * _zoomVal / 100));
         }
 
@@ -217,6 +205,7 @@ namespace TTGamesExplorerRebirthUI.Forms
             Bitmap bitmap = new(img, size.Width <= 0 ? 1 : size.Width, size.Height <= 0 ? 1 : size.Height);
 
             Graphics.FromImage(bitmap).InterpolationMode = InterpolationMode.HighQualityBilinear;
+            
             return bitmap;
         }
 
@@ -259,8 +248,10 @@ namespace TTGamesExplorerRebirthUI.Forms
             if (_TransparentBackground)
             {
                 pictureBox1.BackColor = System.Drawing.Color.Transparent;
+                
                 return;
             }
+            
             pictureBox1.BackColor = System.Drawing.Color.Black;
         }
     }
