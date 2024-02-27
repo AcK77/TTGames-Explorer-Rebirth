@@ -1,15 +1,7 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.Design;
-using System.Drawing;
+﻿using System.ComponentModel;
 using System.Drawing.Design;
 using System.Globalization;
-using System.Reflection;
 using System.Text;
-using System.Threading;
-using System.Windows.Forms;
 using System.Windows.Forms.Design;
 using KEYS = System.Windows.Forms.Keys;
 
@@ -18,7 +10,7 @@ namespace FastColoredTextBoxNS
     /// <summary>
     /// Dictionary of shortcuts for FCTB
     /// </summary>
-    public class HotkeysMapping : SortedDictionary<Keys, FCTBAction>
+    public class HotkeysMapping : SortedDictionary<KEYS, FCTBAction>
     {
         public virtual void InitDefault()
         {
@@ -96,40 +88,51 @@ namespace FastColoredTextBoxNS
 
         public override string ToString()
         {
-            var cult = Thread.CurrentThread.CurrentUICulture;
+            CultureInfo oldCulture = Thread.CurrentThread.CurrentUICulture;
+
             Thread.CurrentThread.CurrentUICulture = CultureInfo.InvariantCulture;
-            StringBuilder sb = new StringBuilder();
-            var kc = new KeysConverter();
+
+            StringBuilder sb = new();
+            KeysConverter kc = new();
+
             foreach (var pair in this)
             {
                 sb.AppendFormat("{0}={1}, ", kc.ConvertToString(pair.Key), pair.Value);
             }
 
             if (sb.Length > 1)
+            {
                 sb.Remove(sb.Length - 2, 2);
-            Thread.CurrentThread.CurrentUICulture = cult;
+            }
+
+            Thread.CurrentThread.CurrentUICulture = oldCulture;
 
             return sb.ToString();
         }
 
         public static HotkeysMapping Parse(string s)
         {
-            var result = new HotkeysMapping();
-            result.Clear();
-            var cult = Thread.CurrentThread.CurrentUICulture;
+            HotkeysMapping result = [];
+
+            CultureInfo oldCulture = Thread.CurrentThread.CurrentUICulture;
+
             Thread.CurrentThread.CurrentUICulture = CultureInfo.InvariantCulture;
 
-            var kc = new KeysConverter();
-            
-            foreach (var p in s.Split(','))
+            KeysConverter kc = new();
+
+            if (s != null)
             {
-                var pp = p.Split('=');
-                var k = (Keys)kc.ConvertFromString(pp[0].Trim());
-                var a = (FCTBAction)Enum.Parse(typeof(FCTBAction), pp[1].Trim());
-                result[k] = a;
+                foreach (string p in s.Split(','))
+                {
+                    string[]   pp = p.Split('=');
+                    KEYS       k  = (KEYS)kc.ConvertFromString(pp[0].Trim());
+                    FCTBAction a  = (FCTBAction)Enum.Parse(typeof(FCTBAction), pp[1].Trim());
+
+                    result[k] = a;
+                }
             }
 
-            Thread.CurrentThread.CurrentUICulture = cult;
+            Thread.CurrentThread.CurrentUICulture = oldCulture;
 
             return result;
         }
@@ -226,12 +229,12 @@ namespace FastColoredTextBoxNS
         CustomAction17,
         CustomAction18,
         CustomAction19,
-        CustomAction20
+        CustomAction20,
     }
 
     internal class HotkeysEditor : UITypeEditor
     {
-        public override UITypeEditorEditStyle GetEditStyle(System.ComponentModel.ITypeDescriptorContext context)
+        public override UITypeEditorEditStyle GetEditStyle(ITypeDescriptorContext context)
         {
             return UITypeEditorEditStyle.Modal;
         }
@@ -240,11 +243,14 @@ namespace FastColoredTextBoxNS
         {
             if ((provider != null) && (((IWindowsFormsEditorService) provider.GetService(typeof(IWindowsFormsEditorService))) != null))
             {
-                var form = new HotkeysEditorForm(HotkeysMapping.Parse(value as string));
+                HotkeysEditorForm form = new(HotkeysMapping.Parse(value as string));
 
                 if (form.ShowDialog() == DialogResult.OK)
+                {
                     value = form.GetHotkeys().ToString();
+                }
             }
+
             return value;
         }
     }

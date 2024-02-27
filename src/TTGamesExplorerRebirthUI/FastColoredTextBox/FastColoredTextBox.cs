@@ -199,12 +199,10 @@ namespace FastColoredTextBoxNS
             WordWrapAutoIndent = true;
             FoldedBlocks = new Dictionary<int, int>();
             AutoCompleteBrackets = false;
-            AutoIndentCharsPatterns = @"^\s*[\w\.]+(\s\w+)?\s*(?<range>=)\s*(?<range>[^;=]+);
-^\s*(case|default)\s*[^:]*(?<range>:)\s*(?<range>[^;]+);";
+            AutoIndentCharsPatterns = @"^\s*[\w\.]+(\s\w+)?\s*(?<range>=)\s*(?<range>[^;=]+);^\s*(case|default)\s*[^:]*(?<range>:)\s*(?<range>[^;]+);";
             AutoIndentChars = true;
             CaretBlinking = true;
             ServiceColors = new ServiceColors();
-            //
             base.AutoScroll = true;
             timer.Tick += timer_Tick;
             timer2.Tick += timer2_Tick;
