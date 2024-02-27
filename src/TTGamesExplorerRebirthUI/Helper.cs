@@ -75,12 +75,11 @@ namespace TTGamesExplorerRebirthUI
 
         public static void OpenFileInternal(string gameFolderPath, string path, byte[] fileBuffer = null, object archiveFile = null)
         {
-            DarkForm form = null;
             switch (Path.GetExtension(path).ToLowerInvariant())
             {
                 case ".dat":
                     {
-                        form = new DATForm(gameFolderPath, path);
+                        new DATForm(gameFolderPath, path).ShowDialog();
                         break;
                     }
 
@@ -89,7 +88,7 @@ namespace TTGamesExplorerRebirthUI
                     {
                         fileBuffer ??= File.ReadAllBytes(path);
 
-                        form = new PAKForm(path, fileBuffer);
+                        new PAKForm(path, fileBuffer).ShowDialog();
                         break;
                     }
 
@@ -108,7 +107,7 @@ namespace TTGamesExplorerRebirthUI
                     {
                         fileBuffer ??= File.ReadAllBytes(path);
                         
-                        form = new TextForm(Path.GetFileName(path), fileBuffer, archiveFile);
+                        new TextForm(Path.GetFileName(path), fileBuffer, archiveFile).ShowDialog();
                         break;
                     }
                 case ".cmo":
@@ -117,7 +116,7 @@ namespace TTGamesExplorerRebirthUI
                     {
                         fileBuffer ??= File.ReadAllBytes(path);
 
-                        form = new ImageForm(path, fileBuffer, ImageFormType.DDS);
+                        new ImageForm(path, fileBuffer, ImageFormType.DDS).ShowDialog();
                         break;
                     }
 
@@ -125,7 +124,7 @@ namespace TTGamesExplorerRebirthUI
                     {
                         fileBuffer ??= File.ReadAllBytes(path);
                         
-                        form = new ImageForm(path, fileBuffer, ImageFormType.NXGTextures);
+                        new ImageForm(path, fileBuffer, ImageFormType.NXGTextures).ShowDialog();
                         break;
                     }
 
@@ -133,7 +132,7 @@ namespace TTGamesExplorerRebirthUI
                     {
                         fileBuffer ??= File.ReadAllBytes(path);
 
-                        form = new FontForm(path, fileBuffer);
+                        new FontForm(path, fileBuffer).ShowDialog();
                         break;
                     }
 
@@ -141,7 +140,7 @@ namespace TTGamesExplorerRebirthUI
                     {
                         fileBuffer ??= File.ReadAllBytes(path);
 
-                        form = new TSHForm(path, fileBuffer);
+                        new TSHForm(path, fileBuffer).ShowDialog();
                         break;
                     }
 
@@ -153,7 +152,7 @@ namespace TTGamesExplorerRebirthUI
                     {
                         fileBuffer ??= File.ReadAllBytes(path);
 
-                        form = new SoundForm(path, fileBuffer);
+                        new SoundForm(path, fileBuffer).ShowDialog();
                         break;
                     }
 
@@ -161,14 +160,10 @@ namespace TTGamesExplorerRebirthUI
                     {
                         fileBuffer ??= File.ReadAllBytes(path);
 
-                        form = new PCShadersForm(path, fileBuffer);
+                        new PCShadersForm(path, fileBuffer).ShowDialog();
                         break;
 
                     }
-            }
-            if (form != null)
-            {
-                form.ShowDialog();
             }
         }
     }
