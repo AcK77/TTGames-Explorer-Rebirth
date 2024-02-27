@@ -54,7 +54,9 @@ namespace TTGamesExplorerRebirthUI.Forms
                     _ddsNames.Add(nxgFile.Path);
                     _ddsFilesRaw.Add(nxgFile.Data);
                 }
+                
                 LoadImages();
+                
                 darkButton2.Visible = true;
             }
         }
