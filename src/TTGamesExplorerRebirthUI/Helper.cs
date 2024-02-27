@@ -106,27 +106,11 @@ namespace TTGamesExplorerRebirthUI
                 case ".txt":
                 case ".xml":
                     {
-                        /*
                         fileBuffer ??= File.ReadAllBytes(path);
                         
-                        new TextForm(Path.GetFileName(path), fileBuffer, archiveFile).ShowDialog();
-                        break;
-                        */
-                        if (fileBuffer == null)
-                        {
-                            break;
-                        }
-                        string temp = Path.GetTempPath() + "TTGEtemp.txt";
-
-                        FileStream file = File.Create(temp);
-                        file.Write(fileBuffer, 0, fileBuffer.Length);
-                        file.Close();
-
-                        Process.Start("notepad.exe", temp);
-                        Task.Delay(10000).ContinueWith(t => File.Delete(temp));
+                        form = new TextForm(Path.GetFileName(path), fileBuffer, archiveFile);
                         break;
                     }
-
                 case ".cmo":
                 case ".dds":
                 case ".tex":
@@ -185,7 +169,6 @@ namespace TTGamesExplorerRebirthUI
             if (form != null)
             {
                 form.ShowDialog();
-                GC.Collect(GC.MaxGeneration, GCCollectionMode.Aggressive);
             }
         }
     }
