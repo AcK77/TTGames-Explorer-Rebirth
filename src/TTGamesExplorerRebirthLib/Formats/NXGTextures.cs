@@ -66,12 +66,11 @@ namespace TTGamesExplorerRebirthLib.Formats
                 throw new InvalidDataException($"{stream.Position:x8}");
             }
 
-            uint   nuTextureSetHeaderVersion  = reader.ReadUInt32BigEndian();
+            uint nuTextureSetHeaderVersion = reader.ReadUInt32BigEndian();
 
             if (nuTextureSetHeaderVersion > 0)
             {
-                ushort nuTextureSetHeaderUnknown2 = reader.ReadUInt16BigEndian();
-                DateStamp = reader.ReadSized16NullTerminatedString();
+                DateStamp = reader.ReadSized32NullTerminatedString();
             }
 
             if (reader.ReadUInt32AsString() != NuFile.MagicVirtualTableObjectReference)

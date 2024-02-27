@@ -3,7 +3,6 @@ using DarkUI.Forms;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats.Png;
 using System.Drawing.Drawing2D;
-using System.Runtime;
 using System.Text.RegularExpressions;
 using TTGamesExplorerRebirthLib.Formats;
 using TTGamesExplorerRebirthLib.Formats.DDS;
@@ -23,11 +22,13 @@ namespace TTGamesExplorerRebirthUI.Forms
         private readonly string _filePath;
         private readonly bool _isDDS;
         private bool _transparentBackground = false;
-
         private System.Drawing.Image _previewImage;
         private int _previewWidth;
         private int _previewHeight;
         private int _zoomVal = 100;
+
+        [GeneratedRegex(@"\d+")]
+        private static partial Regex Regex_FirstDigit();
 
         public ImageForm(string filePath, byte[] fileBuffer, ImageFormType type)
         {
@@ -54,9 +55,9 @@ namespace TTGamesExplorerRebirthUI.Forms
                     _ddsNames.Add(nxgFile.Path);
                     _ddsFilesRaw.Add(nxgFile.Data);
                 }
-                
+
                 LoadImages();
-                
+
                 darkButton2.Visible = true;
             }
         }
@@ -75,29 +76,31 @@ namespace TTGamesExplorerRebirthUI.Forms
                 {
                     if (_ddsNames.Count != 0)
                     {
-                        string fullPath = _ddsNames[i];
-                        fullPath = fullPath.Replace('\\', '/');
+                        string fullPath = _ddsNames[i].Replace('\\', '/');
                         string name = fullPath[(fullPath.LastIndexOf('/') + 1)..];
                         if (name != null)
                         {
                             DarkListItem item2 = new($"{i + 1}: {name}")
                             {
-                                Icon = Properties.Resources.picture
+                                Icon = Properties.Resources.picture,
                             };
+
                             darkListView1.Items.Add(item2);
+
                             i++;
-                            continue;
                         }
                     }
-
-                    DarkListItem item = new($"Image #{i + 1}")
+                    else
                     {
-                        Icon = Properties.Resources.picture
-                    };
+                        DarkListItem item = new($"Image #{i + 1}")
+                        {
+                            Icon = Properties.Resources.picture
+                        };
 
-                    darkListView1.Items.Add(item);
+                        darkListView1.Items.Add(item);
 
-                    i++;
+                        i++;
+                    }
                 }
 
                 if (_ddsFilesRaw.Count == 1)
@@ -117,7 +120,9 @@ namespace TTGamesExplorerRebirthUI.Forms
         private void LoadDDSImage(uint index)
         {
             darkListView2.Items.Clear();
+
             DDSImage dds = new(_ddsFilesRaw[(int)index]);
+
             int i = 1;
             foreach (SixLabors.ImageSharp.Image image in dds.Images)
             {
@@ -142,13 +147,10 @@ namespace TTGamesExplorerRebirthUI.Forms
             }
         }
 
-        [GeneratedRegex(@"\d+")]
-        private static partial Regex regex_FirstDigit();
-
         private static uint GetIndexFromName(string input)
         {
-            string str = regex_FirstDigit().Match(input).Value ?? throw new("Could not find number");
-            
+            string str = Regex_FirstDigit().Match(input).Value ?? throw new("Could not find number");
+
             return uint.Parse(str) - 1;
         }
 
@@ -157,6 +159,7 @@ namespace TTGamesExplorerRebirthUI.Forms
             if (_isDDS)
             {
                 uint index = GetIndexFromName(darkListView1.Items[darkListView1.SelectedIndices[0]].Text);
+
                 LoadDDSImage(index);
             }
         }
@@ -169,11 +172,10 @@ namespace TTGamesExplorerRebirthUI.Forms
                 {
                     uint indexMipMap = GetIndexFromName(darkListView2.Items[darkListView2.SelectedIndices[0]].Text);
                     uint indexImage = GetIndexFromName(darkListView1.Items[darkListView1.SelectedIndices[0]].Text);
+
                     using MemoryStream stream = new();
-                    
-                    var _ddsFile = new DDSImage(_ddsFilesRaw[(int)indexImage]);
 
-
+                    DDSImage _ddsFile = new(_ddsFilesRaw[(int)indexImage]);
 
                     _ddsFile.Images[indexMipMap].Save(stream, PngFormat.Instance);
 
@@ -184,6 +186,7 @@ namespace TTGamesExplorerRebirthUI.Forms
                     _previewImage = new Bitmap(stream);
                     _previewWidth = _ddsFile.Images[indexMipMap].Width;
                     _previewHeight = _ddsFile.Images[indexMipMap].Height;
+
                     pictureBox1.Image = new Bitmap(stream);
                 }
             }
@@ -207,7 +210,7 @@ namespace TTGamesExplorerRebirthUI.Forms
             Bitmap bitmap = new(img, size.Width <= 0 ? 1 : size.Width, size.Height <= 0 ? 1 : size.Height);
 
             Graphics.FromImage(bitmap).InterpolationMode = InterpolationMode.HighQualityBilinear;
-            
+
             return bitmap;
         }
 
@@ -253,7 +256,7 @@ namespace TTGamesExplorerRebirthUI.Forms
                 
                 return;
             }
-            
+
             pictureBox1.BackColor = System.Drawing.Color.Black;
         }
     }

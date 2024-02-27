@@ -1,12 +1,4 @@
 ﻿using TTGamesExplorerRebirthUI.Forms;
-using DarkUI.Forms;
-using FastColoredTextBoxNS;
-using System.Diagnostics;
-using System.Net.Http.Headers;
-using System.Runtime.CompilerServices;
-using System.Windows.Forms.VisualStyles;
-using TTGamesExplorerRebirthLib.Formats.DAT;
-using TTGamesExplorerRebirthUI.Forms;
 using static TTGamesExplorerRebirthUI.Native;
 
 namespace TTGamesExplorerRebirthUI
@@ -107,7 +99,7 @@ namespace TTGamesExplorerRebirthUI
                 case ".xml":
                     {
                         fileBuffer ??= File.ReadAllBytes(path);
-                        
+
                         new TextForm(Path.GetFileName(path), fileBuffer, archiveFile).ShowDialog();
                         break;
                     }
@@ -125,7 +117,7 @@ namespace TTGamesExplorerRebirthUI
                 case ".nxg_textures":
                     {
                         fileBuffer ??= File.ReadAllBytes(path);
-                        
+
                         new ImageForm(path, fileBuffer, ImageFormType.NXGTextures).ShowDialog();
                         break;
                     }
@@ -164,7 +156,6 @@ namespace TTGamesExplorerRebirthUI
 
                         new PCShadersForm(path, fileBuffer).ShowDialog();
                         break;
-                        
                     }
             }
         }

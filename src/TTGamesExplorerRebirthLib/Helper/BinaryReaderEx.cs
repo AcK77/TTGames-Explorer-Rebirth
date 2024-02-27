@@ -91,5 +91,28 @@ namespace TTGamesExplorerRebirthLib.Helper
 
             return text;
         }
+
+        public static string ReadSized32NullTerminatedString(this BinaryReader reader)
+        {
+            uint size = reader.ReadUInt32BigEndian();
+
+            List<byte> strBytes = [];
+
+            int b;
+
+            while ((b = reader.BaseStream.ReadByte()) != 0x00)
+            {
+                strBytes.Add((byte)b);
+            }
+
+            string text = Encoding.ASCII.GetString(strBytes.ToArray());
+
+            if (text.Length != size - 1)
+            {
+                throw new InvalidDataException();
+            }
+
+            return text;
+        }
     }
 }

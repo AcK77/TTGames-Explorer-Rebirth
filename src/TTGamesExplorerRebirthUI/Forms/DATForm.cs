@@ -23,26 +23,46 @@ namespace TTGamesExplorerRebirthUI.Forms
 
             _gameFolderPath = gameFolderPath;
             _datFilePath = datFilePath;
-            _datArchive = new(datFilePath);
-            
+
+            // Show loadingForm.
+
             LoadingForm loadingForm = new()
             {
-                 Text = "Opening DAT file",
-                 StartPosition = FormStartPosition.CenterScreen
+                Text = "Opening DAT file...",
             };
-            
-            int i = 0;
 
-            Stopwatch timer = new();
-            timer.Start();
+            new Thread(() =>
+            {
+                Stopwatch stopwatch = new();
+                System.Windows.Forms.Timer timer = new();
 
-            loadingForm.progressBar1.Maximum = _datArchive.Files.Count;
-            loadingForm.Show();
+                timer.Start();
+                stopwatch.Start();
+                timer.Tick += (s, e) =>
+                {
+                    loadingForm?.Invoke((MethodInvoker)(() =>
+                    {
+                        loadingForm.darkLabel3.Text = $"{stopwatch.Elapsed:mm\\:ss}";
+                        loadingForm.darkLabel3.Refresh();
+                    }));
+                };
 
-            loadingForm.darkButton1.Hide();
+                loadingForm.Height = 135;
+                loadingForm.progressBar1.Maximum = 100;
+                loadingForm.darkLabel1.Text = "Opening DAT file, please wait...";
+                loadingForm.darkLabel2.Text = "";
+                loadingForm.progressBar1.Style = ProgressBarStyle.Marquee;
+                loadingForm.progressBar1.MarqueeAnimationSpeed = 30;
+                loadingForm.darkButton1.Visible = false;
 
-            loadingForm.darkLabel1.Text = "Opening DAT file";
-            loadingForm.darkLabel1.Refresh();
+                loadingForm.ShowDialog();
+                timer.Stop();
+                stopwatch.Stop();
+            }).Start();
+
+            // Load DAT file.
+
+            _datArchive = new(datFilePath);
 
             foreach (var file in _datArchive.Files)
             {
@@ -53,30 +73,18 @@ namespace TTGamesExplorerRebirthUI.Forms
                 {
                     _datArchiveFolders.Add(folderPath);
                 }
-
-                loadingForm.progressBar1.Value = i;
-
-                loadingForm.darkLabel2.Text = $"{i} / {_datArchive.Files.Count} files...";
-                loadingForm.darkLabel2.Refresh();
-
-                loadingForm.darkButton1.Refresh();
-                loadingForm.darkButton1.Click += new EventHandler(delegate (Object o, EventArgs a)
-                {
-                    loadingForm.Close();
-                    return;
-                });
-
-                loadingForm.darkLabel3.Text = $"{timer.Elapsed:mm\\:ss}";
-                loadingForm.darkLabel3.Refresh();
-
-                i++;
             }
-            loadingForm.Close();
-            timer.Stop();
-        
+
             _datArchiveFolders.Sort();
 
             toolStripStatusLabel1.Text = $"{Path.GetFileName(datFilePath)} - {_datArchive.Files.Count} file(s)";
+
+            // Close loadingForm.
+
+            loadingForm?.Invoke((MethodInvoker)(() =>
+            {
+                loadingForm?.Close();
+            }));
         }
 
         private void LoadFolderInTreeView()

@@ -28,17 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ImageForm));
             splitContainer1 = new SplitContainer();
             darkSectionPanel1 = new DarkUI.Controls.DarkSectionPanel();
             flowLayoutPanel1 = new FlowLayoutPanel();
             pictureBox1 = new PictureBox();
             darkSectionPanel2 = new DarkUI.Controls.DarkSectionPanel();
-            darkButton3 = new DarkUI.Controls.DarkButton();
             splitContainer2 = new SplitContainer();
             darkSectionPanel4 = new DarkUI.Controls.DarkSectionPanel();
             darkListView2 = new DarkUI.Controls.DarkListView();
             darkSectionPanel3 = new DarkUI.Controls.DarkSectionPanel();
             darkListView1 = new DarkUI.Controls.DarkListView();
+            darkButton3 = new DarkUI.Controls.DarkButton();
             darkButton2 = new DarkUI.Controls.DarkButton();
             darkButton1 = new DarkUI.Controls.DarkButton();
             darkLabel1 = new DarkUI.Controls.DarkLabel();
@@ -126,18 +127,6 @@
             darkSectionPanel2.Size = new Size(842, 205);
             darkSectionPanel2.TabIndex = 7;
             // 
-            // darkButton3
-            // 
-            darkButton3.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            darkButton3.Location = new Point(234, 8);
-            darkButton3.Name = "darkButton3";
-            darkButton3.Padding = new Padding(5);
-            darkButton3.Size = new Size(134, 23);
-            darkButton3.TabIndex = 10;
-            darkButton3.Text = "Toggle Background";
-            darkButton3.Visible = false;
-            darkButton3.Click += DarkButton3_Click;
-            // 
             // splitContainer2
             // 
             splitContainer2.Dock = DockStyle.Fill;
@@ -204,32 +193,47 @@
             darkListView1.Text = "darkListView1";
             darkListView1.SelectedIndicesChanged += DarkListView1_SelectedIndicesChanged;
             // 
+            // darkButton3
+            // 
+            darkButton3.Anchor = AnchorStyles.None;
+            darkButton3.Location = new Point(3, 68);
+            darkButton3.Name = "darkButton3";
+            darkButton3.Padding = new Padding(5);
+            darkButton3.Size = new Size(174, 32);
+            darkButton3.TabIndex = 10;
+            darkButton3.Text = "Toggle Background";
+            darkButton3.Click += DarkButton3_Click;
+            // 
             // darkButton2
             // 
-            darkButton2.Location = new Point(3, 96);
+            darkButton2.Image = Properties.Resources.disk;
+            darkButton2.Location = new Point(3, 106);
             darkButton2.Name = "darkButton2";
             darkButton2.Padding = new Padding(5);
-            darkButton2.Size = new Size(151, 23);
+            darkButton2.Size = new Size(174, 32);
             darkButton2.TabIndex = 9;
             darkButton2.Text = "Extract to DDS...";
+            darkButton2.TextImageRelation = TextImageRelation.ImageBeforeText;
             darkButton2.Visible = false;
             darkButton2.Click += DarkButton2_Click;
             // 
             // darkButton1
             // 
-            darkButton1.Location = new Point(3, 141);
+            darkButton1.Image = Properties.Resources.disk;
+            darkButton1.Location = new Point(3, 144);
             darkButton1.Name = "darkButton1";
             darkButton1.Padding = new Padding(5);
-            darkButton1.Size = new Size(151, 23);
+            darkButton1.Size = new Size(174, 32);
             darkButton1.TabIndex = 8;
             darkButton1.Text = "Save as PNG...";
+            darkButton1.TextImageRelation = TextImageRelation.ImageBeforeText;
             darkButton1.Click += DarkButton1_Click;
             // 
             // darkLabel1
             // 
             darkLabel1.AutoSize = true;
             darkLabel1.ForeColor = Color.FromArgb(220, 220, 220);
-            darkLabel1.Location = new Point(61, 7);
+            darkLabel1.Location = new Point(44, 7);
             darkLabel1.Name = "darkLabel1";
             darkLabel1.Size = new Size(35, 15);
             darkLabel1.TabIndex = 7;
@@ -250,7 +254,7 @@
             trackBar1.Location = new Point(3, 25);
             trackBar1.Maximum = 200;
             trackBar1.Name = "trackBar1";
-            trackBar1.Size = new Size(151, 45);
+            trackBar1.Size = new Size(174, 45);
             trackBar1.TabIndex = 1;
             trackBar1.TickFrequency = 10;
             trackBar1.TickStyle = TickStyle.Both;
@@ -297,6 +301,7 @@
             Controls.Add(splitContainer1);
             Controls.Add(darkStatusStrip1);
             DoubleBuffered = true;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "ImageForm";
             ShowInTaskbar = false;
             StartPosition = FormStartPosition.CenterParent;
