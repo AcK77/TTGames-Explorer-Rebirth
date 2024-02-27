@@ -22,7 +22,7 @@ namespace TTGamesExplorerRebirthUI.Forms
         private readonly List<byte[]> _ddsFilesRaw = [];
         private readonly string _filePath;
         private readonly bool _isDDS;
-        private bool _TransparentBackground = false;
+        private bool _transparentBackground = false;
 
         private System.Drawing.Image _previewImage;
         private int _previewWidth;
@@ -244,8 +244,8 @@ namespace TTGamesExplorerRebirthUI.Forms
 
         private void DarkButton3_Click(object sender, EventArgs e)
         {
-            _TransparentBackground = !_TransparentBackground;
-            if (_TransparentBackground)
+            _transparentBackground = !_transparentBackground;
+            if (_transparentBackground)
             {
                 pictureBox1.BackColor = System.Drawing.Color.Transparent;
                 
