@@ -76,8 +76,7 @@ namespace TTGamesExplorerRebirthUI.Forms
                 {
                     if (_ddsNames.Count != 0)
                     {
-                        string fullPath = _ddsNames[i].Replace('\\', '/');
-                        string name = fullPath[(fullPath.LastIndexOf('/') + 1)..];
+                        string name = Path.GetFileName(_ddsNames[i]);
                         if (name != null)
                         {
                             DarkListItem item2 = new($"{i + 1}: {name}")
@@ -219,7 +218,10 @@ namespace TTGamesExplorerRebirthUI.Forms
             saveFileDialog1.Filter = "Portable Network Graphic files (*.png)|*.png";
             saveFileDialog1.DefaultExt = "png";
             saveFileDialog1.Title = "Save as PNG...";
-            saveFileDialog1.FileName = $"{Path.GetFileNameWithoutExtension(_filePath)}.png";
+
+            uint indexImage = GetIndexFromName(darkListView1.Items[darkListView1.SelectedIndices[0]].Text);
+
+            saveFileDialog1.FileName = _ddsNames.Count != 0 ? $"{Path.GetFileName(_ddsNames[(int)indexImage])}.png" : $"{Path.GetFileNameWithoutExtension(_filePath)}.png";
 
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
@@ -235,9 +237,9 @@ namespace TTGamesExplorerRebirthUI.Forms
             saveFileDialog1.DefaultExt = "dds";
             saveFileDialog1.Title = "Save as DDS...";
 
-            uint indexImage = uint.Parse(darkListView1.Items[darkListView1.SelectedIndices[0]].Text.Split("(")[0].Replace("Image #", "")) - 1;
+            uint indexImage = GetIndexFromName(darkListView1.Items[darkListView1.SelectedIndices[0]].Text);
 
-            saveFileDialog1.FileName = $"{Path.GetFileNameWithoutExtension(_filePath)}_Image{indexImage}.dds";
+            saveFileDialog1.FileName = $"{Path.GetFileName(_ddsNames[(int)indexImage])}.dds";
 
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
@@ -250,6 +252,7 @@ namespace TTGamesExplorerRebirthUI.Forms
         private void DarkButton3_Click(object sender, EventArgs e)
         {
             _transparentBackground = !_transparentBackground;
+
             if (_transparentBackground)
             {
                 pictureBox1.BackColor = System.Drawing.Color.Transparent;
