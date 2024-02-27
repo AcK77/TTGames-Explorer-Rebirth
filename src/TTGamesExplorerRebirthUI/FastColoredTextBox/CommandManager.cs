@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System;
-
-namespace FastColoredTextBoxNS
+﻿namespace FastColoredTextBoxNS
 {
     public class CommandManager
     {
@@ -191,9 +188,9 @@ namespace FastColoredTextBoxNS
         {
             get
             {
-                if (End.iLine < Start.iLine) return End.iChar;
-                if (End.iLine > Start.iLine) return Start.iChar;
-                return Math.Min(End.iChar, Start.iChar);
+                if (End.ILine < Start.ILine) return End.IChar;
+                if (End.ILine > Start.ILine) return Start.IChar;
+                return Math.Min(End.IChar, Start.IChar);
             }
         }
     }
@@ -223,20 +220,20 @@ namespace FastColoredTextBoxNS
 
         protected virtual void OnTextChanged(bool invert)
         {
-            bool b = sel.Start.iLine < lastSel.Start.iLine;
+            bool b = sel.Start.ILine < lastSel.Start.ILine;
             if (invert)
             {
                 if (b)
-                    ts.OnTextChanged(sel.Start.iLine, sel.Start.iLine);
+                    ts.OnTextChanged(sel.Start.ILine, sel.Start.ILine);
                 else
-                    ts.OnTextChanged(sel.Start.iLine, lastSel.Start.iLine);
+                    ts.OnTextChanged(sel.Start.ILine, lastSel.Start.ILine);
             }
             else
             {
                 if (b)
-                    ts.OnTextChanged(sel.Start.iLine, lastSel.Start.iLine);
+                    ts.OnTextChanged(sel.Start.ILine, lastSel.Start.ILine);
                 else
-                    ts.OnTextChanged(lastSel.Start.iLine, lastSel.Start.iLine);
+                    ts.OnTextChanged(lastSel.Start.ILine, lastSel.Start.ILine);
             }
         }
 

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Text;
+﻿using System.Text;
 
 namespace FastColoredTextBoxNS
 {
@@ -44,7 +41,7 @@ namespace FastColoredTextBoxNS
             var tempSB = new StringBuilder();
             var currentStyleId = StyleIndex.None;
             r.Normalize();
-            int currentLine = r.Start.iLine;
+            int currentLine = r.Start.ILine;
             styles[currentStyleId] = null;
             colorTable.Clear();
             //
@@ -55,25 +52,25 @@ namespace FastColoredTextBoxNS
             //
             foreach (Place p in r)
             {
-                Char c = r.tb[p.iLine][p.iChar];
-                if (c.style != currentStyleId)
+                Char c = r.tb[p.ILine][p.IChar];
+                if (c.Style != currentStyleId)
                 {
                     Flush(sb, tempSB, currentStyleId);
-                    currentStyleId = c.style;
+                    currentStyleId = c.Style;
                     styles[currentStyleId] = null;
                 }
 
-                if (p.iLine != currentLine)
+                if (p.ILine != currentLine)
                 {
-                    for (int i = currentLine; i < p.iLine; i++)
+                    for (int i = currentLine; i < p.ILine; i++)
                     {
                         tempSB.AppendLine(@"\line");
                         if (IncludeLineNumbers)
                             tempSB.AppendFormat(@"{{\cf{1} {0}}}\tab", i + 2, lineNumberColor);
                     }
-                    currentLine = p.iLine;
+                    currentLine = p.ILine;
                 }
-                switch (c.c)
+                switch (c.C)
                 {
                     case '\\':
                         tempSB.Append(@"\\");
@@ -85,10 +82,10 @@ namespace FastColoredTextBoxNS
                         tempSB.Append(@"\}");
                         break;
                     default:
-                        var ch = c.c;
+                        var ch = c.C;
                         var code = (int)ch;
                         if(code < 128)
-                            tempSB.Append(c.c);
+                            tempSB.Append(c.C);
                         else
                             tempSB.AppendFormat(@"{{\u{0}}}", code);
                         break;

@@ -1,6 +1,4 @@
 ﻿using System.Text;
-using System.Drawing;
-using System.Collections.Generic;
 
 namespace FastColoredTextBoxNS
 {
@@ -63,7 +61,7 @@ namespace FastColoredTextBoxNS
             StringBuilder tempSB = new StringBuilder();
             StyleIndex currentStyleId = StyleIndex.None;
             r.Normalize();
-            int currentLine = r.Start.iLine;
+            int currentLine = r.Start.ILine;
             styles[currentStyleId] = null;
             //
             if (UseOriginalFont)
@@ -77,26 +75,26 @@ namespace FastColoredTextBoxNS
             bool hasNonSpace = false;
             foreach (Place p in r)
             {
-                Char c = r.tb[p.iLine][p.iChar];
-                if (c.style != currentStyleId)
+                Char c = r.tb[p.ILine][p.IChar];
+                if (c.Style != currentStyleId)
                 {
                     Flush(sb, tempSB, currentStyleId);
-                    currentStyleId = c.style;
+                    currentStyleId = c.Style;
                     styles[currentStyleId] = null;
                 }
 
-                if (p.iLine != currentLine)
+                if (p.ILine != currentLine)
                 {
-                    for (int i = currentLine; i < p.iLine; i++)
+                    for (int i = currentLine; i < p.ILine; i++)
                     {
                         tempSB.Append(UseBr ? "<br>" : "\r\n");
                         if (IncludeLineNumbers)
                             tempSB.AppendFormat("<span class=lineNumber>{0}</span>  ", i + 2);
                     }
-                    currentLine = p.iLine;
+                    currentLine = p.ILine;
                     hasNonSpace = false;
                 }
-                switch (c.c)
+                switch (c.C)
                 {
                     case ' ':
                         if ((hasNonSpace || !UseForwardNbsp) && !UseNbsp)
@@ -115,7 +113,7 @@ namespace FastColoredTextBoxNS
                         break;
                     default:
                         hasNonSpace = true;
-                        tempSB.Append(c.c);
+                        tempSB.Append(c.C);
                         break;
                 }
             }

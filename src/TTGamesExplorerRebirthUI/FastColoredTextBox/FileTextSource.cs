@@ -1,9 +1,5 @@
-﻿//#define debug
-
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.IO;
+﻿using System.Text;
+using Timer = System.Windows.Forms.Timer;
 
 namespace FastColoredTextBoxNS
 {
@@ -13,10 +9,10 @@ namespace FastColoredTextBoxNS
     /// </summary>
     public class FileTextSource : TextSource, IDisposable
     {
-        List<int> sourceFileLinePositions = new List<int>();
+        List<int> sourceFileLinePositions = [];
         FileStream fs;
         Encoding fileEncoding;
-        System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
+        Timer timer = new Timer();
 
         /// <summary>
         /// Occurs when need to display line in the textbox
@@ -54,14 +50,14 @@ namespace FastColoredTextBoxNS
         private void UnloadUnusedLines()
         {
             const int margin = 2000;
-            var iStartVisibleLine = CurrentTB.VisibleRange.Start.iLine;
-            var iFinishVisibleLine = CurrentTB.VisibleRange.End.iLine;
+            var iStartVisibleLine = CurrentTB.VisibleRange.Start.ILine;
+            var iFinishVisibleLine = CurrentTB.VisibleRange.End.ILine;
 
             int count = 0;
             for (int i = 0; i < Count; i++)
-                if (base.lines[i] != null && !base.lines[i].IsChanged && Math.Abs(i - iFinishVisibleLine) > margin)
+                if (base._lines[i] != null && !base._lines[i].IsChanged && Math.Abs(i - iFinishVisibleLine) > margin)
                 {
-                    base.lines[i] = null;
+                    base._lines[i] = null;
                     count++;
                 }
             #if debug
@@ -86,7 +82,7 @@ namespace FastColoredTextBoxNS
             int shift = DefineShift(enc);
             //first line
             sourceFileLinePositions.Add((int)fs.Position);
-            base.lines.Add(null);
+            base._lines.Add(null);
             //other lines
             sourceFileLinePositions.Capacity = (int)(length/7 + 1000);
 
@@ -127,13 +123,13 @@ namespace FastColoredTextBoxNS
                 if (b == 10)// \n
                 {
                     sourceFileLinePositions.Add((int)fs.Position);
-                    base.lines.Add(null);
+                    base._lines.Add(null);
                 }
                 else
                 if (prev == 13)// \r (Mac format)
                 {
                     sourceFileLinePositions.Add((int)prevPos);
-                    base.lines.Add(null);
+                    base._lines.Add(null);
                     SaveEOL = "\r";
                 }
 
@@ -143,7 +139,7 @@ namespace FastColoredTextBoxNS
             if (prev == 13)
             {
                 sourceFileLinePositions.Add((int)prevPos);
-                base.lines.Add(null);
+                base._lines.Add(null);
             }
 
             if(length > 2000000)
@@ -151,14 +147,14 @@ namespace FastColoredTextBoxNS
 
             Line[] temp = new Line[100];
 
-            var c = base.lines.Count;
-            base.lines.AddRange(temp);
-            base.lines.TrimExcess();
-            base.lines.RemoveRange(c, temp.Length);
+            var c = base._lines.Count;
+            base._lines.AddRange(temp);
+            base._lines.TrimExcess();
+            base._lines.RemoveRange(c, temp.Length);
 
 
             int[] temp2 = new int[100];
-            c = base.lines.Count;
+            c = base._lines.Count;
             sourceFileLinePositions.AddRange(temp2);
             sourceFileLinePositions.TrimExcess();
             sourceFileLinePositions.RemoveRange(c, temp.Length);
@@ -168,7 +164,7 @@ namespace FastColoredTextBoxNS
 
             OnLineInserted(0, Count);
             //load first lines for calc width of the text
-            var linesCount = Math.Min(lines.Count, CurrentTB.ClientRectangle.Height/CurrentTB.CharHeight);
+            var linesCount = Math.Min(_lines.Count, CurrentTB.ClientRectangle.Height/CurrentTB.CharHeight);
             for (int i = 0; i < linesCount; i++)
                 LoadLineFromSourceFile(i);
             //
@@ -277,10 +273,10 @@ namespace FastColoredTextBoxNS
                     var sourceLine = ReadLine(sr, i);//read line from source file
                     string line;
 
-                    bool lineIsChanged = lines[i] != null && lines[i].IsChanged;
+                    bool lineIsChanged = _lines[i] != null && _lines[i].IsChanged;
 
                     if (lineIsChanged)
-                        line = lines[i].Text;
+                        line = _lines[i].Text;
                     else
                         line = sourceLine;
 
@@ -306,7 +302,7 @@ namespace FastColoredTextBoxNS
 
             //clear lines buffer
             for (int i = 0; i < Count; i++)
-                lines[i] = null;
+                _lines[i] = null;
             //deattach from source file
             sr.Dispose();
             fs.Dispose();
@@ -336,7 +332,7 @@ namespace FastColoredTextBoxNS
 
         public override void ClearIsChanged()
         {
-            foreach (var line in lines)
+            foreach (var line in _lines)
                 if(line!=null)
                     line.IsChanged = false;
         }
@@ -345,12 +341,12 @@ namespace FastColoredTextBoxNS
         {
             get 
             {
-                if (base.lines[i] != null)
-                    return lines[i];
+                if (base._lines[i] != null)
+                    return _lines[i];
                 else
                     LoadLineFromSourceFile(i);
 
-                return lines[i];
+                return _lines[i];
             }
             set
             {
@@ -380,7 +376,7 @@ namespace FastColoredTextBoxNS
 
             foreach (var c in s)
                 line.Add(new Char(c));
-            base.lines[i] = line;
+            base._lines[i] = line;
 
             if (CurrentTB.WordWrap)
                 OnRecalcWordWrap(new TextChangedEventArgs(i, i));
@@ -405,40 +401,39 @@ namespace FastColoredTextBoxNS
 
         public override int GetLineLength(int i)
         {
-            if (base.lines[i] == null)
+            if (base._lines[i] == null)
                 return 0;
             else
-                return base.lines[i].Count;
+                return base._lines[i].Count;
         }
 
         public override bool LineHasFoldingStartMarker(int iLine)
         {
-            if (lines[iLine] == null)
+            if (_lines[iLine] == null)
                 return false;
             else
-                return !string.IsNullOrEmpty(lines[iLine].FoldingStartMarker);
+                return !string.IsNullOrEmpty(_lines[iLine].FoldingStartMarker);
         }
 
         public override bool LineHasFoldingEndMarker(int iLine)
         {
-            if (lines[iLine] == null)
+            if (_lines[iLine] == null)
                 return false;
             else
-                return !string.IsNullOrEmpty(lines[iLine].FoldingEndMarker);
+                return !string.IsNullOrEmpty(_lines[iLine].FoldingEndMarker);
         }
 
         public override void Dispose()
         {
-            if (fs != null)
-                fs.Dispose();
+            fs?.Dispose();
 
             timer.Dispose();
         }
 
         internal void UnloadLine(int iLine)
         {
-            if (lines[iLine] != null && !lines[iLine].IsChanged)
-                lines[iLine] = null;
+            if (_lines[iLine] != null && !_lines[iLine].IsChanged)
+                _lines[iLine] = null;
         }
     }
 

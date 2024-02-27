@@ -1,51 +1,66 @@
-﻿using System.Collections.Generic;
-using System.Text.RegularExpressions;
-using System;
+﻿using System.Text.RegularExpressions;
 
 namespace FastColoredTextBoxNS
 {
-    public class SyntaxDescriptor: IDisposable
+    public class SyntaxDescriptor : IDisposable
     {
-        public char leftBracket = '(';
-        public char rightBracket = ')';
-        public char leftBracket2 = '{';
-        public char rightBracket2 = '}';
-        public BracketsHighlightStrategy bracketsHighlightStrategy = BracketsHighlightStrategy.Strategy2;
-        public readonly List<Style> styles = new List<Style>();
-        public readonly List<RuleDesc> rules = new List<RuleDesc>();
-        public readonly List<FoldingDesc> foldings = new List<FoldingDesc>();
+        private bool _disposedValue;
+
+        public char LeftBracket = '(';
+        public char RightBracket = ')';
+        public char LeftBracket2 = '{';
+        public char RightBracket2 = '}';
+        public BracketsHighlightStrategy BracketsHighlightStrategy = BracketsHighlightStrategy.Strategy2;
+        public readonly List<Style> Styles = [];
+        public readonly List<RuleDesc> Rules = [];
+        public readonly List<FoldingDesc> Foldings = [];
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposedValue)
+            {
+                if (disposing)
+                {
+                    foreach (var style in Styles)
+                    {
+                        style.Dispose();
+                    }
+                }
+
+                _disposedValue = true;
+            }
+        }
 
         public void Dispose()
         {
-            foreach (var style in styles)
-                style.Dispose();
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
     }
 
     public class RuleDesc
     {
-        Regex regex;
-        public string pattern;
-        public RegexOptions options = RegexOptions.None;
-        public Style style;
+        private Regex _regex;
+
+        public string Pattern;
+        public RegexOptions Options = RegexOptions.None;
+        public Style Style;
 
         public Regex Regex
         {
             get
             {
-                if (regex == null)
-                {
-                    regex = new Regex(pattern, SyntaxHighlighter.RegexCompiledOption | options);
-                }
-                return regex;
+                _regex ??= new Regex(Pattern, SyntaxHighlighter.RegexCompiledOption | Options);
+
+                return _regex;
             }
         }
     }
 
     public class FoldingDesc
     {
-        public string startMarkerRegex;
-        public string finishMarkerRegex;
-        public RegexOptions options = RegexOptions.None;
+        public string StartMarkerRegex;
+        public string FinishMarkerRegex;
+        public RegexOptions Options = RegexOptions.None;
     }
 }

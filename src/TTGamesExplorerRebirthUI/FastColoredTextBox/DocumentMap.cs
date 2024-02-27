@@ -143,21 +143,21 @@ namespace FastColoredTextBoxNS
 
             //calc startPlace
             var r = target.VisibleRange;
-            if (startPlace.iLine > r.Start.iLine)
-                startPlace.iLine = r.Start.iLine;
+            if (startPlace.ILine > r.Start.ILine)
+                startPlace.ILine = r.Start.ILine;
             else
             {
                 var endP = target.PlaceToPoint(r.End);
                 endP.Offset(0, -(int)(ClientSize.Height / zoom) + target.CharHeight);
                 var pp = target.PointToPlace(endP);
-                if (pp.iLine > startPlace.iLine)
-                    startPlace.iLine = pp.iLine;
+                if (pp.ILine > startPlace.ILine)
+                    startPlace.ILine = pp.ILine;
             }
-            startPlace.iChar = 0;
+            startPlace.IChar = 0;
             //calc scroll pos
             var linesCount = target.Lines.Count;
-            var sp1 = (float)r.Start.iLine / linesCount;
-            var sp2 = (float)r.End.iLine / linesCount;
+            var sp1 = (float)r.Start.ILine / linesCount;
+            var sp2 = (float)r.End.ILine / linesCount;
 
             //scale graphics
             e.Graphics.ScaleTransform(zoom, zoom);

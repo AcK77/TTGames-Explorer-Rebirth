@@ -20,10 +20,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="FastColoredTextBox\FastColoredTextBox.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="DarkUI.Net5.0" Version="1.0.0" />
     <PackageReference Include="NAudio" Version="2.2.1" />
     <PackageReference Include="NAudio.Vorbis" Version="1.5.0" />

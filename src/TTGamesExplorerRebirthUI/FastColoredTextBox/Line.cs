@@ -57,7 +57,7 @@ namespace FastColoredTextBoxNS
             for (int i = 0; i < Count; i++)
             {
                 Char c = this[i];
-                c.style &= ~styleIndex;
+                c.Style &= ~styleIndex;
                 this[i] = c;
             }
         }
@@ -70,7 +70,7 @@ namespace FastColoredTextBoxNS
             get{
                 StringBuilder sb = new StringBuilder(Count);
                 foreach(Char c in this)
-                    sb.Append(c.c);
+                    sb.Append(c.C);
                 return sb.ToString();
             }
         }
@@ -93,7 +93,7 @@ namespace FastColoredTextBoxNS
             {
                 int spacesCount = 0;
                 for (int i = 0; i < Count; i++)
-                    if (this[i].c == ' ')
+                    if (this[i].C == ' ')
                         spacesCount++;
                     else
                         break;

@@ -405,31 +405,31 @@ namespace FastColoredTextBoxNS
                 if (brackets.Attributes["left"] == null || brackets.Attributes["right"] == null ||
                     brackets.Attributes["left"].Value == "" || brackets.Attributes["right"].Value == "")
                 {
-                    desc.leftBracket = '\x0';
-                    desc.rightBracket = '\x0';
+                    desc.LeftBracket = '\x0';
+                    desc.RightBracket = '\x0';
                 }
                 else
                 {
-                    desc.leftBracket = brackets.Attributes["left"].Value[0];
-                    desc.rightBracket = brackets.Attributes["right"].Value[0];
+                    desc.LeftBracket = brackets.Attributes["left"].Value[0];
+                    desc.RightBracket = brackets.Attributes["right"].Value[0];
                 }
 
                 if (brackets.Attributes["left2"] == null || brackets.Attributes["right2"] == null ||
                     brackets.Attributes["left2"].Value == "" || brackets.Attributes["right2"].Value == "")
                 {
-                    desc.leftBracket2 = '\x0';
-                    desc.rightBracket2 = '\x0';
+                    desc.LeftBracket2 = '\x0';
+                    desc.RightBracket2 = '\x0';
                 }
                 else
                 {
-                    desc.leftBracket2 = brackets.Attributes["left2"].Value[0];
-                    desc.rightBracket2 = brackets.Attributes["right2"].Value[0];
+                    desc.LeftBracket2 = brackets.Attributes["left2"].Value[0];
+                    desc.RightBracket2 = brackets.Attributes["right2"].Value[0];
                 }
 
                 if (brackets.Attributes["strategy"] == null || brackets.Attributes["strategy"].Value == "")
-                    desc.bracketsHighlightStrategy = BracketsHighlightStrategy.Strategy2;
+                    desc.BracketsHighlightStrategy = BracketsHighlightStrategy.Strategy2;
                 else
-                    desc.bracketsHighlightStrategy = (BracketsHighlightStrategy)Enum.Parse(typeof(BracketsHighlightStrategy), brackets.Attributes["strategy"].Value);
+                    desc.BracketsHighlightStrategy = (BracketsHighlightStrategy)Enum.Parse(typeof(BracketsHighlightStrategy), brackets.Attributes["strategy"].Value);
             }
 
             var styleByName = new Dictionary<string, Style>();
@@ -438,12 +438,12 @@ namespace FastColoredTextBoxNS
             {
                 Style s = ParseStyle(style);
                 styleByName[style.Attributes["name"].Value] = s;
-                desc.styles.Add(s);
+                desc.Styles.Add(s);
             }
             foreach (XmlNode rule in doc.SelectNodes("doc/rule"))
-                desc.rules.Add(ParseRule(rule, styleByName));
+                desc.Rules.Add(ParseRule(rule, styleByName));
             foreach (XmlNode folding in doc.SelectNodes("doc/folding"))
-                desc.foldings.Add(ParseFolding(folding));
+                desc.Foldings.Add(ParseFolding(folding));
 
             return desc;
         }
@@ -452,12 +452,12 @@ namespace FastColoredTextBoxNS
         {
             var folding = new FoldingDesc();
             //regex
-            folding.startMarkerRegex = foldingNode.Attributes["start"].Value;
-            folding.finishMarkerRegex = foldingNode.Attributes["finish"].Value;
+            folding.StartMarkerRegex = foldingNode.Attributes["start"].Value;
+            folding.FinishMarkerRegex = foldingNode.Attributes["finish"].Value;
             //options
             XmlAttribute optionsA = foldingNode.Attributes["options"];
             if (optionsA != null)
-                folding.options = (RegexOptions)Enum.Parse(typeof(RegexOptions), optionsA.Value);
+                folding.Options = (RegexOptions)Enum.Parse(typeof(RegexOptions), optionsA.Value);
 
             return folding;
         }
@@ -465,7 +465,7 @@ namespace FastColoredTextBoxNS
         protected static RuleDesc ParseRule(XmlNode ruleNode, Dictionary<string, Style> styles)
         {
             var rule = new RuleDesc();
-            rule.pattern = ruleNode.InnerText;
+            rule.Pattern = ruleNode.InnerText;
             //
             XmlAttribute styleA = ruleNode.Attributes["style"];
             XmlAttribute optionsA = ruleNode.Attributes["options"];
@@ -474,10 +474,10 @@ namespace FastColoredTextBoxNS
                 throw new Exception("Rule must contain style name.");
             if (!styles.ContainsKey(styleA.Value))
                 throw new Exception("Style '" + styleA.Value + "' is not found.");
-            rule.style = styles[styleA.Value];
+            rule.Style = styles[styleA.Value];
             //options
             if (optionsA != null)
-                rule.options = (RegexOptions)Enum.Parse(typeof(RegexOptions), optionsA.Value);
+                rule.Options = (RegexOptions)Enum.Parse(typeof(RegexOptions), optionsA.Value);
 
             return rule;
         }
@@ -522,28 +522,28 @@ namespace FastColoredTextBoxNS
         {
             //set style order
             range.tb.ClearStylesBuffer();
-            for (int i = 0; i < desc.styles.Count; i++)
-                range.tb.Styles[i] = desc.styles[i];
+            for (int i = 0; i < desc.Styles.Count; i++)
+                range.tb.Styles[i] = desc.Styles[i];
             // add resilient styles
-            int l = desc.styles.Count;
+            int l = desc.Styles.Count;
             for (int i = 0; i < resilientStyles.Count; i++)
                 range.tb.Styles[l + i] = resilientStyles[i];
             //brackets
             char[] oldBrackets = RememberBrackets(range.tb);
-            range.tb.LeftBracket = desc.leftBracket;
-            range.tb.RightBracket = desc.rightBracket;
-            range.tb.LeftBracket2 = desc.leftBracket2;
-            range.tb.RightBracket2 = desc.rightBracket2;
+            range.tb.LeftBracket = desc.LeftBracket;
+            range.tb.RightBracket = desc.RightBracket;
+            range.tb.LeftBracket2 = desc.LeftBracket2;
+            range.tb.RightBracket2 = desc.RightBracket2;
             //clear styles of range
-            range.ClearStyle(desc.styles.ToArray());
+            range.ClearStyle(desc.Styles.ToArray());
             //highlight syntax
-            foreach (RuleDesc rule in desc.rules)
-                range.SetStyle(rule.style, rule.Regex);
+            foreach (RuleDesc rule in desc.Rules)
+                range.SetStyle(rule.Style, rule.Regex);
             //clear folding
             range.ClearFoldingMarkers();
             //folding markers
-            foreach (FoldingDesc folding in desc.foldings)
-                range.SetFoldingMarkers(folding.startMarkerRegex, folding.finishMarkerRegex, folding.options);
+            foreach (FoldingDesc folding in desc.Foldings)
+                range.SetFoldingMarkers(folding.StartMarkerRegex, folding.FinishMarkerRegex, folding.Options);
 
             //
             RestoreBrackets(range.tb, oldBrackets);
@@ -979,12 +979,12 @@ namespace FastColoredTextBoxNS
             foreach (var r in range.GetRanges(XMLFoldingRegex))
             {
                 var tagName = r.Text;
-                var iLine = r.Start.iLine;
+                var iLine = r.Start.ILine;
                 //if it is opening tag...
                 if (tagName[0] != '/')
                 {
                     // ...push into stack
-                    var tag = new XmlFoldingTag { Name = tagName, id = id++, startLine = r.Start.iLine };
+                    var tag = new XmlFoldingTag { Name = tagName, id = id++, startLine = r.Start.ILine };
                     stack.Push(tag);
                     // if this line has no markers - set marker
                     if (string.IsNullOrEmpty(fctb[iLine].FoldingStartMarker))

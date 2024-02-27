@@ -59,21 +59,21 @@ namespace FastColoredTextBoxNS
         {
             if (hint.Inline)
             {
-                if (hint.Range.Start.iLine < tb.LineInfos.Count - 1)
-                    hint.HostPanel.Top = tb.LineInfos[hint.Range.Start.iLine + 1].startY - hint.TopPadding - hint.HostPanel.Height - tb.VerticalScroll.Value;
+                if (hint.Range.Start.ILine < tb.LineInfos.Count - 1)
+                    hint.HostPanel.Top = tb.LineInfos[hint.Range.Start.ILine + 1].startY - hint.TopPadding - hint.HostPanel.Height - tb.VerticalScroll.Value;
                 else
                     hint.HostPanel.Top = tb.TextHeight + tb.Paddings.Top - hint.HostPanel.Height - tb.VerticalScroll.Value;
             }
             else
             {
-                if (hint.Range.Start.iLine > tb.LinesCount - 1) return;
-                if (hint.Range.Start.iLine == tb.LinesCount - 1)
+                if (hint.Range.Start.ILine > tb.LinesCount - 1) return;
+                if (hint.Range.Start.ILine == tb.LinesCount - 1)
                 {
-                    var y = tb.LineInfos[hint.Range.Start.iLine].startY - tb.VerticalScroll.Value + tb.CharHeight;
+                    var y = tb.LineInfos[hint.Range.Start.ILine].startY - tb.VerticalScroll.Value + tb.CharHeight;
 
                     if (y + hint.HostPanel.Height + 1 > tb.ClientRectangle.Bottom)
                     {
-                        hint.HostPanel.Top = Math.Max(0, tb.LineInfos[hint.Range.Start.iLine].startY - tb.VerticalScroll.Value - hint.HostPanel.Height);
+                        hint.HostPanel.Top = Math.Max(0, tb.LineInfos[hint.Range.Start.ILine].startY - tb.VerticalScroll.Value - hint.HostPanel.Height);
                     }
                     else
                         hint.HostPanel.Top = y;
@@ -81,9 +81,9 @@ namespace FastColoredTextBoxNS
                 }
                 else
                 {
-                    hint.HostPanel.Top = tb.LineInfos[hint.Range.Start.iLine + 1].startY - tb.VerticalScroll.Value;
+                    hint.HostPanel.Top = tb.LineInfos[hint.Range.Start.ILine + 1].startY - tb.VerticalScroll.Value;
                     if (hint.HostPanel.Bottom > tb.ClientRectangle.Bottom)
-                        hint.HostPanel.Top = tb.LineInfos[hint.Range.Start.iLine + 1].startY - tb.CharHeight - hint.TopPadding - hint.HostPanel.Height - tb.VerticalScroll.Value;
+                        hint.HostPanel.Top = tb.LineInfos[hint.Range.Start.ILine + 1].startY - tb.CharHeight - hint.TopPadding - hint.HostPanel.Height - tb.VerticalScroll.Value;
                 }
             }
 
@@ -154,10 +154,10 @@ namespace FastColoredTextBoxNS
 
             if (hint.Inline/* || hint.Range.Start.iLine >= tb.LinesCount - 1*/)
             {
-                var li = tb.LineInfos[hint.Range.Start.iLine];
+                var li = tb.LineInfos[hint.Range.Start.ILine];
                 hint.TopPadding = li.bottomPadding;
                 li.bottomPadding += hint.HostPanel.Height;
-                tb.LineInfos[hint.Range.Start.iLine] = li;
+                tb.LineInfos[hint.Range.Start.ILine] = li;
                 tb.NeedRecalc(true);
             }
 

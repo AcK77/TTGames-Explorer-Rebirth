@@ -1,40 +1,32 @@
-﻿using System;
-
-namespace FastColoredTextBoxNS
+﻿namespace FastColoredTextBoxNS
 {
     /// <summary>
     /// Line index and char index
     /// </summary>
-    public struct Place : IEquatable<Place>
+    public struct Place(int iChar, int iLine) : IEquatable<Place>
     {
-        public int iChar;
-        public int iLine;
-
-        public Place(int iChar, int iLine)
-        {
-            this.iChar = iChar;
-            this.iLine = iLine;
-        }
+        public int IChar = iChar;
+        public int ILine = iLine;
 
         public void Offset(int dx, int dy)
         {
-            iChar += dx;
-            iLine += dy;
+            IChar += dx;
+            ILine += dy;
         }
 
         public bool Equals(Place other)
         {
-            return iChar == other.iChar && iLine == other.iLine;
+            return IChar == other.IChar && ILine == other.ILine;
         }
 
         public override bool Equals(object obj)
         {
-            return (obj is Place) && Equals((Place)obj);
+            return (obj is Place place) && Equals(place);
         }
 
         public override int GetHashCode()
         {
-            return iChar.GetHashCode() ^ iLine.GetHashCode();
+            return IChar.GetHashCode() ^ ILine.GetHashCode();
         }
 
         public static bool operator !=(Place p1, Place p2)
@@ -49,51 +41,49 @@ namespace FastColoredTextBoxNS
 
         public static bool operator <(Place p1, Place p2)
         {
-            if (p1.iLine < p2.iLine) return true;
-            if (p1.iLine > p2.iLine) return false;
-            if (p1.iChar < p2.iChar) return true;
+            if (p1.ILine < p2.ILine) return true;
+            if (p1.ILine > p2.ILine) return false;
+            if (p1.IChar < p2.IChar) return true;
+
             return false;
         }
 
         public static bool operator <=(Place p1, Place p2)
         {
             if (p1.Equals(p2)) return true;
-            if (p1.iLine < p2.iLine) return true;
-            if (p1.iLine > p2.iLine) return false;
-            if (p1.iChar < p2.iChar) return true;
+            if (p1.ILine < p2.ILine) return true;
+            if (p1.ILine > p2.ILine) return false;
+            if (p1.IChar < p2.IChar) return true;
+
             return false;
         }
 
         public static bool operator >(Place p1, Place p2)
         {
-            if (p1.iLine > p2.iLine) return true;
-            if (p1.iLine < p2.iLine) return false;
-            if (p1.iChar > p2.iChar) return true;
+            if (p1.ILine > p2.ILine) return true;
+            if (p1.ILine < p2.ILine) return false;
+            if (p1.IChar > p2.IChar) return true;
+
             return false;
         }
 
         public static bool operator >=(Place p1, Place p2)
         {
             if (p1.Equals(p2)) return true;
-            if (p1.iLine > p2.iLine) return true;
-            if (p1.iLine < p2.iLine) return false;
-            if (p1.iChar > p2.iChar) return true;
+            if (p1.ILine > p2.ILine) return true;
+            if (p1.ILine < p2.ILine) return false;
+            if (p1.IChar > p2.IChar) return true;
+
             return false;
         }
 
         public static Place operator +(Place p1, Place p2)
         {
-            return new Place(p1.iChar + p2.iChar, p1.iLine + p2.iLine);
+            return new Place(p1.IChar + p2.IChar, p1.ILine + p2.ILine);
         }
 
-        public static Place Empty
-        {
-            get { return new Place(); }
-        }
+        public static Place Empty => new();
 
-        public override string ToString()
-        {
-            return "(" + iChar + "," + iLine + ")";
-        }
+        public override string ToString() => "(" + IChar + "," + ILine + ")";
     }
 }

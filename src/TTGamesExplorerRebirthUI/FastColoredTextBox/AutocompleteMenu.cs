@@ -460,7 +460,7 @@ namespace FastColoredTextBoxNS
                 else
                     if (!Menu.Fragment.Contains(tb.Selection.Start))
                     {
-                        if (tb.Selection.Start.iLine == Menu.Fragment.End.iLine && tb.Selection.Start.iChar == Menu.Fragment.End.iChar + 1)
+                        if (tb.Selection.Start.ILine == Menu.Fragment.End.ILine && tb.Selection.Start.IChar == Menu.Fragment.End.IChar + 1)
                         {
                             //user press key at end of fragment
                             char c = tb.Selection.CharBeforeStart;
@@ -638,8 +638,8 @@ namespace FastColoredTextBoxNS
             {
                 var start = tb.Selection.Start;
                 var end = tb.Selection.End;
-                start.iChar = fragment.Start.iChar;
-                end.iChar = fragment.End.iChar;
+                start.IChar = fragment.Start.IChar;
+                end.IChar = fragment.End.IChar;
                 tb.Selection.Start = start;
                 tb.Selection.End = end;
             }
