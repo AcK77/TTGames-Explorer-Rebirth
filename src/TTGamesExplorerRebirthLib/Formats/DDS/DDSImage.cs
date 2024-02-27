@@ -35,7 +35,7 @@ namespace TTGamesExplorerRebirthLib.Formats.DDS
                 Images[0] = bcDecoder.DecodeToImageRgba32(ddsFile);
             }
         }
-        
+
         public static uint CalculateDdsSize(MemoryStream stream, BinaryReader reader)
         {
             _ = reader.ReadUInt32(); // Magic: DDS.
