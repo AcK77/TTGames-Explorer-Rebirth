@@ -38,10 +38,11 @@ namespace TTGamesExplorerRebirthUI.Forms
         private void FontForm_Load(object sender, EventArgs e)
         {
             toolStripStatusLabel1.Text = Path.GetFileName(_filePath);
-
-            for (int i = 0; i < _fontFile.Chars.Length; i++)
+            
+            darkComboBox1.Items.Add("None");
+            for (int i = 1; i <= _fontFile.Chars.Length; i++)
             {
-                darkComboBox1.Items.Add($"Char #{i + 1}");
+                darkComboBox1.Items.Add($"Char #{i}");
             }
 
             darkComboBox1.SelectedItem = darkComboBox1.Items[0];
@@ -98,7 +99,11 @@ namespace TTGamesExplorerRebirthUI.Forms
         {
             if (!darkCheckBox1.Checked)
             {
-                int indexChar = int.Parse(darkComboBox1.SelectedItem.ToString().Replace("Char #", "")) - 1;
+                int indexChar = 0;
+                if (darkComboBox1.SelectedItem.ToString() != "None")
+                {
+                    indexChar = int.Parse(darkComboBox1.SelectedItem.ToString().Replace("Char #", "")) - 1;
+                }
 
                 RectangleF rect = new()
                 {
