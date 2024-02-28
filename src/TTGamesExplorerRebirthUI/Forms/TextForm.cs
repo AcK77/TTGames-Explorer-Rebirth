@@ -20,6 +20,15 @@ namespace TTGamesExplorerRebirthUI.Forms
 
             fastColoredTextBox1.BackColor = Colors.DarkBackground;
             fastColoredTextBox1.SelectionColor = Colors.BlueHighlight;
+            
+            if (fileBuffer.Length > 10000000) // 10 MB
+            {
+                fastColoredTextBox1.Text = "No file open";
+                MessageBox.Show("Text viewer does not support files over 10MB! \n\nUse Notepad or Visual Studio instead.", "Text Viewer", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                
+                return;
+            }
+
             fastColoredTextBox1.Text = Encoding.ASCII.GetString(fileBuffer);
 
             switch (Path.GetExtension(fileName))

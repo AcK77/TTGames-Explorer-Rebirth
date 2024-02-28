@@ -21,7 +21,7 @@ namespace TTGamesExplorerRebirthUI.Forms
         private readonly List<byte[]> _ddsFilesRaw = [];
         private readonly string _filePath;
         private readonly bool _isDDS;
-        private bool _transparentBackground = false;
+        private bool _transparentBackground = true; 
         private System.Drawing.Image _previewImage;
         private int _previewWidth;
         private int _previewHeight;
