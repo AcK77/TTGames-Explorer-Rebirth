@@ -5,9 +5,9 @@ namespace TTGamesExplorerRebirthLib.Formats.NuCore
 #pragma warning disable IDE0059
     public static class NuFile
     {
-        public const string MagicFourCC                      = ".CC4";
-        public const string MagicResourceHeader              = "HSER";
-        public const string MagicVirtualTableObjectReference = "ROTV";
+        public const string MagicFourCC         = ".CC4";
+        public const string MagicResourceHeader = "HSER";
+        public const string MagicVector         = "ROTV";
 
         public static uint ReadNuFileHeader(this BinaryReader reader)
         {
@@ -44,7 +44,7 @@ namespace TTGamesExplorerRebirthLib.Formats.NuCore
                 nuResourceHeader.Nodes = reader.ReadNuFileTree();
             }
 
-            reader.ReadNuResourceVirtualTableObjectReference();
+            reader.ReadNuVector(nuResourceHeader);
 
             nuResourceHeader.ProjectName = reader.ReadSized16NullTerminatedString();
 
@@ -83,18 +83,23 @@ namespace TTGamesExplorerRebirthLib.Formats.NuCore
                 {
                     ushort childIndex   = reader.ReadUInt16BigEndian();
                     ushort siblingIndex = reader.ReadUInt16BigEndian();
-                    uint   nameOffset   = reader.ReadUInt32BigEndian();
+                    int    nameOffset   = reader.ReadInt32BigEndian();
 
                     long oldPosition = reader.BaseStream.Position;
 
-                    reader.BaseStream.Seek(leafNamesPosition + nameOffset, SeekOrigin.Begin);
+                    string name = "";
 
-                    string name = reader.ReadNullTerminatedString();
+                    if (nameOffset != -1)
+                    {
+                        reader.BaseStream.Seek(leafNamesPosition + nameOffset, SeekOrigin.Begin);
 
-                    reader.BaseStream.Seek(oldPosition, SeekOrigin.Begin);
+                        name = reader.ReadNullTerminatedString();
+
+                        reader.BaseStream.Seek(oldPosition, SeekOrigin.Begin);
+                    }
 
                     ushort parentIndex = reader.ReadUInt16BigEndian();
-                    ushort fileIndex   = reader.ReadUInt16BigEndian();
+                    ushort fileIndex   = (ushort)((nuFileTreeVersion > 1) ? reader.ReadUInt16BigEndian() : i);
 
                     nodes[i] = new()
                     {
@@ -105,24 +110,61 @@ namespace TTGamesExplorerRebirthLib.Formats.NuCore
                         FileIndex    = fileIndex,
                     };
                 }
+
+                uint unknown1 = reader.ReadUInt32BigEndian();
             }
 
             return nodes;
         }
 
-        public static void ReadNuResourceVirtualTableObjectReference(this BinaryReader reader)
+        public static void ReadNuVector(this BinaryReader reader, NuResourceHeader nuResourceHeader)
         {
-            if (reader.ReadUInt32AsString() != MagicVirtualTableObjectReference)
+            if (reader.ReadUInt32AsString() != MagicVector)
             {
                 throw new InvalidDataException($"{reader.BaseStream.Position:x8}");
             }
 
-            uint size    = reader.ReadUInt32BigEndian();
-            uint version = reader.ReadUInt32BigEndian();
+            uint size = reader.ReadUInt32BigEndian();
+            uint id   = reader.ReadUInt32BigEndian();
 
             if (size > 0)
             {
-                throw new NotSupportedException($"{reader.BaseStream.Position:x8}");
+                for (int i = 0; i < size; i++)
+                {
+                    uint type = reader.ReadUInt32BigEndian();
+
+                    if (nuResourceHeader.Version <= 6)
+                    {
+                        uint oldParam = reader.ReadUInt32BigEndian();
+                    }
+
+                    ulong hash = reader.ReadUInt32BigEndian();
+                    if (hash == 1)
+                    {
+                        uint unknown = reader.ReadUInt32BigEndian();
+                        byte[] nuChecksum = reader.ReadBytes(0x10);
+                    }
+                    else
+                    {
+                        uint unknown = reader.ReadUInt32BigEndian();
+                    }
+
+                    if (nuResourceHeader.Version >= 3)
+                    {
+                        uint platformsAndClasses = reader.ReadUInt32BigEndian();
+
+                        if (nuResourceHeader.Version >= 6)
+                        {
+                            uint forContext = reader.ReadUInt32BigEndian();
+                            uint withContext = reader.ReadUInt32BigEndian();
+                        }
+
+                        if (nuResourceHeader.Version >= 8)
+                        {
+                            uint discipline = reader.ReadUInt32BigEndian();
+                        }
+                    }
+                }
             }
         }
     }

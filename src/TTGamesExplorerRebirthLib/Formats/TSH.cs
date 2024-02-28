@@ -82,7 +82,7 @@ namespace TTGamesExplorerRebirthLib.Formats
 
             uint nuTextureSetHeaderVersion = reader.ReadUInt32BigEndian();
 
-            if (reader.ReadUInt32AsString() != NuFile.MagicVirtualTableObjectReference)
+            if (reader.ReadUInt32AsString() != NuFile.MagicVector)
             {
                 throw new InvalidDataException($"{stream.Position:x8}");
             }

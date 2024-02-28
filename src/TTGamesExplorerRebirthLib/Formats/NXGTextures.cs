@@ -73,7 +73,7 @@ namespace TTGamesExplorerRebirthLib.Formats
                 DateStamp = reader.ReadSized32NullTerminatedString();
             }
 
-            if (reader.ReadUInt32AsString() != NuFile.MagicVirtualTableObjectReference)
+            if (reader.ReadUInt32AsString() != NuFile.MagicVector)
             {
                 throw new InvalidDataException($"{stream.Position:x8}");
             }

@@ -16,7 +16,7 @@
         public uint   ChildIndex;
         public uint   SiblingIndex;
         public string Name;
-        public uint   ParentIndex;
+        public int    ParentIndex;
         public uint   FileIndex;
     }
 }
