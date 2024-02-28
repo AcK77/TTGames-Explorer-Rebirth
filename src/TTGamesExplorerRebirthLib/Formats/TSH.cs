@@ -39,7 +39,7 @@ namespace TTGamesExplorerRebirthLib.Formats
     {
         private const string MagicTxSh = "HSXT";
 
-        public NuResourceHeader Header;
+        public NuResourceHeader ResourceHeader;
 
         public DDSImage Image;
 
@@ -62,13 +62,13 @@ namespace TTGamesExplorerRebirthLib.Formats
 
             // Read header.
 
-            reader.ReadNuFileHeader();
+            new NuFileHeader().Deserialize(reader);
 
-            Header = reader.ReadNuResourceHeader();
+            ResourceHeader = new NuResourceHeader().Deserialize(reader);
 
             // Read NuTextureSheetHeader.
 
-            uint nuTextureSetHeaderSize = reader.ReadNuFileHeader();
+            uint nuTextureSetHeaderSize = new NuFileHeader().Deserialize(reader);
 
             if (reader.ReadUInt32AsString() != MagicTxSh)
             {
@@ -82,7 +82,7 @@ namespace TTGamesExplorerRebirthLib.Formats
 
             uint nuTextureSetHeaderVersion = reader.ReadUInt32BigEndian();
 
-            if (reader.ReadUInt32AsString() != NuFile.MagicVector)
+            if (reader.ReadUInt32AsString() != NuVector.Magic)
             {
                 throw new InvalidDataException($"{stream.Position:x8}");
             }

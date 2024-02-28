@@ -25,7 +25,7 @@ namespace TTGamesExplorerRebirthLib.Formats
     {
         private const string MagicBcsh = "HSCB";
 
-        public NuResourceHeader Header;
+        public NuResourceHeader ResourceHeader;
 
         public List<PCShadersFile> Shaders = [];
 
@@ -46,20 +46,20 @@ namespace TTGamesExplorerRebirthLib.Formats
 
             // Read header.
 
-            reader.ReadNuFileHeader();
+            new NuFileHeader().Deserialize(reader);
 
-            Header = reader.ReadNuResourceHeader();
+            ResourceHeader = new NuResourceHeader().Deserialize(reader);
 
             // Read subheader.
 
-            uint dataSize = reader.ReadNuFileHeader(); // dataSize + nuResourceHeaderSize + 8 (2 int for sizes) = Total filesize.
+            uint dataSize = new NuFileHeader().Deserialize(reader); // dataSize + nuResourceHeaderSize + 8 (2 int for sizes) = Total filesize.
 
-            if (reader.ReadUInt32AsString() != NuFile.MagicResourceHeader)
+            if (reader.ReadUInt32AsString() != NuResourceHeader.Magic)
             {
                 throw new InvalidDataException($"{stream.Position:x8}");
             }
 
-            if (reader.ReadUInt32AsString() != NuFile.MagicResourceHeader)
+            if (reader.ReadUInt32AsString() != NuResourceHeader.Magic)
             {
                 throw new InvalidDataException($"{stream.Position:x8}");
             }

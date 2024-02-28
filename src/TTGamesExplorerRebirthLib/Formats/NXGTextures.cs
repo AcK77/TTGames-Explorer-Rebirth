@@ -23,7 +23,7 @@ namespace TTGamesExplorerRebirthLib.Formats
     {
         private const string MagicTxSt = "TSXT";
 
-        public NuResourceHeader Header;
+        public NuResourceHeader ResourceHeader;
 
         public string DateStamp;
 
@@ -46,13 +46,13 @@ namespace TTGamesExplorerRebirthLib.Formats
 
             // Read header.
 
-            reader.ReadNuFileHeader();
+            new NuFileHeader().Deserialize(reader);
 
-            Header = reader.ReadNuResourceHeader();
+            ResourceHeader = new NuResourceHeader().Deserialize(reader);
 
             // Read NuTextureSetHeader.
 
-            uint nuTextureSetHeaderSize = reader.ReadNuFileHeader();
+            uint nuTextureSetHeaderSize = new NuFileHeader().Deserialize(reader);
 
             if (reader.ReadUInt32AsString() != MagicTxSt)
             {
@@ -73,74 +73,19 @@ namespace TTGamesExplorerRebirthLib.Formats
                 DateStamp = reader.ReadSized32NullTerminatedString();
             }
 
-            if (reader.ReadUInt32AsString() != NuFile.MagicVector)
-            {
-                throw new InvalidDataException($"{stream.Position:x8}");
-            }
+            List<string> filesPath = new NuTexGenHdr().Deserialize(reader, nuTextureSetHeaderVersion).FilesPath;
 
-            uint nuTextureCount = reader.ReadUInt32BigEndian();
+            Files = [];
 
-            for (int i = 0; i < nuTextureCount; i++)
-            {
-                // Read NuTexGenHdr.
-
-                byte[] nuChecksum         = reader.ReadBytes(0x10);
-                bool   isNuChecksumZeroed = !nuChecksum.Any(b => b != 0);
-
-                string path = "";
-
-                if (nuTextureSetHeaderVersion == 1 || nuTextureSetHeaderVersion == 0)
-                {
-                    uint pathSize            = reader.ReadUInt32BigEndian();
-                         path                = reader.ReadNullTerminatedString();
-                    uint nuTexGenHdrUnknown1 = reader.ReadUInt32BigEndian();
-                }
-                
-                if (nuTextureSetHeaderVersion == 12)
-                {
-                    uint nuAlignedBuffer = reader.ReadUInt32();
-                    byte pathSize        = reader.ReadByte();
-                         path            = reader.ReadNullTerminatedString();
-                    byte nuResourceId    = reader.ReadByte();
-                }
-
-                // FIXME: Some nxg_textures failed here.
-                if (nuTextureSetHeaderVersion == 14)
-                {
-                    if (!isNuChecksumZeroed)
-                    {
-                        uint nuAlignedBuffer     = reader.ReadUInt32();
-                        byte pathSize            = reader.ReadByte();
-                             path                = reader.ReadNullTerminatedString();
-                        byte nuResourceId        = reader.ReadByte();
-                        uint nuTexGenHdrUnknown3 = reader.ReadUInt32();
-                        uint nuTexGenHdrUnknown4 = reader.ReadUInt32();
-                    }
-                    else
-                    {
-                        ushort pathSize            = reader.ReadUInt16BigEndian();
-                               path                = reader.ReadNullTerminatedString();
-                        uint   nuTexGenHdrUnknown1 = reader.ReadUInt32();
-                        uint   nuTexGenHdrUnknown2 = reader.ReadUInt32();
-                        uint   nuTexGenHdrUnknown3 = reader.ReadUInt32();
-                    }
-                }
-
-                if (!isNuChecksumZeroed)
-                {
-                    Files.Add(new NXGFile()
-                    {
-                        Path = path,
-                        // TODO: Add more informations.
-                    });
-                }
-            }
-
-            for (int i = 0; i < Files.Count; i++)
+            for (int i = 0; i < filesPath.Count; i++)
             {
                 uint ddsSize = DDSImage.CalculateDdsSize(stream, reader);
 
-                Files[i].Data = reader.ReadBytes((int)ddsSize);
+                Files.Add(new NXGFile()
+                {
+                    Path = filesPath[i],
+                    Data = reader.ReadBytes((int)ddsSize),
+                });
 
                 if (stream.Position == stream.Length)
                 {
