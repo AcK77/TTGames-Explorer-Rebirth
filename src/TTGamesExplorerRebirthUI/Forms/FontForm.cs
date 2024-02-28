@@ -40,6 +40,7 @@ namespace TTGamesExplorerRebirthUI.Forms
             toolStripStatusLabel1.Text = Path.GetFileName(_filePath);
             
             darkComboBox1.Items.Add("None");
+            
             for (int i = 1; i <= _fontFile.Chars.Length; i++)
             {
                 darkComboBox1.Items.Add($"Char #{i}");
@@ -100,9 +101,10 @@ namespace TTGamesExplorerRebirthUI.Forms
             if (!darkCheckBox1.Checked)
             {
                 int indexChar = 0;
+                
                 if (darkComboBox1.SelectedItem.ToString() != "None")
                 {
-                    indexChar = int.Parse(darkComboBox1.SelectedItem.ToString().Replace("Char #", "")) - 1;
+                    indexChar = int.Parse(darkComboBox1.SelectedItem.ToString().Replace("Char #", ""));
                 }
 
                 RectangleF rect = new()
