@@ -25,6 +25,7 @@ namespace TTGamesExplorerRebirthUI.Forms
             {
                 fastColoredTextBox1.Text = "No file open";
                 MessageBox.Show("Text viewer does not support files over 10MB! \n\nUse Notepad or Visual Studio instead.", "Text Viewer", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                
                 return;
             }
 
