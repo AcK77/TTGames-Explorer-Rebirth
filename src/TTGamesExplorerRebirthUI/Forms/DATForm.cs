@@ -28,8 +28,8 @@ namespace TTGamesExplorerRebirthUI.Forms
 
             LoadingForm loadingForm = new()
             {
-                Text = "Opening DAT file...",
-                StartPosition = FormStartPosition.CenterParent
+                Text          = "Opening DAT file...",
+                StartPosition = FormStartPosition.CenterScreen,
             };
 
             new Thread(() =>

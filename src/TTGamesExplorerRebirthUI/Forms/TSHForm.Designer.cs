@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TSHForm));
             splitContainer1 = new SplitContainer();
             darkSectionPanel1 = new DarkUI.Controls.DarkSectionPanel();
             flowLayoutPanel1 = new FlowLayoutPanel();
@@ -221,6 +222,7 @@
             Controls.Add(splitContainer1);
             Controls.Add(darkStatusStrip1);
             DoubleBuffered = true;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "TSHForm";
             ShowInTaskbar = false;
             StartPosition = FormStartPosition.CenterParent;

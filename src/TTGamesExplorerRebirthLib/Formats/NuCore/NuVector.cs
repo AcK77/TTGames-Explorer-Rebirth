@@ -5,9 +5,9 @@ namespace TTGamesExplorerRebirthLib.Formats.NuCore
 #pragma warning disable IDE0059
     public class NuVector
     {
-        public static string Magic = "ROTV";
+        public const string Magic = "ROTV";
 
-        public void Deserialize(BinaryReader reader, NuResourceHeader nuResourceHeader)
+        public static T Deserialize<T>(BinaryReader reader, NuResourceHeader nuResourceHeader)
         {
             if (reader.ReadUInt32AsString() != Magic)
             {
@@ -15,46 +15,42 @@ namespace TTGamesExplorerRebirthLib.Formats.NuCore
             }
 
             uint size = reader.ReadUInt32BigEndian();
-            uint id   = reader.ReadUInt32BigEndian();
 
-            if (size > 0)
+            if (typeof(T) == typeof(NuResourceReference))
             {
+                uint id = reader.ReadUInt32BigEndian();
+
+                return (T)(object)new NuResourceReference().Deserialize(reader, nuResourceHeader, size);
+            }
+            else if (typeof(T) == typeof(NuVFXLocator))
+            {
+                return (T)(object)new NuVFXLocator().Deserialize();
+            }
+            else if (typeof(T) == typeof(NuSpline[]))
+            {
+                NuSpline[] nuSplines = new NuSpline[size];
+
                 for (int i = 0; i < size; i++)
                 {
-                    uint type = reader.ReadUInt32BigEndian();
-
-                    if (nuResourceHeader.Version <= 6)
-                    {
-                        uint oldParam = reader.ReadUInt32BigEndian();
-                    }
-
-                    ulong hash = reader.ReadUInt32BigEndian();
-                    if (hash == 1)
-                    {
-                        uint   unknown    = reader.ReadUInt32BigEndian();
-                        byte[] nuChecksum = reader.ReadBytes(0x10);
-                    }
-                    else
-                    {
-                        uint unknown = reader.ReadUInt32BigEndian();
-                    }
-
-                    if (nuResourceHeader.Version >= 3)
-                    {
-                        uint platformsAndClasses = reader.ReadUInt32BigEndian();
-
-                        if (nuResourceHeader.Version >= 6)
-                        {
-                            uint forContext  = reader.ReadUInt32BigEndian();
-                            uint withContext = reader.ReadUInt32BigEndian();
-                        }
-
-                        if (nuResourceHeader.Version >= 8)
-                        {
-                            uint discipline = reader.ReadUInt32BigEndian();
-                        }
-                    }
+                    nuSplines[i] = new NuSpline().Deserialize();
                 }
+
+                return (T)(object)nuSplines;
+            }
+            else if (typeof(T) == typeof(ushort[]))
+            {
+                ushort[] ushortArray = new ushort[size];
+
+                for (int i = 0; i < size; i++)
+                {
+                    ushortArray[i] = reader.ReadUInt16();
+                }
+
+                return (T)(object)ushortArray;
+            }
+            else
+            {
+                throw new NotSupportedException($"{reader.BaseStream.Position:x8}");
             }
         }
     }

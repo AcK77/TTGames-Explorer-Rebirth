@@ -5,14 +5,14 @@ namespace TTGamesExplorerRebirthLib.Formats.NuCore
 #pragma warning disable IDE0059
     public class NuResourceHeader
     {
-        public static string Magic = "HSER";
+        public const string Magic = "HSER";
 
-        public uint             Version            { get; private set; }
-        public uint             Type               { get; private set; }
-        public string           ProjectName        { get; private set; }
-        public string           ProducedByUserName { get; private set; }
-        public string           SourceFileName     { get; private set; }
-        public NuFileTreeNode[] Nodes              { get; private set; }
+        public uint                 Version            { get; private set; }
+        public uint                 Type               { get; private set; }
+        public string               ProjectName        { get; private set; }
+        public string               ProducedByUserName { get; private set; }
+        public string               SourceFileName     { get; private set; }
+        public List<NuFileTreeNode> Nodes              { get; private set; }
 
         public NuResourceHeader Deserialize(BinaryReader reader)
         {
@@ -31,10 +31,10 @@ namespace TTGamesExplorerRebirthLib.Formats.NuCore
             
             if (Type == 1)
             {
-                Nodes = new NuFileTree().Deserialize(reader);
+                Nodes = new NuFileTree().Deserialize(reader).Nodes;
             }
 
-            new NuVector().Deserialize(reader, this);
+            NuVector.Deserialize<NuResourceReference>(reader, this);
 
             ProjectName = reader.ReadSized16NullTerminatedString();
 

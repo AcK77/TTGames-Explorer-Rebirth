@@ -5,7 +5,7 @@ namespace TTGamesExplorerRebirthLib.Formats.NuCore
 #pragma warning disable IDE0059
     public class NuTexHdrSceneBlock
     {
-        public static string Magic = "HGXT";
+        public const string Magic = "HGXT";
 
         public List<string> FilesPath {  get; private set; }
 

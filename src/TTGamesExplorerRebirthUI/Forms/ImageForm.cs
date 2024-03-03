@@ -19,13 +19,16 @@ namespace TTGamesExplorerRebirthUI.Forms
     {
         private readonly List<string> _ddsNames = [];
         private readonly List<byte[]> _ddsFilesRaw = [];
+
         private readonly string _filePath;
-        private readonly bool _isDDS;
-        private bool _transparentBackground = true; 
+        private readonly bool   _isDDS;
+
         private System.Drawing.Image _previewImage;
-        private int _previewWidth;
-        private int _previewHeight;
-        private int _zoomVal = 100;
+
+        private bool _transparentBackground = true;
+        private int  _previewWidth;
+        private int  _previewHeight;
+        private int  _zoomVal = 100;
 
         [GeneratedRegex(@"\d+")]
         private static partial Regex Regex_FirstDigit();
@@ -50,10 +53,10 @@ namespace TTGamesExplorerRebirthUI.Forms
 
                 NXGTextures nxgTextures = new(fileBuffer);
 
-                foreach (NXGFile nxgFile in nxgTextures.Files)
+                foreach (var nxgFile in nxgTextures.Files)
                 {
-                    _ddsNames.Add(nxgFile.Path);
-                    _ddsFilesRaw.Add(nxgFile.Data);
+                    _ddsNames.Add(nxgFile.Key);
+                    _ddsFilesRaw.Add(nxgFile.Value);
                 }
 
                 LoadImages();

@@ -115,7 +115,7 @@ namespace TTGamesExplorerRebirthUI.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap brick_icon {
             get {
-                object obj = ResourceManager.GetObject("brick-icon", resourceCulture);
+                object obj = ResourceManager.GetObject("brick_icon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -241,6 +241,36 @@ namespace TTGamesExplorerRebirthUI.Properties {
         }
         
         /// <summary>
+        ///   Recherche une ressource localisée de type System.Byte[].
+        /// </summary>
+        internal static byte[] ModelFragment {
+            get {
+                object obj = ResourceManager.GetObject("ModelFragment", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Byte[].
+        /// </summary>
+        internal static byte[] ModelVertex {
+            get {
+                object obj = ResourceManager.GetObject("ModelVertex", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap music {
+            get {
+                object obj = ResourceManager.GetObject("music", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap page {
@@ -346,6 +376,26 @@ namespace TTGamesExplorerRebirthUI.Properties {
         internal static System.Drawing.Bitmap play_green {
             get {
                 object obj = ResourceManager.GetObject("play_green", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap script {
+            get {
+                object obj = ResourceManager.GetObject("script", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap shape_3d {
+            get {
+                object obj = ResourceManager.GetObject("shape_3d", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -2,7 +2,6 @@
 
 namespace TTGamesExplorerRebirthLib.Formats.NuCore
 {
-#pragma warning disable IDE0059
     public class NuTexGenHdr
     {
         public List<string> FilesPath { get; private set; }
@@ -20,23 +19,24 @@ namespace TTGamesExplorerRebirthLib.Formats.NuCore
 
             for (int i = 0; i < nuTextureCount; i++)
             {
-                // Read NuTexGenHdr.
-
-                byte[] nuChecksum = reader.ReadBytes(0x10);
-                bool isNuChecksumZeroed = !nuChecksum.Any(b => b != 0);
+                byte[] nuChecksum         = reader.ReadBytes(0x10);
+                bool   isNuChecksumZeroed = !nuChecksum.Any(b => b != 0);
 
                 string path = "";
 
                 if (nuTexHdrVersion == 1 || nuTexHdrVersion == 0)
                 {
                     path = reader.ReadSized32NullTerminatedString();
+
                     uint nuTexGenHdrUnknown1 = reader.ReadUInt32BigEndian();
                 }
 
                 if (nuTexHdrVersion == 12)
                 {
                     uint nuAlignedBuffer = reader.ReadUInt32();
+
                     path = reader.ReadSized8NullTerminatedString();
+
                     byte nuResourceId = reader.ReadByte();
                 }
 
@@ -45,18 +45,26 @@ namespace TTGamesExplorerRebirthLib.Formats.NuCore
                 {
                     if (!isNuChecksumZeroed)
                     {
-                        uint nuAlignedBuffer = reader.ReadUInt32();
-                        path = reader.ReadSized8NullTerminatedString();
-                        byte nuResourceId = reader.ReadByte();
-                        uint nuTexGenHdrUnknown3 = reader.ReadUInt32();
-                        uint nuTexGenHdrUnknown4 = reader.ReadUInt32();
+                        reader.ReadSized16NullTerminatedString();
+
+                        path = reader.ReadSized16NullTerminatedString();
+
+                        byte unknown1 = reader.ReadByte();
+
+                        NuTextureType textureType = (NuTextureType)reader.ReadUInt32BigEndian() - 1;
+
+                        ushort unknown3 = reader.ReadUInt16BigEndian();
+                        ushort unknown4 = reader.ReadUInt16BigEndian();
                     }
                     else
                     {
                         path = reader.ReadSized16NullTerminatedString();
-                        uint nuTexGenHdrUnknown1 = reader.ReadUInt32();
-                        uint nuTexGenHdrUnknown2 = reader.ReadUInt32();
-                        uint nuTexGenHdrUnknown3 = reader.ReadUInt32();
+
+                        ushort unknown1 = reader.ReadUInt16BigEndian();
+                        ushort unknown2 = reader.ReadUInt16BigEndian();
+                        uint   unknown3 = reader.ReadUInt32BigEndian();
+                        ushort unknown4 = reader.ReadUInt16BigEndian();
+                        ushort unknown5 = reader.ReadUInt16BigEndian();
                     }
                 }
 
@@ -70,5 +78,4 @@ namespace TTGamesExplorerRebirthLib.Formats.NuCore
             return this;
         }
     }
-#pragma warning restore IDE0059
 }

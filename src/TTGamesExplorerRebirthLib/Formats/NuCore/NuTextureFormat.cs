@@ -1,0 +1,35 @@
+﻿namespace TTGamesExplorerRebirthLib.Formats.NuCore
+{
+    public enum NuTextureFormat
+    {
+        DXT1,
+        DXT1A,
+        DXT2,
+        DXT3,
+        DXT4,
+        DXT5,
+        B8888,
+        A16B16G16R16F,
+        A32B32G32R32F,
+        DXTN,
+        A2R10G10B10_DEP,
+        PAL8,
+        PAL4,
+        RGB5A3,
+        Undefined,
+        L8,
+        ETC1,
+        ETC1_A4,
+        A32B32G32R32F_LIN,
+        PVRTC1_2_RGB,
+        PVRTC1_2,
+        PVRTC1_4_RGB,
+        PVRTC1_4,
+        ATITC_RGBA,
+        ATITC_RGB,
+        ATITC_RGBA_EXP,
+        R8G8,
+        A16B16G16R16F_LIN,
+        R16G16F_LIN,
+    }
+}

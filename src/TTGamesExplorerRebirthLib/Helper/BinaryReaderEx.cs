@@ -137,5 +137,10 @@ namespace TTGamesExplorerRebirthLib.Helper
 
             return text;
         }
+
+        public static string ReadSizedString(this BinaryReader reader, uint size)
+        {
+            return Encoding.ASCII.GetString(reader.ReadBytes((int)size));
+        }
     }
 }

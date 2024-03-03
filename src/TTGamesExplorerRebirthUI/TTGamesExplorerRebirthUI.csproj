@@ -6,7 +6,7 @@
     <Nullable>disable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
-    <ApplicationIcon>Icons\head-ico.ico</ApplicationIcon>
+    <ApplicationIcon>Properties\Icons\head-ico.ico</ApplicationIcon>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <GenerateResourceWarnOnBinaryFormatterUse>false</GenerateResourceWarnOnBinaryFormatterUse>
   </PropertyGroup>
@@ -16,13 +16,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Icons\head-ico.ico" />
+    <Content Include="Properties\Icons\head-ico.ico" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="DarkUI.Net5.0" Version="1.0.0" />
     <PackageReference Include="NAudio" Version="2.2.1" />
     <PackageReference Include="NAudio.Vorbis" Version="1.5.0" />
+    <PackageReference Include="OpenTK" Version="4.8.2" />
     <PackageReference Include="SixLabors.ImageSharp" Version="3.1.2" />
     <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="2.1.1" />
   </ItemGroup>

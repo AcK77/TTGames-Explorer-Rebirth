@@ -11,7 +11,7 @@ namespace TTGamesExplorerRebirthLib.Formats.NuCore
         public string TimeDate   { get; private set; }
         public string LegoPartId { get; private set; }
 
-        public NuConversionInfo Deserialize(BinaryReader reader, NuResourceHeader nuResourceHeader)
+        public NuConversionInfo Deserialize(BinaryReader reader)
         {
             if (reader.ReadUInt32AsString() != Magic)
             {

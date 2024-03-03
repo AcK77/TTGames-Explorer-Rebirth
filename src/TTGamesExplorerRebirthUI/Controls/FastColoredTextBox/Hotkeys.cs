@@ -112,8 +112,9 @@ namespace FastColoredTextBoxNS
 
         public static HotkeysMapping Parse(string s)
         {
-            HotkeysMapping result = [];
 
+            HotkeysMapping result = [];
+            /*
             CultureInfo oldCulture = Thread.CurrentThread.CurrentUICulture;
 
             Thread.CurrentThread.CurrentUICulture = CultureInfo.InvariantCulture;
@@ -133,7 +134,7 @@ namespace FastColoredTextBoxNS
             }
 
             Thread.CurrentThread.CurrentUICulture = oldCulture;
-
+            */
             return result;
         }
     }

@@ -43,7 +43,9 @@ namespace TTGamesExplorerRebirthUI
                 ".dll" => new Bitmap(Properties.Resources.page_gear),
                 ".exe" => new Bitmap(Properties.Resources.application),
                 ".ft2" => new Bitmap(Properties.Resources.font),
+                ".ghg" => new Bitmap(Properties.Resources.shape_3d),
                 ".git" => new Bitmap(Properties.Resources.page_white_text),
+                ".gsc" => new Bitmap(Properties.Resources.shape_3d),
                 ".ini" => new Bitmap(Properties.Resources.page_white_text),
                 ".lua" => new Bitmap(Properties.Resources.page_white_text),
                 ".mp3" => new Bitmap(Properties.Resources.page_white_music),
@@ -55,7 +57,7 @@ namespace TTGamesExplorerRebirthUI
                 ".sub" => new Bitmap(Properties.Resources.page_white_text),
                 ".subopt" => new Bitmap(Properties.Resources.page_white_text),
                 ".tex" => new Bitmap(Properties.Resources.picture),
-                ".tsh" => new Bitmap(Properties.Resources.picture),
+                ".tsh" => new Bitmap(Properties.Resources.border_all),
                 ".txt" => new Bitmap(Properties.Resources.page_white_text),
                 ".pac" => new Bitmap(Properties.Resources.brick),
                 ".pak" => new Bitmap(Properties.Resources.brick),
@@ -155,6 +157,15 @@ namespace TTGamesExplorerRebirthUI
                         fileBuffer ??= File.ReadAllBytes(path);
 
                         new PCShadersForm(path, fileBuffer).ShowDialog();
+                        break;
+                    }
+
+                case ".ghg":
+                case ".gsc":
+                    {
+                        fileBuffer ??= File.ReadAllBytes(path);
+
+                        new ModelForm(path, fileBuffer).ShowDialog();
                         break;
                     }
             }

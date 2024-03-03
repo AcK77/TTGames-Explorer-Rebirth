@@ -38,7 +38,7 @@ namespace TTGamesExplorerRebirthUI.Forms
         {
             toolStripStatusLabel1.Text = Path.GetFileName(_filePath);
 
-            for (int i = 0; i < _tshFile.Entries.Count; i++)
+            for (int i = 0; i < _tshFile.TextureSheet.Entries.Count; i++)
             {
                 darkComboBox1.Items.Add($"Section #{i + 1}");
             }
@@ -59,14 +59,15 @@ namespace TTGamesExplorerRebirthUI.Forms
 
                 SixLabors.ImageSharp.Image image = _tshFile.Image.Images[0].CloneAs<Rgba32>();
 
-                for (int i = 0; i < _tshFile.Entries.Count; i++)
+                for (int i = 0; i < _tshFile.TextureSheet.Entries.Count; i++)
                 {
                     RectangleF rect = new()
                     {
-                        X = _tshFile.Entries[i].MinX,
-                        Y = _tshFile.Entries[i].MinY,
-                        Width = _tshFile.Entries[i].Width - _tshFile.Entries[i].TrimLeft - _tshFile.Entries[i].TrimRight,
-                        Height = _tshFile.Entries[i].Height - _tshFile.Entries[i].TrimTop - _tshFile.Entries[i].TrimBottom,
+                        X = _tshFile.TextureSheet.Entries[i].MinX,
+                        Y = _tshFile.TextureSheet.Entries[i].MinY,
+
+                        Width  = _tshFile.TextureSheet.Entries[i].Width - _tshFile.TextureSheet.Entries[i].TrimLeft - _tshFile.TextureSheet.Entries[i].TrimRight,
+                        Height = _tshFile.TextureSheet.Entries[i].Height - _tshFile.TextureSheet.Entries[i].TrimTop - _tshFile.TextureSheet.Entries[i].TrimBottom,
                     };
 
                     image.Mutate(x => x.Fill(Color.FromRgba(255, 0, 0, 120), rect));
@@ -80,8 +81,8 @@ namespace TTGamesExplorerRebirthUI.Forms
 
                 darkLabel1.Text = $"{_zoomVal}%";
 
-                _previewImage = new Bitmap(stream);
-                _previewWidth = image.Width;
+                _previewImage  = new Bitmap(stream);
+                _previewWidth  = image.Width;
                 _previewHeight = image.Height;
 
                 pictureBox1.Image = new Bitmap(stream);
@@ -101,10 +102,11 @@ namespace TTGamesExplorerRebirthUI.Forms
 
                 RectangleF rect = new()
                 {
-                    X = _tshFile.Entries[indexSection].MinX,
-                    Y = _tshFile.Entries[indexSection].MinY,
-                    Width = _tshFile.Entries[indexSection].Width - _tshFile.Entries[indexSection].TrimLeft - _tshFile.Entries[indexSection].TrimRight,
-                    Height = _tshFile.Entries[indexSection].Height - _tshFile.Entries[indexSection].TrimTop - _tshFile.Entries[indexSection].TrimBottom,
+                    X = _tshFile.TextureSheet.Entries[indexSection].MinX,
+                    Y = _tshFile.TextureSheet.Entries[indexSection].MinY,
+
+                    Width  = _tshFile.TextureSheet.Entries[indexSection].Width - _tshFile.TextureSheet.Entries[indexSection].TrimLeft - _tshFile.TextureSheet.Entries[indexSection].TrimRight,
+                    Height = _tshFile.TextureSheet.Entries[indexSection].Height - _tshFile.TextureSheet.Entries[indexSection].TrimTop - _tshFile.TextureSheet.Entries[indexSection].TrimBottom,
                 };
 
                 using MemoryStream stream = new();

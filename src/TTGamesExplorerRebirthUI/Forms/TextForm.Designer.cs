@@ -65,9 +65,8 @@
             fastColoredTextBox1.DisabledColor = Color.FromArgb(100, 180, 180, 180);
             fastColoredTextBox1.Dock = DockStyle.Fill;
             fastColoredTextBox1.FoldingIndicatorColor = Color.PaleGreen;
-            fastColoredTextBox1.Font = new Font("Courier New", 9.75F);
             fastColoredTextBox1.ForeColor = Color.Gainsboro;
-            fastColoredTextBox1.Hotkeys = resources.GetString("fastColoredTextBox1.Hotkeys");
+            fastColoredTextBox1.Hotkeys = "";
             fastColoredTextBox1.IsReplaceMode = false;
             fastColoredTextBox1.LineNumberColor = Color.White;
             fastColoredTextBox1.Location = new Point(1, 25);
