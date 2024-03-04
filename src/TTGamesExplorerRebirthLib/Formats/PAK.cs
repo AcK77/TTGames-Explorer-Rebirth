@@ -22,9 +22,9 @@ namespace TTGamesExplorerRebirthLib.Formats
 
         public List<PAKFile> Files = [];
 
-        public PAK(string archiveFilePath)
+        public PAK(string filePath)
         {
-            Deserialize(File.ReadAllBytes(archiveFilePath));
+            Deserialize(File.ReadAllBytes(filePath));
         }
 
         public PAK(byte[] buffer)

@@ -16,9 +16,9 @@ namespace TTGamesExplorerRebirthLib.Formats
         public NuTextureSheet TextureSheet { get; private set; }
         public DDSImage       Image        { get; private set; }
 
-        public TSH(string archiveFilePath)
+        public TSH(string filePath)
         {
-            Deserialize(File.ReadAllBytes(archiveFilePath));
+            Deserialize(File.ReadAllBytes(filePath));
         }
 
         public TSH(byte[] buffer)

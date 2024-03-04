@@ -115,9 +115,9 @@ namespace TTGamesExplorerRebirthLib.Helper
             return text;
         }
 
-        public static string ReadSized32NullTerminatedString(this BinaryReader reader)
+        public static string ReadSized32NullTerminatedString(this BinaryReader reader, bool littleEndian = false)
         {
-            uint size = reader.ReadUInt32BigEndian();
+            uint size = littleEndian ? reader.ReadUInt32() : reader.ReadUInt32BigEndian();
 
             List<byte> strBytes = [];
 

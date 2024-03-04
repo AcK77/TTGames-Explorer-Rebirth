@@ -17,5 +17,23 @@ namespace TTGamesExplorerRebirthLib.Formats.NuCore
 
             return nuResourceHeaderSize;
         }
+
+        public bool IsNuFile(BinaryReader reader)
+        {
+            long position = reader.BaseStream.Position;
+
+            reader.ReadUInt32();
+
+            if (reader.ReadUInt32AsString() != Magic)
+            {
+                reader.BaseStream.Seek(position, SeekOrigin.Begin);
+
+                return false;
+            }
+
+            reader.BaseStream.Seek(position, SeekOrigin.Begin);
+
+            return true;
+        }
     }
 }
