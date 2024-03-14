@@ -23,12 +23,12 @@ namespace TTGamesExplorerRebirthUI
             }
         }
 
-        public void Save()
+        public static void Save()
         {
             File.WriteAllText(SettingsFilePath, JsonSerializer.Serialize(_instance));
         }
 
-        public void Load()
+        public static void Load()
         {
             if (File.Exists(SettingsFilePath))
             {

@@ -1,7 +1,8 @@
 using DarkUI.Controls;
 using DarkUI.Forms;
+using System.Diagnostics;
 using System.Security.Cryptography;
-using System.Windows.Forms;
+using System.Text;
 
 namespace TTGamesExplorerRebirthUI.Forms
 {
@@ -22,7 +23,7 @@ namespace TTGamesExplorerRebirthUI.Forms
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            AppSettings.Instance.Load();
+            AppSettings.Load();
 
             if (AppSettings.Instance.GameFolderPath != null)
             {
@@ -43,7 +44,7 @@ namespace TTGamesExplorerRebirthUI.Forms
 
                 AppSettings.Instance.GameFolderPath = folderBrowserDialog1.SelectedPath;
 
-                AppSettings.Instance.Save();
+                AppSettings.Save();
             }
         }
 

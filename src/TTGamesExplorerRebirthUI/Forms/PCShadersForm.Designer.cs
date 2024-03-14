@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PCShadersForm));
             darkStatusStrip1 = new DarkUI.Controls.DarkStatusStrip();
             toolStripStatusLabel1 = new ToolStripStatusLabel();
@@ -38,10 +39,17 @@
             darkContextMenu1 = new DarkUI.Controls.DarkContextMenu();
             extractToolStripMenuItem = new ToolStripMenuItem();
             folderBrowserDialog1 = new FolderBrowserDialog();
+            splitContainer1 = new SplitContainer();
+            fastColoredTextBox1 = new FastColoredTextBoxNS.FastColoredTextBox();
             darkStatusStrip1.SuspendLayout();
             darkMenuStrip1.SuspendLayout();
             darkSectionPanel1.SuspendLayout();
             darkContextMenu1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
+            splitContainer1.Panel1.SuspendLayout();
+            splitContainer1.Panel2.SuspendLayout();
+            splitContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)fastColoredTextBox1).BeginInit();
             SuspendLayout();
             // 
             // darkStatusStrip1
@@ -50,10 +58,10 @@
             darkStatusStrip1.BackColor = Color.FromArgb(60, 63, 65);
             darkStatusStrip1.ForeColor = Color.FromArgb(220, 220, 220);
             darkStatusStrip1.Items.AddRange(new ToolStripItem[] { toolStripStatusLabel1 });
-            darkStatusStrip1.Location = new Point(0, 342);
+            darkStatusStrip1.Location = new Point(0, 466);
             darkStatusStrip1.Name = "darkStatusStrip1";
             darkStatusStrip1.Padding = new Padding(0, 5, 0, 3);
-            darkStatusStrip1.Size = new Size(537, 24);
+            darkStatusStrip1.Size = new Size(932, 24);
             darkStatusStrip1.SizingGrip = false;
             darkStatusStrip1.TabIndex = 0;
             darkStatusStrip1.Text = "darkStatusStrip1";
@@ -73,7 +81,7 @@
             darkMenuStrip1.Location = new Point(0, 0);
             darkMenuStrip1.Name = "darkMenuStrip1";
             darkMenuStrip1.Padding = new Padding(3, 2, 0, 2);
-            darkMenuStrip1.Size = new Size(537, 24);
+            darkMenuStrip1.Size = new Size(932, 24);
             darkMenuStrip1.TabIndex = 1;
             darkMenuStrip1.Text = "darkMenuStrip1";
             // 
@@ -91,10 +99,10 @@
             // 
             darkSectionPanel1.Controls.Add(darkListView1);
             darkSectionPanel1.Dock = DockStyle.Fill;
-            darkSectionPanel1.Location = new Point(0, 24);
+            darkSectionPanel1.Location = new Point(0, 0);
             darkSectionPanel1.Name = "darkSectionPanel1";
             darkSectionPanel1.SectionHeader = "Shader(s):";
-            darkSectionPanel1.Size = new Size(537, 318);
+            darkSectionPanel1.Size = new Size(252, 442);
             darkSectionPanel1.TabIndex = 2;
             // 
             // darkListView1
@@ -104,9 +112,10 @@
             darkListView1.Location = new Point(1, 25);
             darkListView1.MultiSelect = true;
             darkListView1.Name = "darkListView1";
-            darkListView1.Size = new Size(535, 292);
+            darkListView1.Size = new Size(250, 416);
             darkListView1.TabIndex = 0;
             darkListView1.Text = "darkListView1";
+            darkListView1.SelectedIndicesChanged += DarkListView1_SelectedIndicesChanged;
             // 
             // darkContextMenu1
             // 
@@ -126,15 +135,66 @@
             extractToolStripMenuItem.Text = "Extract...";
             extractToolStripMenuItem.Click += ExtractToolStripMenuItem_Click;
             // 
+            // splitContainer1
+            // 
+            splitContainer1.Dock = DockStyle.Fill;
+            splitContainer1.Location = new Point(0, 24);
+            splitContainer1.Name = "splitContainer1";
+            // 
+            // splitContainer1.Panel1
+            // 
+            splitContainer1.Panel1.Controls.Add(darkSectionPanel1);
+            // 
+            // splitContainer1.Panel2
+            // 
+            splitContainer1.Panel2.Controls.Add(fastColoredTextBox1);
+            splitContainer1.Size = new Size(932, 442);
+            splitContainer1.SplitterDistance = 252;
+            splitContainer1.TabIndex = 3;
+            // 
+            // fastColoredTextBox1
+            // 
+            fastColoredTextBox1.AutoCompleteBracketsList = new char[]
+    {
+    '(',
+    ')',
+    '{',
+    '}',
+    '[',
+    ']',
+    '"',
+    '"',
+    '\'',
+    '\''
+    };
+            fastColoredTextBox1.AutoIndentCharsPatterns = "^\\s*[\\w\\.]+(\\s\\w+)?\\s*(?<range>=)\\s*(?<range>[^;=]+);^\\s*(case|default)\\s*[^:]*(?<range>:)\\s*(?<range>[^;]+);";
+            fastColoredTextBox1.AutoScrollMinSize = new Size(27, 14);
+            fastColoredTextBox1.BackBrush = null;
+            fastColoredTextBox1.CharHeight = 14;
+            fastColoredTextBox1.CharWidth = 8;
+            fastColoredTextBox1.DefaultMarkerSize = 8;
+            fastColoredTextBox1.DisabledColor = Color.FromArgb(100, 180, 180, 180);
+            fastColoredTextBox1.Dock = DockStyle.Fill;
+            fastColoredTextBox1.Hotkeys = "";
+            fastColoredTextBox1.IsReplaceMode = false;
+            fastColoredTextBox1.LineNumberColor = Color.White;
+            fastColoredTextBox1.Location = new Point(0, 0);
+            fastColoredTextBox1.Name = "fastColoredTextBox1";
+            fastColoredTextBox1.Paddings = new Padding(0);
+            fastColoredTextBox1.SelectionColor = Color.FromArgb(60, 0, 0, 255);
+            fastColoredTextBox1.ServiceColors = (FastColoredTextBoxNS.ServiceColors)resources.GetObject("fastColoredTextBox1.ServiceColors");
+            fastColoredTextBox1.Size = new Size(676, 442);
+            fastColoredTextBox1.TabIndex = 0;
+            fastColoredTextBox1.Zoom = 100;
+            // 
             // PCShadersForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(537, 366);
-            Controls.Add(darkSectionPanel1);
+            ClientSize = new Size(932, 490);
+            Controls.Add(splitContainer1);
             Controls.Add(darkStatusStrip1);
             Controls.Add(darkMenuStrip1);
-            FormBorderStyle = FormBorderStyle.FixedSingle;
             Icon = (Icon)resources.GetObject("$this.Icon");
             MainMenuStrip = darkMenuStrip1;
             MaximizeBox = false;
@@ -151,6 +211,11 @@
             darkMenuStrip1.PerformLayout();
             darkSectionPanel1.ResumeLayout(false);
             darkContextMenu1.ResumeLayout(false);
+            splitContainer1.Panel1.ResumeLayout(false);
+            splitContainer1.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)splitContainer1).EndInit();
+            splitContainer1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)fastColoredTextBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -166,5 +231,7 @@
         private FolderBrowserDialog folderBrowserDialog1;
         private DarkUI.Controls.DarkContextMenu darkContextMenu1;
         private ToolStripMenuItem extractToolStripMenuItem;
+        private SplitContainer splitContainer1;
+        private FastColoredTextBoxNS.FastColoredTextBox fastColoredTextBox1;
     }
 }

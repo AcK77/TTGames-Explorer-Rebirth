@@ -43,6 +43,7 @@ namespace TTGamesExplorerRebirthUI
                 ".dll" => new Bitmap(Properties.Resources.page_gear),
                 ".exe" => new Bitmap(Properties.Resources.application),
                 ".ft2" => new Bitmap(Properties.Resources.font),
+                ".fpk" => new Bitmap(Properties.Resources.brick),
                 ".ghg" => new Bitmap(Properties.Resources.shape_3d),
                 ".git" => new Bitmap(Properties.Resources.page_white_text),
                 ".gsc" => new Bitmap(Properties.Resources.shape_3d),
@@ -78,6 +79,7 @@ namespace TTGamesExplorerRebirthUI
                         break;
                     }
 
+                case ".fpk":
                 case ".pac":
                 case ".pak":
                     {

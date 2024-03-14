@@ -7,7 +7,7 @@ namespace TTGamesExplorerRebirthLib.Formats.NuCore
 #pragma warning disable IDE0059
         private const string Magic = "OFNI";
 
-        public string UserName   { get; private set; }
+        public string Author     { get; private set; }
         public string TimeDate   { get; private set; }
         public string LegoPartId { get; private set; }
 
@@ -20,7 +20,7 @@ namespace TTGamesExplorerRebirthLib.Formats.NuCore
 
             uint version = reader.ReadUInt32BigEndian();
 
-            UserName = (version < 2) ? reader.ReadSized32NullTerminatedString() : reader.ReadSized16NullTerminatedString();
+            Author   = (version < 2) ? reader.ReadSized32NullTerminatedString() : reader.ReadSized16NullTerminatedString();
             TimeDate = (version < 2) ? reader.ReadSized32NullTerminatedString() : reader.ReadSized16NullTerminatedString();
 
             if (version > 1)
