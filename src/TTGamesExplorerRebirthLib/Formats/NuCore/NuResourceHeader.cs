@@ -26,9 +26,16 @@ namespace TTGamesExplorerRebirthLib.Formats.NuCore
                 throw new InvalidDataException($"{reader.BaseStream.Position:x8}");
             }
 
-            Version = reader.ReadUInt32BigEndian();
-            Type    = reader.ReadUInt32BigEndian();
-            
+            Version = reader.ReadUInt32BigEndian(); // Name is maybe wrong?
+
+            if (Version >= 17) // Maybe it could be lower.
+            {
+                string fileName   = reader.ReadSized16NullTerminatedString();
+                byte[] nuChecksum = reader.ReadBytes(0x10);
+            }
+
+            Type = reader.ReadUInt32BigEndian(); // Name is maybe wrong?
+
             if (Type == 1)
             {
                 Files = new NuFileTree().Deserialize(reader).Files;
@@ -39,15 +46,26 @@ namespace TTGamesExplorerRebirthLib.Formats.NuCore
             ProjectName = reader.ReadSized16NullTerminatedString();
 
             uint resourceType       = reader.ReadUInt32();
-            uint accurevTransaction = reader.ReadUInt32(); // Always 0x00A33A70 ?
+            uint accurevTransaction = reader.ReadUInt32();
 
             ProducedByUserName = reader.ReadSized16NullTerminatedString();
 
-            sbyte unknown1 = reader.ReadSByte(); // Always -1 ?
+            sbyte unknown1 = reader.ReadSByte();
 
             SourceFileName = reader.ReadSized16NullTerminatedString();
 
-            sbyte unknown2 = reader.ReadSByte(); // Always -1 ?
+            if (Version >= 17) // Maybe it could be lower.
+            {
+                byte[] nuChecksum1 = reader.ReadBytes(0x10);
+                uint   unknown2    = reader.ReadUInt32BigEndian();
+                uint   fnv1aHash1  = reader.ReadUInt32BigEndian();
+                byte[] nuChecksum2 = reader.ReadBytes(0x10);
+                byte[] nuChecksum3 = reader.ReadBytes(0x10);
+                uint   unknown3    = reader.ReadUInt32BigEndian();
+                uint   fnv1aHash2  = reader.ReadUInt32BigEndian();
+            }
+
+            sbyte unknown5 = reader.ReadSByte();
 
             return this;
         }

@@ -9,6 +9,7 @@ namespace TTGamesExplorerRebirthLib.Formats.NuCore
         {
             for (int i = 0; i < size; i++)
             {
+                uint id   = reader.ReadUInt32BigEndian();
                 uint type = reader.ReadUInt32BigEndian();
 
                 if (nuResourceHeader.Version <= 6)
@@ -16,16 +17,8 @@ namespace TTGamesExplorerRebirthLib.Formats.NuCore
                     uint oldParam = reader.ReadUInt32BigEndian();
                 }
 
-                ulong hash = reader.ReadUInt32BigEndian();
-                if (hash == 1)
-                {
-                    uint   unknown    = reader.ReadUInt32BigEndian();
-                    byte[] nuChecksum = reader.ReadBytes(0x10);
-                }
-                else
-                {
-                    uint unknown = reader.ReadUInt32BigEndian();
-                }
+                uint unknown1 = reader.ReadUInt32BigEndian();
+                uint fnv1aHash = reader.ReadUInt32BigEndian();
 
                 if (nuResourceHeader.Version >= 3)
                 {
@@ -36,12 +29,19 @@ namespace TTGamesExplorerRebirthLib.Formats.NuCore
                         uint forContext  = reader.ReadUInt32BigEndian();
                         uint withContext = reader.ReadUInt32BigEndian();
                     }
-
-                    if (nuResourceHeader.Version >= 8)
-                    {
-                        uint discipline = reader.ReadUInt32BigEndian();
-                    }
                 }
+
+                if (nuResourceHeader.Version >= 17)
+                {
+                    byte[] nuChecksum = reader.ReadBytes(0x10);
+                    uint   unknown2   = reader.ReadUInt32BigEndian();
+                    byte[] unknown3   = reader.ReadBytes(0x10);
+                }
+            }
+
+            if (nuResourceHeader.Version >= 8)
+            {
+                uint discipline = reader.ReadUInt32BigEndian();
             }
 
             return this;

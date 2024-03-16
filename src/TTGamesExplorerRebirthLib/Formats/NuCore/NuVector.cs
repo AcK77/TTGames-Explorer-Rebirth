@@ -9,17 +9,22 @@ namespace TTGamesExplorerRebirthLib.Formats.NuCore
 
         public static T Deserialize<T>(BinaryReader reader, NuResourceHeader nuResourceHeader)
         {
-            if (reader.ReadUInt32AsString() != Magic)
+            if (nuResourceHeader.Version < 17) // Maybe it could be lower.
             {
-                throw new InvalidDataException($"{reader.BaseStream.Position:x8}");
+                if (reader.ReadUInt32AsString() != Magic)
+                {
+                    throw new InvalidDataException($"{reader.BaseStream.Position:x8}");
+                }
+            }
+            else
+            {
+                uint unknown = reader.ReadUInt32BigEndian();
             }
 
             uint size = reader.ReadUInt32BigEndian();
 
             if (typeof(T) == typeof(NuResourceReference))
             {
-                uint id = reader.ReadUInt32BigEndian();
-
                 return (T)(object)new NuResourceReference().Deserialize(reader, nuResourceHeader, size);
             }
             else if (typeof(T) == typeof(NuVFXLocator))
