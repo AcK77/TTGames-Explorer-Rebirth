@@ -48,6 +48,14 @@ namespace TTGamesExplorerRebirthUI.Forms
             }
         }
 
+        private void openFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                Helper.OpenFileInternal(Path.GetDirectoryName(openFileDialog1.FileName), openFileDialog1.FileName);
+            }
+        }
+
         private void LoadGameFolder(string path)
         {
             LoadFolderInTreeView(path);

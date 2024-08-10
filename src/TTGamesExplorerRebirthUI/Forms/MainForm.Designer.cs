@@ -47,6 +47,8 @@
             darkContextMenu1 = new DarkUI.Controls.DarkContextMenu();
             extractToolStripMenuItem = new ToolStripMenuItem();
             folderBrowserDialog1 = new FolderBrowserDialog();
+            openFileToolStripMenuItem = new ToolStripMenuItem();
+            openFileDialog1 = new OpenFileDialog();
             darkStatusStrip1.SuspendLayout();
             darkMenuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
@@ -99,7 +101,7 @@
             // fileToolStripMenuItem
             // 
             fileToolStripMenuItem.BackColor = Color.FromArgb(60, 63, 65);
-            fileToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { loadGameFolderToolStripMenuItem, toolStripSeparator1, exitToolStripMenuItem });
+            fileToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { openFileToolStripMenuItem, loadGameFolderToolStripMenuItem, toolStripSeparator1, exitToolStripMenuItem });
             fileToolStripMenuItem.ForeColor = Color.FromArgb(220, 220, 220);
             fileToolStripMenuItem.Image = Properties.Resources.page;
             fileToolStripMenuItem.Name = "fileToolStripMenuItem";
@@ -112,7 +114,7 @@
             loadGameFolderToolStripMenuItem.ForeColor = Color.FromArgb(220, 220, 220);
             loadGameFolderToolStripMenuItem.Image = Properties.Resources.folder_brick;
             loadGameFolderToolStripMenuItem.Name = "loadGameFolderToolStripMenuItem";
-            loadGameFolderToolStripMenuItem.Size = new Size(176, 22);
+            loadGameFolderToolStripMenuItem.Size = new Size(180, 22);
             loadGameFolderToolStripMenuItem.Text = "Load game folder...";
             loadGameFolderToolStripMenuItem.Click += LoadGameFolderToolStripMenuItem_Click;
             // 
@@ -122,7 +124,7 @@
             toolStripSeparator1.ForeColor = Color.FromArgb(220, 220, 220);
             toolStripSeparator1.Margin = new Padding(0, 0, 0, 1);
             toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new Size(173, 6);
+            toolStripSeparator1.Size = new Size(177, 6);
             // 
             // exitToolStripMenuItem
             // 
@@ -130,7 +132,7 @@
             exitToolStripMenuItem.ForeColor = Color.FromArgb(220, 220, 220);
             exitToolStripMenuItem.Image = Properties.Resources.cancel;
             exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            exitToolStripMenuItem.Size = new Size(176, 22);
+            exitToolStripMenuItem.Size = new Size(180, 22);
             exitToolStripMenuItem.Text = "Exit";
             // 
             // aboutToolStripMenuItem
@@ -256,6 +258,20 @@
             extractToolStripMenuItem.Size = new Size(109, 22);
             extractToolStripMenuItem.Text = "Extract";
             // 
+            // openFileToolStripMenuItem
+            // 
+            openFileToolStripMenuItem.BackColor = Color.FromArgb(60, 63, 65);
+            openFileToolStripMenuItem.ForeColor = Color.FromArgb(220, 220, 220);
+            openFileToolStripMenuItem.Image = Properties.Resources.page_go;
+            openFileToolStripMenuItem.Name = "openFileToolStripMenuItem";
+            openFileToolStripMenuItem.Size = new Size(180, 22);
+            openFileToolStripMenuItem.Text = "Open file...";
+            openFileToolStripMenuItem.Click += openFileToolStripMenuItem_Click;
+            // 
+            // openFileDialog1
+            // 
+            openFileDialog1.Filter = "All files|*.*";
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -310,5 +326,7 @@
         private DarkUI.Controls.DarkSectionPanel darkSectionPanel2;
         private DarkUI.Controls.DarkContextMenu darkContextMenu1;
         private ToolStripMenuItem extractToolStripMenuItem;
+        private ToolStripMenuItem openFileToolStripMenuItem;
+        private OpenFileDialog openFileDialog1;
     }
 }
