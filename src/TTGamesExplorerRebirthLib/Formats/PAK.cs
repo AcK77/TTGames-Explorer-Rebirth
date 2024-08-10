@@ -40,7 +40,8 @@ namespace TTGamesExplorerRebirthLib.Formats
 
             // Read header.
 
-            if (reader.ReadUInt32() != Magic1 || reader.ReadUInt32() != Magic2)
+            uint magic = reader.ReadUInt32();
+            if (magic != Magic1 && magic != Magic2)
             {
                 throw new InvalidDataException($"{stream.Position:x8}");
             }
@@ -49,7 +50,11 @@ namespace TTGamesExplorerRebirthLib.Formats
             uint archiveSize = reader.ReadUInt32();
             uint checksum    = reader.ReadUInt32();
             uint unknown1    = reader.ReadUInt32(); // Always 0.
-            uint unknown2    = reader.ReadUInt32(); // TODO: Known values: 0x00402F4C.
+
+            if (magic == Magic1)
+            {
+                uint unknown2 = reader.ReadUInt32(); // TODO: Known values: 0x00402F4C.
+            }
 
             // NOTE: Checksum is computed over the whole file with the field "checksum" zeroed.
             //       It uses TTGamesChecksum.PAK(buffer);
