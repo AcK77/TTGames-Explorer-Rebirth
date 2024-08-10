@@ -8,9 +8,19 @@ namespace TTGamesExplorerRebirthLib.Formats.NuCore
 
         public NuTexGenHdr Deserialize(BinaryReader reader, uint nuTexHdrVersion)
         {
-            if (reader.ReadUInt32AsString() != NuVector.Magic)
+            if (nuTexHdrVersion == 14)
             {
-                throw new InvalidDataException($"{reader.BaseStream.Position:x8}");
+                if (reader.ReadUInt32BigEndian() != 0) // VTOR is null.
+                {
+                    throw new InvalidDataException($"{reader.BaseStream.Position:x8}");
+                }
+            }
+            else
+            {
+                if (reader.ReadUInt32AsString() != NuVector.Magic)
+                {
+                    throw new InvalidDataException($"{reader.BaseStream.Position:x8}");
+                }
             }
 
             uint nuTextureCount = reader.ReadUInt32BigEndian();
