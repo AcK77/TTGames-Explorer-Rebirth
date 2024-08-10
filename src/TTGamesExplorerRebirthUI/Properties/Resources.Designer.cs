@@ -241,26 +241,6 @@ namespace TTGamesExplorerRebirthUI.Properties {
         }
         
         /// <summary>
-        ///   Recherche une ressource localisée de type System.Byte[].
-        /// </summary>
-        internal static byte[] ModelFragment {
-            get {
-                object obj = ResourceManager.GetObject("ModelFragment", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une ressource localisée de type System.Byte[].
-        /// </summary>
-        internal static byte[] ModelVertex {
-            get {
-                object obj = ResourceManager.GetObject("ModelVertex", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap music {
@@ -296,6 +276,16 @@ namespace TTGamesExplorerRebirthUI.Properties {
         internal static System.Drawing.Bitmap page_gear {
             get {
                 object obj = ResourceManager.GetObject("page_gear", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap page_go {
+            get {
+                object obj = ResourceManager.GetObject("page_go", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
