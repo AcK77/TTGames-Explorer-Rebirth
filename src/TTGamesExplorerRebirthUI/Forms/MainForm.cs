@@ -48,7 +48,7 @@ namespace TTGamesExplorerRebirthUI.Forms
             }
         }
 
-        private void openFileToolStripMenuItem_Click(object sender, EventArgs e)
+        private void OpenFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {

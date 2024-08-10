@@ -15,6 +15,13 @@
         [
             new GamesMetadata()
             {
+                Exe = "LEGOMARVEL.exe",
+                Hash = "2A0CEDE63A1C0FA76911F87B6909BB6DB2E3FBC4",
+                Name = "LEGO MARVEL Super Heroes",
+                Cover = Properties.Resources.LEGOMarvel1
+            },
+            new GamesMetadata()
+            {
                 Exe = "LEGOLOTR.exe",
                 Hash = "294F2BE808C3051AAD58F17EF2DE764DE76FE1E6",
                 Name = "LEGO The Lord of the Rings",

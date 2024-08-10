@@ -223,6 +223,16 @@ namespace TTGamesExplorerRebirthUI.Properties {
         /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap LEGOMarvel1 {
+            get {
+                object obj = ResourceManager.GetObject("LEGOMarvel1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap LEGOStarWarsSaga {
             get {
                 object obj = ResourceManager.GetObject("LEGOStarWarsSaga", resourceCulture);

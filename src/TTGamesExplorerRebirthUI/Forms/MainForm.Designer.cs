@@ -266,7 +266,7 @@
             openFileToolStripMenuItem.Name = "openFileToolStripMenuItem";
             openFileToolStripMenuItem.Size = new Size(180, 22);
             openFileToolStripMenuItem.Text = "Open file...";
-            openFileToolStripMenuItem.Click += openFileToolStripMenuItem_Click;
+            openFileToolStripMenuItem.Click += OpenFileToolStripMenuItem_Click;
             // 
             // openFileDialog1
             // 
