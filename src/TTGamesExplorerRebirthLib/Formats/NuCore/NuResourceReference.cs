@@ -17,7 +17,7 @@ namespace TTGamesExplorerRebirthLib.Formats.NuCore
                     uint oldParam = reader.ReadUInt32BigEndian();
                 }
 
-                uint unknown1 = reader.ReadUInt32BigEndian();
+                uint unknown1  = reader.ReadUInt32BigEndian();
                 uint fnv1aHash = reader.ReadUInt32BigEndian();
 
                 if (nuResourceHeader.Version >= 3)

@@ -15,7 +15,10 @@ namespace TTGamesExplorerRebirthLib.Formats.NuCore
             uint leafNameSize      = reader.ReadUInt32BigEndian();
             long leafNamesPosition = reader.BaseStream.Position;
 
-            reader.BaseStream.Seek(leafNameSize, SeekOrigin.Current);
+            if (leafNameSize > 2)
+            {
+                reader.BaseStream.Seek(leafNameSize, SeekOrigin.Current);
+            }
 
             if (nodeCount > 0)
             {
@@ -28,7 +31,7 @@ namespace TTGamesExplorerRebirthLib.Formats.NuCore
 
                 Files = new string[fileCount];
 
-                for (int i = 0; i < nodeCount; i++)
+                for (int i = 0; i < fileCount; i++)
                 {
                     if (nodes[i].FileIndex != -1)
                     {

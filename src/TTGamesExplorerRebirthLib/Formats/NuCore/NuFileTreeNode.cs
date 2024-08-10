@@ -44,9 +44,11 @@ namespace TTGamesExplorerRebirthLib.Formats.NuCore
                 }
             }
 
-            uint parentIndex = reader.ReadUInt16BigEndian();
-
-            Parent = nodes[(int)parentIndex];
+            int parentIndex = reader.ReadInt16BigEndian();
+            if (parentIndex != -1)
+            {
+                Parent = nodes[parentIndex];
+            }
 
             if (nuFileTreeVersion < 1)
             {

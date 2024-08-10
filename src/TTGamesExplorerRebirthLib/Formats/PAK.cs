@@ -18,7 +18,8 @@ namespace TTGamesExplorerRebirthLib.Formats
     /// </remarks>
     public class PAK
     {
-        private const uint Magic = 0x1234567A;
+        private const uint Magic1 = 0x1234567A;
+        private const uint Magic2 = 0x12345679;
 
         public List<PAKFile> Files = [];
 
@@ -39,7 +40,7 @@ namespace TTGamesExplorerRebirthLib.Formats
 
             // Read header.
 
-            if (reader.ReadUInt32() != Magic)
+            if (reader.ReadUInt32() != Magic1 || reader.ReadUInt32() != Magic2)
             {
                 throw new InvalidDataException($"{stream.Position:x8}");
             }
