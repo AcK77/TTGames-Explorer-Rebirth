@@ -38,16 +38,16 @@ namespace TTGamesExplorerRebirthLib.Formats.NuCore
                 {
                     path = reader.ReadSized32NullTerminatedString();
 
-                    uint nuTexGenHdrUnknown1 = reader.ReadUInt32BigEndian();
+                    uint nuTextureType = reader.ReadUInt32BigEndian();
                 }
 
                 if (nuTexHdrVersion == 12)
                 {
-                    uint nuAlignedBuffer = reader.ReadUInt32();
+                    uint level = reader.ReadUInt32(); // Accurev internal level (unused)
 
                     path = reader.ReadSized8NullTerminatedString();
 
-                    byte nuResourceId = reader.ReadByte();
+                    byte nuTextureTypeAsU8 = reader.ReadByte();
                 }
 
                 // FIXME: Some textures failed here.
@@ -59,7 +59,7 @@ namespace TTGamesExplorerRebirthLib.Formats.NuCore
 
                         path = reader.ReadSized16NullTerminatedString();
 
-                        byte unknown1 = reader.ReadByte();
+                        byte nuTextureTypeAsU8 = reader.ReadByte();
 
                         NuTextureType textureType = (NuTextureType)reader.ReadUInt32BigEndian() - 1;
 
