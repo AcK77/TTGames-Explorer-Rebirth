@@ -38,7 +38,7 @@ namespace TTGamesExplorerRebirthLib.Formats.NuCore
                 {
                     path = reader.ReadSized32NullTerminatedString();
 
-                    uint nuttype = reader.ReadUInt32BigEndian();
+                    uint nuTextureType = reader.ReadUInt32BigEndian();
                 }
 
                 if (nuTexHdrVersion == 12)
