@@ -20,7 +20,7 @@ namespace TTGamesExplorerRebirthLib.Formats.NuCore
                 throw new InvalidDataException($"{reader.BaseStream.Position:x8}");
             }
 
-            uint nuTextureSetHeaderUnknown1 = reader.ReadUInt32BigEndian();
+            uint TXSTHDRCount = reader.ReadUInt32BigEndian(); // always 1
 
             if (reader.ReadUInt32AsString() != MagicTxSt)
             {
