@@ -43,7 +43,7 @@ namespace TTGamesExplorerRebirthLib.Formats.NuCore
 
                 if (nuTexHdrVersion == 12)
                 {
-                    uint Level = reader.ReadUInt32(); // Accurev internal level (unused)
+                    uint level = reader.ReadUInt32(); // Accurev internal level (unused)
 
                     path = reader.ReadSized8NullTerminatedString();
 
