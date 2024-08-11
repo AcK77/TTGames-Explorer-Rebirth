@@ -47,7 +47,7 @@ namespace TTGamesExplorerRebirthLib.Formats.NuCore
 
                     path = reader.ReadSized8NullTerminatedString();
 
-                    byte nuttypeAsU8 = reader.ReadByte();
+                    byte nuTextureTypeAsU8 = reader.ReadByte();
                 }
 
                 // FIXME: Some textures failed here.
@@ -59,7 +59,7 @@ namespace TTGamesExplorerRebirthLib.Formats.NuCore
 
                         path = reader.ReadSized16NullTerminatedString();
 
-                        byte nuttypeAsU8 = reader.ReadByte();
+                        byte nuTextureTypeAsU8 = reader.ReadByte();
 
                         NuTextureType textureType = (NuTextureType)reader.ReadUInt32BigEndian() - 1;
 
