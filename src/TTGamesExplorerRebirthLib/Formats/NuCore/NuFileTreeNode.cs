@@ -28,6 +28,8 @@ namespace TTGamesExplorerRebirthLib.Formats.NuCore
                 int nameHash = reader.ReadInt32BigEndian();
 
                 // TODO: Compute hash name and find it.
+
+                Name = "UnknownHash";
             }
             else
             {
@@ -73,7 +75,7 @@ namespace TTGamesExplorerRebirthLib.Formats.NuCore
                 path = string.Format("{0}/{1}", iterator.Name, path);
             }
 
-            return path.Substring(0, path.Length - 1);
+            return path[..^1];
         }
     }
 #pragma warning restore IDE0059
