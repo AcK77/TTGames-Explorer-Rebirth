@@ -16,7 +16,14 @@
             new GamesMetadata()
             {
                 Exe = "LEGOMARVEL.exe",
-                Hash = "2A0CEDE63A1C0FA76911F87B6909BB6DB2E3FBC4",
+                Hash = "2A0CEDE63A1C0FA76911F87B6909BB6DB2E3FBC4", // LEGOMarvel-26-09-13-Steam-v0.4g_Hotfix
+                Name = "LEGO MARVEL Super Heroes",
+                Cover = Properties.Resources.LEGOMarvel1
+            },
+            new GamesMetadata()
+            {
+                Exe = "LEGOMARVEL.exe",
+                Hash = "8FAB01D1A141ECBAFF561E17A62AA835DE4E420E", // LEGOMarvel-10-02-14-Steam-Call-In-Patch-v0.3b_Hotfix
                 Name = "LEGO MARVEL Super Heroes",
                 Cover = Properties.Resources.LEGOMarvel1
             },
