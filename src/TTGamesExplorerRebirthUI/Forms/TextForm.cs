@@ -31,10 +31,16 @@ namespace TTGamesExplorerRebirthUI.Forms
 
             fastColoredTextBox1.Text = Encoding.ASCII.GetString(fileBuffer);
 
-            switch (Path.GetExtension(fileName))
+            switch (Path.GetExtension(fileName).ToLower())
             {
                 case ".xml":
                     fastColoredTextBox1.Language = Language.XML;
+                    break;
+                case ".json":
+                    fastColoredTextBox1.Language = Language.JSON;
+                    break;
+                case ".lua":
+                    fastColoredTextBox1.Language = Language.Lua;
                     break;
             }
 
