@@ -128,9 +128,10 @@ namespace TTGamesExplorerRebirthUI.Forms
             // Ensure that the viewport and projection matrix are set correctly initially.
             GlControl_Resize(_glControl, EventArgs.Empty);
 
+            /*
             _cubeShader = CompileProgram(Encoding.UTF8.GetString(Properties.Resources.ModelVertex, 0, Properties.Resources.ModelVertex.Length),
                                          Encoding.UTF8.GetString(Properties.Resources.ModelFragment, 0, Properties.Resources.ModelFragment.Length));
-
+            */
             _VAO = GL.GenVertexArray();
             GL.BindVertexArray(_VAO);
 

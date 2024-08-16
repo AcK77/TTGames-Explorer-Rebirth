@@ -28,44 +28,59 @@ namespace TTGamesExplorerRebirthUI
             return string.Format("{0:n1}{1}", number, sizeSuffixes[counter]);
         }
 
+        static readonly private Bitmap bitmap_page_white_music = new Bitmap(Properties.Resources.page_white_music);
+        static readonly private Bitmap bitmap_page_white_text = new Bitmap(Properties.Resources.page_white_text);
+        static readonly private Bitmap bitmap_picture = new Bitmap(Properties.Resources.picture);
+        static readonly private Bitmap bitmap_page_white_database = new Bitmap(Properties.Resources.page_white_database);
+        static readonly private Bitmap bitmap_box = new Bitmap(Properties.Resources.box);
+        static readonly private Bitmap bitmap_page_gear = new Bitmap(Properties.Resources.page_gear);
+        static readonly private Bitmap bitmap_application = new Bitmap(Properties.Resources.application);
+        static readonly private Bitmap bitmap_font = new Bitmap(Properties.Resources.font);
+        static readonly private Bitmap bitmap_brick = new Bitmap(Properties.Resources.brick);
+        static readonly private Bitmap bitmap_shape_3d = new Bitmap(Properties.Resources.shape_3d);
+        static readonly private Bitmap bitmap_pictures = new Bitmap(Properties.Resources.pictures);
+        static readonly private Bitmap bitmap_border_all = new Bitmap(Properties.Resources.border_all);
+        static readonly private Bitmap bitmap_page_code = new Bitmap(Properties.Resources.page_code);
+        static readonly private Bitmap bitmap_page_white = new Bitmap(Properties.Resources.page_white);
+
         public static Bitmap GetIconByFileName(string path)
         {
             return Path.GetExtension(path).ToLowerInvariant() switch
             {
-                ".adp" => new Bitmap(Properties.Resources.page_white_music),
-                ".ats" => new Bitmap(Properties.Resources.page_white_text),
-                ".cbx" => new Bitmap(Properties.Resources.page_white_music),
-                ".cfg" => new Bitmap(Properties.Resources.page_white_text),
-                ".cmo" => new Bitmap(Properties.Resources.picture),
-                ".csv" => new Bitmap(Properties.Resources.page_white_database),
-                ".dat" => new Bitmap(Properties.Resources.box),
-                ".dds" => new Bitmap(Properties.Resources.picture),
-                ".dll" => new Bitmap(Properties.Resources.page_gear),
-                ".exe" => new Bitmap(Properties.Resources.application),
-                ".ft2" => new Bitmap(Properties.Resources.font),
-                ".fpk" => new Bitmap(Properties.Resources.brick),
-                ".ghg" => new Bitmap(Properties.Resources.shape_3d),
-                ".git" => new Bitmap(Properties.Resources.page_white_text),
-                ".gsc" => new Bitmap(Properties.Resources.shape_3d),
-                ".ini" => new Bitmap(Properties.Resources.page_white_text),
-                ".lua" => new Bitmap(Properties.Resources.page_white_text),
-                ".mp3" => new Bitmap(Properties.Resources.page_white_music),
-                ".nxg_textures" => new Bitmap(Properties.Resources.pictures),
-                ".ogg" => new Bitmap(Properties.Resources.page_white_music),
-                ".pc_shaders" => new Bitmap(Properties.Resources.border_all),
-                ".scp" => new Bitmap(Properties.Resources.page_white_text),
-                ".sf" => new Bitmap(Properties.Resources.page_white_text),
-                ".sub" => new Bitmap(Properties.Resources.page_white_text),
-                ".subopt" => new Bitmap(Properties.Resources.page_white_text),
-                ".tex" => new Bitmap(Properties.Resources.picture),
-                ".tsh" => new Bitmap(Properties.Resources.border_all),
-                ".txt" => new Bitmap(Properties.Resources.page_white_text),
-                ".pac" => new Bitmap(Properties.Resources.brick),
-                ".pak" => new Bitmap(Properties.Resources.brick),
-                ".wav" => new Bitmap(Properties.Resources.page_white_music),
-                ".xml" => new Bitmap(Properties.Resources.page_code),
+                ".adp" => bitmap_page_white_music,
+                ".ats" => bitmap_page_white_text,
+                ".cbx" => bitmap_page_white_music,
+                ".cfg" => bitmap_page_white_text,
+                ".cmo" => bitmap_picture,
+                ".csv" => bitmap_page_white_database,
+                ".dat" => bitmap_box,
+                ".dds" => bitmap_picture,
+                ".dll" => bitmap_page_gear,
+                ".exe" => bitmap_application,
+                ".ft2" => bitmap_font,
+                ".fpk" => bitmap_brick,
+                ".ghg" => bitmap_shape_3d,
+                ".git" => bitmap_page_white_text,
+                ".gsc" => bitmap_shape_3d,
+                ".ini" => bitmap_page_white_text,
+                ".lua" => bitmap_page_white_text,
+                ".mp3" => bitmap_page_white_text,
+                ".nxg_textures" => bitmap_pictures,
+                ".ogg" => bitmap_page_white_music,
+                ".pc_shaders" => bitmap_border_all,
+                ".scp" => bitmap_page_white_text,
+                ".sf" => bitmap_page_white_text,
+                ".sub" => bitmap_page_white_text,
+                ".subopt" => bitmap_page_white_text,
+                ".tex" => bitmap_picture,
+                ".tsh" => bitmap_border_all,
+                ".txt" => bitmap_page_white_text,
+                ".pac" => bitmap_brick,
+                ".pak" => bitmap_brick,
+                ".wav" => bitmap_page_white_music,
+                ".xml" => bitmap_page_code,
 
-                _ => new Bitmap(Properties.Resources.page_white),
+                _ => bitmap_page_white,
             };
         }
 
