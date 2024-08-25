@@ -28,59 +28,59 @@ namespace TTGamesExplorerRebirthUI
             return string.Format("{0:n1}{1}", number, sizeSuffixes[counter]);
         }
 
-        static readonly private Bitmap bitmap_page_white_music = new Bitmap(Properties.Resources.page_white_music);
-        static readonly private Bitmap bitmap_page_white_text = new Bitmap(Properties.Resources.page_white_text);
-        static readonly private Bitmap bitmap_picture = new Bitmap(Properties.Resources.picture);
-        static readonly private Bitmap bitmap_page_white_database = new Bitmap(Properties.Resources.page_white_database);
-        static readonly private Bitmap bitmap_box = new Bitmap(Properties.Resources.box);
-        static readonly private Bitmap bitmap_page_gear = new Bitmap(Properties.Resources.page_gear);
-        static readonly private Bitmap bitmap_application = new Bitmap(Properties.Resources.application);
-        static readonly private Bitmap bitmap_font = new Bitmap(Properties.Resources.font);
-        static readonly private Bitmap bitmap_brick = new Bitmap(Properties.Resources.brick);
-        static readonly private Bitmap bitmap_shape_3d = new Bitmap(Properties.Resources.shape_3d);
-        static readonly private Bitmap bitmap_pictures = new Bitmap(Properties.Resources.pictures);
-        static readonly private Bitmap bitmap_border_all = new Bitmap(Properties.Resources.border_all);
-        static readonly private Bitmap bitmap_page_code = new Bitmap(Properties.Resources.page_code);
-        static readonly private Bitmap bitmap_page_white = new Bitmap(Properties.Resources.page_white);
+        static readonly private Bitmap _bitmapPageWhiteMusic = new Bitmap(Properties.Resources.page_white_music);
+        static readonly private Bitmap _bitmapPageWhiteText = new Bitmap(Properties.Resources.page_white_text);
+        static readonly private Bitmap _bitmapPicture = new Bitmap(Properties.Resources.picture);
+        static readonly private Bitmap _bitmapPictures = new Bitmap(Properties.Resources.pictures);
+        static readonly private Bitmap _bitmapPageWhiteDatabase = new Bitmap(Properties.Resources.page_white_database);
+        static readonly private Bitmap _bitmapBox = new Bitmap(Properties.Resources.box);
+        static readonly private Bitmap _bitmapPageGear = new Bitmap(Properties.Resources.page_gear);
+        static readonly private Bitmap _bitmapApplication = new Bitmap(Properties.Resources.application);
+        static readonly private Bitmap _bitmapFont = new Bitmap(Properties.Resources.font);
+        static readonly private Bitmap _bitmapBrick = new Bitmap(Properties.Resources.brick);
+        static readonly private Bitmap _bitmapShape3d = new Bitmap(Properties.Resources.shape_3d);
+        static readonly private Bitmap _bitmapBorderAll = new Bitmap(Properties.Resources.border_all);
+        static readonly private Bitmap _bitmapPageCode = new Bitmap(Properties.Resources.page_code);
+        static readonly private Bitmap _bitmapPageWhite = new Bitmap(Properties.Resources.page_white);
 
         public static Bitmap GetIconByFileName(string path)
         {
             return Path.GetExtension(path).ToLowerInvariant() switch
             {
-                ".adp" => bitmap_page_white_music,
-                ".ats" => bitmap_page_white_text,
-                ".cbx" => bitmap_page_white_music,
-                ".cfg" => bitmap_page_white_text,
-                ".cmo" => bitmap_picture,
-                ".csv" => bitmap_page_white_database,
-                ".dat" => bitmap_box,
-                ".dds" => bitmap_picture,
-                ".dll" => bitmap_page_gear,
-                ".exe" => bitmap_application,
-                ".ft2" => bitmap_font,
-                ".fpk" => bitmap_brick,
-                ".ghg" => bitmap_shape_3d,
-                ".git" => bitmap_page_white_text,
-                ".gsc" => bitmap_shape_3d,
-                ".ini" => bitmap_page_white_text,
-                ".lua" => bitmap_page_white_text,
-                ".mp3" => bitmap_page_white_text,
-                ".nxg_textures" => bitmap_pictures,
-                ".ogg" => bitmap_page_white_music,
-                ".pc_shaders" => bitmap_border_all,
-                ".scp" => bitmap_page_white_text,
-                ".sf" => bitmap_page_white_text,
-                ".sub" => bitmap_page_white_text,
-                ".subopt" => bitmap_page_white_text,
-                ".tex" => bitmap_picture,
-                ".tsh" => bitmap_border_all,
-                ".txt" => bitmap_page_white_text,
-                ".pac" => bitmap_brick,
-                ".pak" => bitmap_brick,
-                ".wav" => bitmap_page_white_music,
-                ".xml" => bitmap_page_code,
+                ".adp" => _bitmapPageWhiteMusic,
+                ".ats" => _bitmapPageWhiteText,
+                ".cbx" => _bitmapPageWhiteMusic,
+                ".cfg" => _bitmapPageWhiteText,
+                ".cmo" => _bitmapPicture,
+                ".csv" => _bitmapPageWhiteDatabase,
+                ".dat" => _bitmapBox,
+                ".dds" => _bitmapPicture,
+                ".dll" => _bitmapPageGear,
+                ".exe" => _bitmapApplication,
+                ".ft2" => _bitmapFont,
+                ".fpk" => _bitmapBrick,
+                ".ghg" => _bitmapShape3d,
+                ".git" => _bitmapPageWhiteText,
+                ".gsc" => _bitmapShape3d,
+                ".ini" => _bitmapPageWhiteText,
+                ".lua" => _bitmapPageWhiteText,
+                ".mp3" => _bitmapPageWhiteText,
+                ".nxg_textures" => _bitmapPictures,
+                ".ogg" => _bitmapPageWhiteMusic,
+                ".pc_shaders" => _bitmapBorderAll,
+                ".scp" => _bitmapPageWhiteText,
+                ".sf" => _bitmapPageWhiteText,
+                ".sub" => _bitmapPageWhiteText,
+                ".subopt" => _bitmapPageWhiteText,
+                ".tex" => _bitmapPicture,
+                ".tsh" => _bitmapBorderAll,
+                ".txt" => _bitmapPageWhiteText,
+                ".pac" => _bitmapBrick,
+                ".pak" => _bitmapBrick,
+                ".wav" => _bitmapPageWhiteMusic,
+                ".xml" => _bitmapPageCode,
 
-                _ => bitmap_page_white,
+                _ => _bitmapPageWhite,
             };
         }
 

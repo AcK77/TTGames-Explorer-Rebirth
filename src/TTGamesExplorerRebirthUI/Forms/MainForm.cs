@@ -11,9 +11,24 @@ namespace TTGamesExplorerRebirthUI.Forms
         private string _loadedGameFolderPath = "";
         private GamesMetadata _gameMetadata;
 
-        public MainForm()
+        public MainForm(string path = null)
         {
             InitializeComponent();
+
+            if (path != null)
+            {
+                if (Directory.Exists(path))
+                {
+                    AppSettings.Instance.GameFolderPath = path;
+                    return;
+                }
+
+                new Thread(() =>
+                {
+                    Thread.CurrentThread.IsBackground = true;
+                    Helper.OpenFileInternal(path, Path.GetFullPath(path));
+                }).Start();
+            }
         }
 
         protected override void OnHandleCreated(EventArgs e)
@@ -314,7 +329,7 @@ namespace TTGamesExplorerRebirthUI.Forms
             {
                 // NOTE: Then it's a file. Try to open it.
 
-                Helper.OpenFileInternal(_loadedGameFolderPath, path);
+                Helper.OpenFileInternal(_loadedGameFolderPath, (string)darkListView1.Items[darkListView1.SelectedIndices[0]].Tag);
             }
         }
 

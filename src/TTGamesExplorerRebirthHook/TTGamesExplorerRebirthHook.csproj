@@ -5,7 +5,7 @@
     <PlatformTarget>x86</PlatformTarget>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     <Platforms>AnyCPU;x86</Platforms>
-    <BaseOutputPath>$(SolutionDir)BUILDS\TTGEHook</BaseOutputPath>
+    <BaseOutputPath>$(SolutionDir)Builds\TTGEHook</BaseOutputPath>
 	<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
   </PropertyGroup>
 
