@@ -85,8 +85,8 @@ namespace TTGamesExplorerRebirthUI.Forms
             }
         }
 
-        private readonly Bitmap _FolderBitmap = new Bitmap(Properties.Resources.folder);
-        private readonly Bitmap _ExpandedBitmap = new Bitmap(Properties.Resources.folder_page);
+        private readonly Bitmap _folderBitmap = new Bitmap(Properties.Resources.folder);
+        private readonly Bitmap _expandedBitmap = new Bitmap(Properties.Resources.folder_page);
 
         private void LoadFolderInTreeView(string folderPath)
         {
@@ -98,8 +98,8 @@ namespace TTGamesExplorerRebirthUI.Forms
 
             DarkTreeNode rootNode = new("Root")
             {
-                ExpandedIcon = _ExpandedBitmap,
-                Icon = _FolderBitmap,
+                ExpandedIcon = _expandedBitmap,
+                Icon = _folderBitmap,
                 ExpandAreaHot = true,
                 IsRoot = true,
                 Expanded = true,
@@ -135,8 +135,8 @@ namespace TTGamesExplorerRebirthUI.Forms
                         {
                             DarkTreeNode node = new(subPath)
                             {
-                                ExpandedIcon = _ExpandedBitmap,
-                                Icon = _FolderBitmap,
+                                ExpandedIcon = _expandedBitmap,
+                                Icon = _folderBitmap,
                                 Expanded = true,
                             };
 
@@ -170,7 +170,6 @@ namespace TTGamesExplorerRebirthUI.Forms
             {
                 FileStream stream = File.OpenRead(path);
                 string sha1 = BitConverter.ToString(SHA1.Create().ComputeHash(stream)).Replace("-", "");
-                
                 _gameMetadata = GamesMetadataHelper.Items.Where(metadata => metadata.Hash == sha1).FirstOrDefault();
                 if (_gameMetadata != null)
                 {
@@ -253,7 +252,7 @@ namespace TTGamesExplorerRebirthUI.Forms
 
                 if (File.GetAttributes(path) == FileAttributes.Directory)
                 {
-                    listItem.Icon = _FolderBitmap;
+                    listItem.Icon = _folderBitmap;
                 }
                 else
                 {
