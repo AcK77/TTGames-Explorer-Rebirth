@@ -171,7 +171,7 @@ namespace TTGamesExplorerRebirthUI.Forms
             {
                 FileStream stream = File.OpenRead(path);
                 string sha1 = BitConverter.ToString(SHA1.Create().ComputeHash(stream)).Replace("-", "");
-                
+
                 _gameMetadata = GamesMetadataHelper.Items.Where(metadata => metadata.Hash == sha1).FirstOrDefault();
                 if (_gameMetadata != null)
                 {
