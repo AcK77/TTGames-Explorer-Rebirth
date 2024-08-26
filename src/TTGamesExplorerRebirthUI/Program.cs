@@ -15,8 +15,7 @@ namespace TTGamesExplorerRebirthUI
             Application.SetCompatibleTextRenderingDefault(false);
             ApplicationConfiguration.Initialize();
 
-            if (args.Length != 0
-            && (File.Exists(args[0]) || Directory.Exists(args[0])))
+            if (args.Length != 0 && (File.Exists(args[0]) || Directory.Exists(args[0])))
             {
                 Application.Run(new MainForm(args[0]));
                 return;
