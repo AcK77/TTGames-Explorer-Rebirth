@@ -20,6 +20,7 @@ namespace TTGamesExplorerRebirthUI.Forms
                 if (Directory.Exists(path))
                 {
                     AppSettings.Instance.GameFolderPath = path;
+
                     return;
                 }
 
