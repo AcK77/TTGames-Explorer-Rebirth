@@ -2,7 +2,7 @@
   "profiles": {
     "TTGamesExplorerRebirthUI": {
       "commandName": "Project",
-      "commandLineArgs": "\"D:\\LegoExtracted\\NXG\\LMSH1\\EXTRACTED\\LEVELS\\STORY\\7ASGARD\\7ASGARDA\\7ASGARDA_NXG.NXG_TEXTURES\""
+      "commandLineArgs": ""
     }
   }
 }
