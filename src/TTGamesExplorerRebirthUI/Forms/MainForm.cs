@@ -11,9 +11,25 @@ namespace TTGamesExplorerRebirthUI.Forms
         private string _loadedGameFolderPath = "";
         private GamesMetadata _gameMetadata;
 
-        public MainForm()
+        public MainForm(string path = null)
         {
             InitializeComponent();
+
+            if (path != null)
+            {
+                if (Directory.Exists(path))
+                {
+                    AppSettings.Instance.GameFolderPath = path;
+
+                    return;
+                }
+
+                new Thread(() =>
+                {
+                    Thread.CurrentThread.IsBackground = true;
+                    Helper.OpenFileInternal(path, Path.GetFullPath(path));
+                }).Start();
+            }
         }
 
         protected override void OnHandleCreated(EventArgs e)
@@ -70,6 +86,9 @@ namespace TTGamesExplorerRebirthUI.Forms
             }
         }
 
+        private readonly Bitmap _folderBitmap = new Bitmap(Properties.Resources.folder);
+        private readonly Bitmap _expandedBitmap = new Bitmap(Properties.Resources.folder_page);
+
         private void LoadFolderInTreeView(string folderPath)
         {
             Invoke(new Action(darkTreeView1.Nodes.Clear));
@@ -80,8 +99,8 @@ namespace TTGamesExplorerRebirthUI.Forms
 
             DarkTreeNode rootNode = new("Root")
             {
-                ExpandedIcon = new Bitmap(Properties.Resources.folder_page),
-                Icon = new Bitmap(Properties.Resources.folder),
+                ExpandedIcon = _expandedBitmap,
+                Icon = _folderBitmap,
                 ExpandAreaHot = true,
                 IsRoot = true,
                 Expanded = true,
@@ -117,8 +136,8 @@ namespace TTGamesExplorerRebirthUI.Forms
                         {
                             DarkTreeNode node = new(subPath)
                             {
-                                ExpandedIcon = new Bitmap(Properties.Resources.folder_page),
-                                Icon = new Bitmap(Properties.Resources.folder),
+                                ExpandedIcon = _expandedBitmap,
+                                Icon = _folderBitmap,
                                 Expanded = true,
                             };
 
@@ -235,7 +254,7 @@ namespace TTGamesExplorerRebirthUI.Forms
 
                 if (File.GetAttributes(path) == FileAttributes.Directory)
                 {
-                    listItem.Icon = new Bitmap(Properties.Resources.folder);
+                    listItem.Icon = _folderBitmap;
                 }
                 else
                 {
@@ -311,7 +330,7 @@ namespace TTGamesExplorerRebirthUI.Forms
             {
                 // NOTE: Then it's a file. Try to open it.
 
-                Helper.OpenFileInternal(_loadedGameFolderPath, path);
+                Helper.OpenFileInternal(_loadedGameFolderPath, (string)darkListView1.Items[darkListView1.SelectedIndices[0]].Tag);
             }
         }
 
