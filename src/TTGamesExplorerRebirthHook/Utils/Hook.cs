@@ -5,40 +5,22 @@ using System.Runtime.InteropServices;
 
 namespace TTGamesExplorerRebirthHook.Utils
 {
-    public unsafe class Hook
+    public unsafe class Hook<TDelegate> where TDelegate : Delegate
     {
-        private byte[] _originalBytes;
-        private byte[] _jmpBytes;
+        private readonly byte[] _originalBytes;
+        private byte[]          _jmpBytes;
 
-        private IntPtr _targetAddress;
-        private IntPtr _hookAddress;
+        private readonly IntPtr    _targetAddress;
+        private readonly IntPtr    _hookAddress;
+        private readonly TDelegate _hookDelegate;
 
         public static IntPtr BaseAddress => Process.GetCurrentProcess().MainModule.BaseAddress;
 
-        public enum VirtualProtectionType : uint
+        public Hook(TDelegate dlg, int address)
         {
-            Execute = 0x10,
-            ExecuteRead = 0x20,
-            ExecuteReadWrite = 0x40,
-            ExecuteWriteCopy = 0x80,
-            NoAccess = 0x01,
-            Readonly = 0x02,
-            ReadWrite = 0x04,
-            WriteCopy = 0x08,
-            GuardModifierflag = 0x100,
-            NoCacheModifierflag = 0x200,
-            WriteCombineModifierflag = 0x400,
-        }
-
-        [DllImport("kernel32.dll")]
-        public static extern bool VirtualProtect(IntPtr lpAddress, UIntPtr dwSize, VirtualProtectionType flNewProtect, out VirtualProtectionType lpflOldProtect);
-
-        public Hook() { }
-
-        public TDelegate CreateHook<TDelegate>(TDelegate dlg, int address) where TDelegate : Delegate
-        {
+            _hookDelegate  = dlg;
             _targetAddress = new IntPtr(BaseAddress.ToInt32() + address);
-            _hookAddress = Marshal.GetFunctionPointerForDelegate(dlg);
+            _hookAddress   = Marshal.GetFunctionPointerForDelegate(_hookDelegate);
 
             CreateJMPInstructions();
 
@@ -51,31 +33,25 @@ namespace TTGamesExplorerRebirthHook.Utils
 
             Enable();
 
-            Logger.Instance.Log($"{dlg.Method.Name} hook initialized.");
-
-            return dlg;
+            Logger.Instance.Log($"{_hookDelegate.Method.Name} hook initialized.");
         }
 
-        public T OriginalFunction<T, TDelegate>(params object[] args) where TDelegate : Delegate
+        public T OriginalFunction<T>(params object[] args)
         {
-            TDelegate dlg = Marshal.GetDelegateForFunctionPointer<TDelegate>(_targetAddress);
-
             Disable();
 
-            object dlgResult = dlg.DynamicInvoke(args);
+            object dlgResult = Marshal.GetDelegateForFunctionPointer<TDelegate>(_targetAddress).DynamicInvoke(args);
 
             Enable();
 
             return (T)dlgResult;
         }
 
-        public void OriginalFunction<TDelegate>(params object[] args) where TDelegate : Delegate
+        public void OriginalFunction(params object[] args)
         {
-            TDelegate dlg = Marshal.GetDelegateForFunctionPointer<TDelegate>(_targetAddress);
-
             Disable();
 
-            dlg.DynamicInvoke(args);
+            Marshal.GetDelegateForFunctionPointer<TDelegate>(_targetAddress).DynamicInvoke(args);
 
             Enable();
         }
@@ -100,20 +76,20 @@ namespace TTGamesExplorerRebirthHook.Utils
         {
             UIntPtr bufferSize = new UIntPtr((uint)count);
 
-            if (!VirtualProtect(destination, bufferSize, VirtualProtectionType.ExecuteReadWrite, out VirtualProtectionType oldProtection))
+            if (!Natives.VirtualProtect(destination, bufferSize, Natives.VirtualProtectionType.ExecuteReadWrite, out Natives.VirtualProtectionType oldProtection))
             {
                 throw new Exception($"Failed to unprotect memory. OldProtection: {oldProtection}");
             }
 
             byte* pointerDestination = (byte*)destination;
-            byte* pointerSource = (byte*)source;
+            byte* pointerSource      = (byte*)source;
 
             for (int i = 0; i < count; i++)
             {
                 *(pointerDestination + i) = *(pointerSource + i);
             }
 
-            if (!VirtualProtect(destination, bufferSize, oldProtection, out oldProtection))
+            if (!Natives.VirtualProtect(destination, bufferSize, oldProtection, out oldProtection))
             {
                 throw new Exception($"Failed to unprotect memory. OldProtection: {oldProtection}");
             }
