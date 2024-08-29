@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Runtime.InteropServices;
 
 namespace TTGamesExplorerRebirthHook.Utils
@@ -18,6 +19,11 @@ namespace TTGamesExplorerRebirthHook.Utils
         public static IntPtr StringToPtr(this string text)
         {
             return Marshal.StringToHGlobalAnsi(text);
+        }
+
+        public static void StringToPtrToPtr(this string text, IntPtr ptr)
+        {
+            Marshal.WriteIntPtr(ptr, Marshal.StringToHGlobalAnsi(text));
         }
     }
 }
