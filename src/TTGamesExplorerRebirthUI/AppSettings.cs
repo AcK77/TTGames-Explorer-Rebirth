@@ -8,6 +8,7 @@ namespace TTGamesExplorerRebirthUI
 
         public uint Version { get; set; }
         public string GameFolderPath { get; set; }
+        public bool KeepLogsOpen {  get; set; }
 
         private static AppSettings _instance;
 

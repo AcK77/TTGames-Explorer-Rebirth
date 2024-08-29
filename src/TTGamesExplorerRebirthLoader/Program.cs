@@ -13,17 +13,24 @@ namespace TTGamesExplorerRebirthLoader
 
         static void Main(string[] args)
         {
-            Logger logger = new();
+            if (args.Length == 3)
+            {
+                Logger logger = new();
 
-            logger.ReadingCompleted += Logger_ReadingCompleted;
+                logger.ReadingCompleted += Logger_ReadingCompleted;
 
-            RunProcess(args[0]);
+                RunProcess(args[0]);
 
-            Inject32Bit(args[0], args[1], args[2]);
+                Inject32Bit(args[0], args[1], args[2]);
 
-            Console.ReadKey();
+                Console.ReadKey();
 
-            logger.Dispose();
+                logger.Dispose();
+            }
+            else
+            {
+                RunProcess(args[0]);
+            }
         }
 
         private static void Logger_ReadingCompleted(object sender, string message)
@@ -66,8 +73,6 @@ namespace TTGamesExplorerRebirthLoader
             {
                 throw new NullReferenceException($"Error at \"OpenProcess\": {new Win32Exception(Marshal.GetLastWin32Error()).Message}.");
             }
-
-            Thread.Sleep(1000);
 
             IntPtr allocatedMemoryAddress = VirtualAllocEx(hProcess, IntPtr.Zero, (uint)dllPathBuffer.Length + 1, AllocationType.Commit | AllocationType.Reserve, MemoryProtection.ReadWrite);
             if (allocatedMemoryAddress == IntPtr.Zero)

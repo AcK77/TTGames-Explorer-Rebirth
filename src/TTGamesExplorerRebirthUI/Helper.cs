@@ -1,5 +1,5 @@
 ﻿using TTGamesExplorerRebirthUI.Forms;
-using static TTGamesExplorerRebirthUI.Native;
+using static TTGamesExplorerRebirthUI.Natives;
 
 namespace TTGamesExplorerRebirthUI
 {

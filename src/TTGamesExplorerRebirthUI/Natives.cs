@@ -2,7 +2,7 @@
 
 namespace TTGamesExplorerRebirthUI
 {
-    public static partial class Native
+    public static partial class Natives
     {
         public enum HResult : int
         {
