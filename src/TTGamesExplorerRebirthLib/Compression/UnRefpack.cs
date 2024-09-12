@@ -8,7 +8,7 @@
         /// </summary>
         /// <remarks>
         ///     Based from RE of LEGO Ninjago Tournament by Ac_K.
-        ///     Based on fibdec by yukinogatari:
+        ///     Based on fib_dec by yukinogatari:
         ///     https://github.com/yukinogatari/Reverse-Engineering
         /// </remarks>
         /// <param name="srcBuffer">
