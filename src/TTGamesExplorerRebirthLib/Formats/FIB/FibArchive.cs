@@ -72,11 +72,12 @@ namespace TTGamesExplorerRebirthLib.Formats.FIB
 
             uint size = file.Size;
 
-            if (file.Compression == CompressionFormat.Refpack)
+            if (file.Compression != CompressionFormat.None)
             {
-                // NOTE: Refpack compressed data start with the size of the compressed data.
+                // NOTE: Compressed data start with the size of the compressed chunk.
                 //       "size" still contains the decompressed size, but we don't use it for decomp so we can replace
                 //       it to avoid repetitive code.
+                // TODO: Support multiple chunks decompression, check if the decompressed size is equal to the whole decompressed data size.
                 size = reader.ReadUInt32();
             }
 
