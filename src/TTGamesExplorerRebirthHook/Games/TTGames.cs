@@ -6,6 +6,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using TTGamesExplorerRebirthHook.Games.LMSH1;
 using TTGamesExplorerRebirthHook.Games.LW;
+using TTGamesExplorerRebirthHook.Mod;
 
 namespace TTGamesExplorerRebirthHook.Games
 {
@@ -26,6 +27,8 @@ namespace TTGamesExplorerRebirthHook.Games
 
         public TTGames()
         {
+            ModFolder.LoadFiles();
+
             FileStream stream = File.OpenRead(Process.GetCurrentProcess().MainModule.FileName);
             string     sha1   = BitConverter.ToString(SHA1.Create().ComputeHash(stream)).Replace("-", "");
 
