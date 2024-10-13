@@ -68,6 +68,7 @@ namespace TTGamesExplorerRebirthUI
                 ".nxg_textures" => _bitmapPictures,
                 ".ogg" => _bitmapPageWhiteMusic,
                 ".pc_shaders" => _bitmapBorderAll,
+                ".blob" => _bitmapBorderAll,
                 ".scp" => _bitmapPageWhiteText,
                 ".sf" => _bitmapPageWhiteText,
                 ".sub" => _bitmapPageWhiteText,
@@ -169,6 +170,7 @@ namespace TTGamesExplorerRebirthUI
                         break;
                     }
 
+                case ".blob":
                 case ".pc_shaders":
                     {
                         fileBuffer ??= File.ReadAllBytes(path);
