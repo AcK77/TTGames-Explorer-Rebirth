@@ -49,6 +49,7 @@ namespace TTGamesExplorerRebirthUI
             {
                 ".adp" => _bitmapPageWhiteMusic,
                 ".ats" => _bitmapPageWhiteText,
+                ".blob" => _bitmapBorderAll,
                 ".cbx" => _bitmapPageWhiteMusic,
                 ".cfg" => _bitmapPageWhiteText,
                 ".cmo" => _bitmapPicture,
@@ -68,7 +69,6 @@ namespace TTGamesExplorerRebirthUI
                 ".nxg_textures" => _bitmapPictures,
                 ".ogg" => _bitmapPageWhiteMusic,
                 ".pc_shaders" => _bitmapBorderAll,
-                ".blob" => _bitmapBorderAll,
                 ".scp" => _bitmapPageWhiteText,
                 ".sf" => _bitmapPageWhiteText,
                 ".sub" => _bitmapPageWhiteText,
