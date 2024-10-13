@@ -93,7 +93,7 @@ namespace TTGamesExplorerRebirthLib.Formats
                 {
                     key = reader.ReadUInt32();
                 }
-                else if (ident == MagicShaderVPO)
+                else if (ident == MagicShaderVPO || ident == MagicShaderFPO)
                 {
                     ShaderBlobFile shaderBlobFile = new();
 
@@ -101,23 +101,7 @@ namespace TTGamesExplorerRebirthLib.Formats
 
                     shaderBlobFile.Sent = sent;
                     shaderBlobFile.Key  = key;
-                    shaderBlobFile.Type = ShaderBlobType.Vertex;
-                    shaderBlobFile.Data = reader.ReadBytes(shaderSize);
-
-                    Shaders.Add(shaderBlobFile);
-
-                    sent = 0;
-                    key  = 0;
-                }
-                else if (ident == MagicShaderFPO)
-                {
-                    ShaderBlobFile shaderBlobFile = new();
-
-                    int shaderSize = reader.ReadInt32();
-
-                    shaderBlobFile.Sent = sent;
-                    shaderBlobFile.Key  = key;
-                    shaderBlobFile.Type = ShaderBlobType.Fragment;
+                    shaderBlobFile.Type = ident == MagicShaderVPO ? ShaderBlobType.Vertex : ShaderBlobType.Fragment;
                     shaderBlobFile.Data = reader.ReadBytes(shaderSize);
 
                     Shaders.Add(shaderBlobFile);
