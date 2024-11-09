@@ -1,4 +1,4 @@
-﻿using TTGamesExplorerRebirthLib.Hash;
+﻿using TTGamesExplorerRebirthLib.Hashes;
 using TTGamesExplorerRebirthLib.Helper;
 
 namespace TTGamesExplorerRebirthLib.Formats.DAT
