@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace TTGamesExplorerRebirthLib.Hash
+namespace TTGamesExplorerRebirthLib.Hashes
 {
     public static class Fnv
     {

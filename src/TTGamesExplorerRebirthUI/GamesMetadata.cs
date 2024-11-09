@@ -29,6 +29,20 @@
             },
             new GamesMetadata()
             {
+                Exe = "LEGOMARVEL2.exe",
+                Hash = "0E704AEE9B2A1862B86133254B7B1E97BC66680B",
+                Name = "LEGO MARVEL Super Heroes 2",
+                Cover = Properties.Resources.LEGOMarvel2
+            },
+            new GamesMetadata()
+            {
+                Exe = "LEGOMARVEL2_DX11.exe",
+                Hash = "0297912D972E51245CDB3280ABBF46BC5FA520A9",
+                Name = "LEGO MARVEL Super Heroes 2",
+                Cover = Properties.Resources.LEGOMarvel2
+            },
+            new GamesMetadata()
+            {
                 Exe = "LEGOLOTR.exe",
                 Hash = "294F2BE808C3051AAD58F17EF2DE764DE76FE1E6",
                 Name = "LEGO The Lord of the Rings",
