@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Resources\HarryLauncher_pk_paths.txt" />
+    <EmbeddedResource Include="Resources\LHPC_pk_paths.txt" />
   </ItemGroup>
 
   <ItemGroup>

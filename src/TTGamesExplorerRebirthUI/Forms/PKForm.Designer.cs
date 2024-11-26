@@ -1,6 +1,6 @@
 ﻿namespace TTGamesExplorerRebirthUI.Forms
 {
-    partial class PKForm
+    partial class PkForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PKForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PkForm));
             darkListView1 = new DarkUI.Controls.DarkListView();
             darkContextMenu1 = new DarkUI.Controls.DarkContextMenu();
             extractFilesToolStripMenuItem = new ToolStripMenuItem();

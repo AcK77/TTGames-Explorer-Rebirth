@@ -5,7 +5,7 @@ using TTGamesExplorerRebirthLib.Hashes;
 
 namespace TTGamesExplorerRebirthLib.Formats
 {
-    public class PkWinFile
+    public class PkFile
     {
         public uint   DecompressedSize;
         public uint   CompressedSize;
@@ -22,11 +22,11 @@ namespace TTGamesExplorerRebirthLib.Formats
     ///     Based on my own research (Ac_K).
     ///     Thanks to KimochiYikes for the help.
     /// </remarks>
-    public class PkWin
+    public class Pk
     {
-        public List<PkWinFile> Files = [];
+        public List<PkFile> Files = [];
 
-        public PkWin(string indexPath, string dataPath)
+        public Pk(string indexPath, string dataPath)
         {
             // Read the index file.
 
@@ -41,7 +41,7 @@ namespace TTGamesExplorerRebirthLib.Formats
 
             Dictionary<uint, string> filePaths = [];
 
-            using StreamReader pathsStreamReader = new(Assembly.GetExecutingAssembly().GetManifestResourceStream("TTGamesExplorerRebirthLib.Resources.HarryLauncher_pk_paths.txt"));
+            using StreamReader pathsStreamReader = new(Assembly.GetExecutingAssembly().GetManifestResourceStream("TTGamesExplorerRebirthLib.Resources.LHPC_pk_paths.txt"));
             string line;
             while ((line = pathsStreamReader.ReadLine()) != null)
             {
@@ -51,7 +51,7 @@ namespace TTGamesExplorerRebirthLib.Formats
             uint indexFileCount = indexReader.ReadUInt32();
             for (int i = 0; i < indexFileCount; i++)
             {
-                PkWinFile pkWinFile = new()
+                PkFile pkWinFile = new()
                 {
                     DecompressedSize = indexReader.ReadUInt32(),
                     CompressedSize   = indexReader.ReadUInt32(),
@@ -90,7 +90,7 @@ namespace TTGamesExplorerRebirthLib.Formats
                 throw new InvalidDataException();
             }
 
-            foreach (PkWinFile file in Files)
+            foreach (PkFile file in Files)
             {
                 if (file.CompressedSize != 0)
                 {

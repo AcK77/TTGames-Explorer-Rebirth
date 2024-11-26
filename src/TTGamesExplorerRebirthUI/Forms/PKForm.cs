@@ -5,10 +5,10 @@ using TTGamesExplorerRebirthLib.Formats;
 
 namespace TTGamesExplorerRebirthUI.Forms
 {
-    public partial class PKForm : DarkForm
+    public partial class PkForm : DarkForm
     {
-        private readonly PkWin _pkArchive;
-        private PkWin _pkArchiveExtraction;
+        private readonly Pk _pkArchive;
+        private Pk _pkArchiveExtraction;
 
         private readonly string _archiveDataPath;
         private readonly string _archiveIndexPath;
@@ -16,7 +16,7 @@ namespace TTGamesExplorerRebirthUI.Forms
         private bool   _extractingTaskCanceled;
         private string _extractingAllFolderPath;
 
-        public PKForm(string filePath)
+        public PkForm(string filePath)
         {
             InitializeComponent();
 
@@ -40,8 +40,18 @@ namespace TTGamesExplorerRebirthUI.Forms
                 _archiveIndexPath = Path.ChangeExtension(filePath, ".pkiswitch");
                 _archiveDataPath  = filePath;
             }
+            else if (Path.GetExtension(filePath) == ".pkips4")
+            {
+                _archiveIndexPath = filePath;
+                _archiveDataPath = Path.ChangeExtension(filePath, ".pkdps4");
+            }
+            else if (Path.GetExtension(filePath) == ".pkdps4")
+            {
+                _archiveIndexPath = Path.ChangeExtension(filePath, ".pkips4");
+                _archiveDataPath = filePath;
+            }
 
-            _pkArchive = new PkWin(_archiveIndexPath, _archiveDataPath);
+            _pkArchive = new Pk(_archiveIndexPath, _archiveDataPath);
 
             toolStripStatusLabel1.Text = $"{Path.GetFileName(_archiveIndexPath)} | {Path.GetFileName(_archiveDataPath)} - {_pkArchive.Files.Count} file(s)";
         }
@@ -58,7 +68,7 @@ namespace TTGamesExplorerRebirthUI.Forms
 
         private void LoadFilesInListView()
         {
-            foreach (PkWinFile file in _pkArchive.Files)
+            foreach (PkFile file in _pkArchive.Files)
             {
                 DarkListItem listItem = new($"{file.Path} ({Helper.FormatSize((ulong)file.Data.Length)})")
                 {
@@ -75,7 +85,7 @@ namespace TTGamesExplorerRebirthUI.Forms
             if (darkListView1.Items.Count != 0)
             {
                 string name = (string)darkListView1.Items[darkListView1.SelectedIndices[0]].Tag;
-                PkWinFile file = _pkArchive.Files.Where(file => file.Path == name).First();
+                PkFile file = _pkArchive.Files.Where(file => file.Path == name).First();
 
                 Helper.OpenFileInternal(_archiveDataPath, name, file.Data, file);
             }
@@ -167,7 +177,7 @@ namespace TTGamesExplorerRebirthUI.Forms
             {
                 _pkArchiveExtraction = _pkArchive;
 
-                List<PkWinFile> files = [];
+                List<PkFile> files = [];
                 foreach (int index in darkListView1.SelectedIndices)
                 {
                     files.Add(_pkArchiveExtraction.Files.Where(file => file.Path == (string)darkListView1.Items[index].Tag).First());

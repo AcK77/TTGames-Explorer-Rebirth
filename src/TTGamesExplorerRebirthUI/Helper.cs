@@ -84,6 +84,8 @@ namespace TTGamesExplorerRebirthUI
                 ".pkiwin" => _bitmapBrick,
                 ".pkdswitch" => _bitmapBrick,
                 ".pkiswitch" => _bitmapBrick,
+                ".pkdps4" => _bitmapBrick,
+                ".pkips4" => _bitmapBrick,
 
                 _ => _bitmapPageWhite,
             };
@@ -196,8 +198,10 @@ namespace TTGamesExplorerRebirthUI
                 case ".pkiwin":
                 case ".pkdswitch":
                 case ".pkiswitch":
+                case ".pkdps4":
+                case ".pkips4":
                     {
-                        new PKForm(path).ShowDialog();
+                        new PkForm(path).ShowDialog();
                         break;
                     }
             }
