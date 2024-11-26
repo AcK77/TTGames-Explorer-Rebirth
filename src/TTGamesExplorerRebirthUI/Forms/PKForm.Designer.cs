@@ -32,7 +32,6 @@
             darkListView1 = new DarkUI.Controls.DarkListView();
             darkContextMenu1 = new DarkUI.Controls.DarkContextMenu();
             extractFilesToolStripMenuItem = new ToolStripMenuItem();
-            removeFilesToolStripMenuItem = new ToolStripMenuItem();
             darkStatusStrip1 = new DarkUI.Controls.DarkStatusStrip();
             toolStripStatusLabel1 = new ToolStripStatusLabel();
             darkSectionPanel2 = new DarkUI.Controls.DarkSectionPanel();
@@ -62,9 +61,9 @@
             // 
             darkContextMenu1.BackColor = Color.FromArgb(60, 63, 65);
             darkContextMenu1.ForeColor = Color.FromArgb(220, 220, 220);
-            darkContextMenu1.Items.AddRange(new ToolStripItem[] { extractFilesToolStripMenuItem, removeFilesToolStripMenuItem });
+            darkContextMenu1.Items.AddRange(new ToolStripItem[] { extractFilesToolStripMenuItem });
             darkContextMenu1.Name = "darkContextMenu1";
-            darkContextMenu1.Size = new Size(181, 70);
+            darkContextMenu1.Size = new Size(181, 48);
             darkContextMenu1.Opening += DarkContextMenu1_Opening;
             // 
             // extractFilesToolStripMenuItem
@@ -76,13 +75,6 @@
             extractFilesToolStripMenuItem.Size = new Size(180, 22);
             extractFilesToolStripMenuItem.Text = "Extract file(s)...";
             extractFilesToolStripMenuItem.Click += ExtractFilesToolStripMenuItem_Click;
-            // 
-            // removeFilesToolStripMenuItem
-            // 
-            removeFilesToolStripMenuItem.BackColor = Color.FromArgb(60, 63, 65);
-            removeFilesToolStripMenuItem.ForeColor = Color.FromArgb(220, 220, 220);
-            removeFilesToolStripMenuItem.Name = "removeFilesToolStripMenuItem";
-            removeFilesToolStripMenuItem.Size = new Size(180, 22);
             // 
             // darkStatusStrip1
             // 
@@ -154,7 +146,7 @@
             ShowInTaskbar = false;
             SizeGripStyle = SizeGripStyle.Hide;
             StartPosition = FormStartPosition.CenterParent;
-            Text = "PKi/Pkd Archive";
+            Text = "Pki/Pkd Archive";
             Load += DATForm_Load;
             darkContextMenu1.ResumeLayout(false);
             darkStatusStrip1.ResumeLayout(false);
@@ -177,6 +169,5 @@
         private FolderBrowserDialog folderBrowserDialog1;
         private DarkUI.Controls.DarkContextMenu darkContextMenu1;
         private ToolStripMenuItem extractFilesToolStripMenuItem;
-        private ToolStripMenuItem removeFilesToolStripMenuItem;
     }
 }
