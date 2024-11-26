@@ -35,6 +35,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Forms\PKForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Forms\TSHForm.cs">
       <SubType>Form</SubType>
     </Compile>

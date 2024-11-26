@@ -80,6 +80,10 @@ namespace TTGamesExplorerRebirthUI
                 ".pak" => _bitmapBrick,
                 ".wav" => _bitmapPageWhiteMusic,
                 ".xml" => _bitmapPageCode,
+                ".pkdwin" => _bitmapBrick,
+                ".pkiwin" => _bitmapBrick,
+                ".pkdswitch" => _bitmapBrick,
+                ".pkiswitch" => _bitmapBrick,
 
                 _ => _bitmapPageWhite,
             };
@@ -185,6 +189,15 @@ namespace TTGamesExplorerRebirthUI
                         fileBuffer ??= File.ReadAllBytes(path);
 
                         new ModelForm(path, fileBuffer).ShowDialog();
+                        break;
+                    }
+
+                case ".pkdwin":
+                case ".pkiwin":
+                case ".pkdswitch":
+                case ".pkiswitch":
+                    {
+                        new PKForm(path).ShowDialog();
                         break;
                     }
             }

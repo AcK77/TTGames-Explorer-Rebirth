@@ -35,6 +35,11 @@ namespace TTGamesExplorerRebirthLib.Hashes
             return hash;
         }
 
+        public static uint Fnv1_32_PKWin(string text)
+        {
+            return Fnv1_32($"./{text.ToLowerInvariant()}");
+        }
+
         public static uint Fnv1_32(string text, bool alternate = false)
         {
             return Fnv1_32(Encoding.ASCII.GetBytes(text), alternate);

@@ -33,5 +33,32 @@ namespace TTGamesExplorerRebirthLib.Helper
         {
             return Encoding.ASCII.GetString(BitConverter.GetBytes(value), 0, 2);
         }
+
+        public static string GetExtensionByMagic(string magic)
+        {
+            if (magic.Contains("DDS"))
+            {
+                return ".dds";
+            }
+            else if (magic.Contains("GNF"))
+            {
+                return ".gnf";
+            }
+            else if (magic.Contains("BMF"))
+            {
+                return ".fnt";
+            }
+            else if (magic.Contains("DDS"))
+            {
+                return ".dds";
+            }
+
+            return magic switch
+            {
+                "RIFF" => ".wav",
+                "DXBC" => ".dxc_pc",
+                _ => ".unk",
+            };
+        }
     }
 }

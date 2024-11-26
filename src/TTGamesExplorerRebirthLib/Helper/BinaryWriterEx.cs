@@ -8,5 +8,10 @@ namespace TTGamesExplorerRebirthLib.Helper
         {
             writer.Write(Encoding.ASCII.GetBytes(value));
         }
+
+        public static void WriteStringWithoutPrefixedSizeNullTerminated(this BinaryWriter writer, string value)
+        {
+            writer.Write(Encoding.ASCII.GetBytes(value + '\0'));
+        }
     }
 }
